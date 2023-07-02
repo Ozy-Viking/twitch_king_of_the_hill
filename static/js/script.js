@@ -5,7 +5,6 @@
 //     https://freesound.org/people/madmanmusic/sounds/347981/
 //     https://freesound.org/people/freefire66/sounds/175950/
 //     https://freesound.org/people/klavo1985/sounds/349382/
-//
 //   War horn from:
 //     https://freesound.org/people/DeVern/sounds/512490/
 //   Yeet sounds from:
@@ -15,6 +14,9 @@
 //     https://freesound.org/people/hisoul/sounds/520268/
 //   Cheer from:
 //      https://freesound.org/people/BeeProductive/sounds/430046/
+//
+//  Credit to: https://vrflad.com/champion
+
 var language;
 var port = 8080;
 var maxemotes = 20;
@@ -49,7 +51,6 @@ var weaponnumber = 0;
 
 function connectws() {
 
-
   //check options - if we have first words:
   ws.onopen = function () {
     ws.send(JSON.stringify(
@@ -64,16 +65,13 @@ function connectws() {
       }
     ));
 
-
     ws.onmessage = function (event) {
       // grab message and parse JSON
       const msg = event.data;
       const wsdata = JSON.parse(msg);
 
-
       if (typeof wsdata.data != "undefined") {
         if (typeof wsdata.data.message != "undefined") {
-
 
           var lowermessage = wsdata.data.message.message.toLowerCase();
 
@@ -138,7 +136,7 @@ function addFighter(user) {
               Div.innerHTML = "<img style='transform: rotate(45deg) translate(35px,-50px)' src='static/images/Weapon2.png' />";
             }
             else {
-              Div.setAttribute("weapon", " number 1 fan finger");
+              Div.setAttribute("weapon", "number 1 fan finger");
               Div.innerHTML = "<img style='transform: rotate(-45deg) translate(-35px,-50px)' src='static/images/Weapon2.png' />";
             }
             break;
@@ -190,7 +188,7 @@ function addFighter(user) {
             }
             else {
               Div.setAttribute("weapon", "frying pan");
-              Div.innerHTML = "<img style='transform: rotate(0deg) translate(-60px,-10px)' src='static/images/Weapon7a.png'/>";
+              Div.innerHTML = "<img style='transform: rotate(0deg) translate(-60px,-10px)' src='static/images/Weapon7.png'/>";
             }
             break;
         }
@@ -251,25 +249,25 @@ function randomWeapon() {
   var random = Math.floor(Math.random() * 7) + 1;
   switch (random) {
     case 1:
-      Div.style.background = 'url("Weapon1.png")';
+      Div.style.background = 'url("static/images/Weapon1.png")';
       break;
     case 2:
-      Div.style.background = 'url("Weapon2.png")';
+      Div.style.background = 'url("static/images/Weapon2.png")';
       break;
     case 3:
-      Div.style.background = 'url("Weapon3.png")';
+      Div.style.background = 'url("static/images/Weapon3.png")';
       break;
     case 4:
-      Div.style.background = 'url("Weapon4.png")';
+      Div.style.background = 'url("static/images/Weapon4.png")';
       break;
     case 5:
-      Div.style.background = 'url("Weapon5.png")';
+      Div.style.background = 'url("static/images/Weapon5.png")';
       break;
     case 6:
-      Div.style.background = 'url("Weapon6.png")';
+      Div.style.background = 'url("static/images/Weapon6.png")';
       break;
     default:
-      Div.style.background = 'url("Weapon7.png")';
+      Div.style.background = 'url("static/images/Weapon7.png")';
 
       break;
   }
@@ -298,10 +296,10 @@ function randomWeapon() {
 }
 
 function loseSound() {
-  var random = Math.floor(Math.random() * 14) + 1;
+  var yeetNumber = Math.floor(Math.random() * 14) + 1;
   var losesound;
 
-  audio[soundplay] = new Audio('yeet' + random + '.mp3');
+  audio[soundplay] = new Audio(`static/sound/yeet${yeetNumber}.mp3`);
   audio[soundplay].volume = 0.4;
   audio[soundplay].play();
   if (soundplay > 9) {
@@ -331,7 +329,7 @@ function yeet(id) {
 }
 
 function winnerTime(id) {
-  audio[soundplay] = new Audio('cheer.mp3');
+  audio[soundplay] = new Audio('static/sound/cheer.mp3');
   audio[soundplay].volume = 0.4;
   audio[soundplay].play();
   if (soundplay > 9) {
@@ -342,10 +340,6 @@ function winnerTime(id) {
   }
   element = document.getElementById(id);
   var user = element.getAttribute("user");
-  if (user == "Ozy_Viking") {
-    element.style.background = 'url("rigged.png")';
-    element.style.backgroundSize = '100% 100%';
-  }
   TweenMax.set(element, { transformOrigin: "50% 100%" });
   TweenMax.to(element, 1, { scale: 2.5 });
   TweenMax.to(element, 0.1, { x: '-=40', repeat: 0, ease: Sine.easeInOut, delay: 0 });
@@ -443,7 +437,7 @@ function notify(message) {
 function Randomizer(min, max) { return min + Math.random() * (max - min); }
 
 function battleSound() {
-  audio[soundplay] = new Audio("battle.mp3");
+  audio[soundplay] = new Audio("static/sound/battle.mp3");
 
   audio[soundplay].volume = 0.2;
   audio[soundplay].play();
@@ -455,7 +449,7 @@ function battleSound() {
   }
 }
 function hornSound() {
-  audio[soundplay] = new Audio("horn.mp3");
+  audio[soundplay] = new Audio("static/sound/horn.mp3");
 
   audio[soundplay].volume = 0.4;
   audio[soundplay].play();
@@ -473,72 +467,8 @@ function hornSound() {
 var noJoinMessage = `No one joined, so no new ${battleGround}!`;
 var winnerMessage = ` is the new ${battleGround}`;
 var preupdateMessage = "";
-var updateMessage = `Seconds left to join the fight! Type !join to see if you can take the title of ${battleGround}!`;
+var updateMessage = `seconds left to join the fight! Type !join to see if you can take the title of ${battleGround}!`;
 var endingMessage = "The fight is coming to an end!";
-language = urlParams.get('language');
-if (!(language === null)) {
-  if (language.toLocaleLowerCase() == "german") {
-    if (urlParams.get('championName') === null) {
-      championName = "Oberhaupt";
-      hillName = urlParams.get('hillName');
-      if (hillName === null) {
-        hillName = "Hügels";
-      }
-    }
-
-    var noJoinMessage = "Niemand ist dem Kampf beigetreten, also gibt es kein neues " + championName + " des " + hillName + "!";
-    var winnerMessage = " ist das neue " + championName + " des Hügels!";
-    var preupdateMessage = "";
-    var updateMessage = " Sekunden, um dem Kampf beizutreten! Schreibe !join um deine Chance auf den Titel " + championName + " des " + hillName + " zu ergreifen!";
-    var endingMessage = "Der Kampf neigt sich dem Ende zu!";
-
-  }
-  else if (language.toLocaleLowerCase() == "germanf") {
-    if (urlParams.get('championName') === null) {
-      championName = "Königin";
-      hillName = urlParams.get('hillName');
-      if (hillName === null) {
-        hillName = "Hügels";
-      }
-    }
-    var noJoinMessage = "Niemand ist dem Kampf beigetreten, also gibt es keine neue " + championName + " des " + hillName + "!";
-    var winnerMessage = " ist die neue " + championName + " des Hügels!";
-    var preupdateMessage = "";
-    var updateMessage = " Sekunden, um dem Kampf beizutreten! Schreibe !join um deine Chance auf den Titel " + championName + " des " + hillName + " zu ergreifen!";
-    var endingMessage = "Der Kampf neigt sich dem Ende zu!";
-
-  }
-  else if (language.toLocaleLowerCase() == "germanm") {
-    if (urlParams.get('championName') === null) {
-      championName = "König";
-      hillName = urlParams.get('hillName');
-      if (hillName === null) {
-        hillName = "Hügels";
-      }
-    }
-    var noJoinMessage = "Niemand ist dem Kampf beigetreten, also gibt es keinen neuen " + championName + " des " + hillName + "!";
-    var winnerMessage = " ist der neue " + championName + " des Hügels!";
-    var preupdateMessage = "";
-    var updateMessage = " Sekunden, um dem Kampf beizutreten! Schreibe !join um deine Chance auf den Titel " + championName + " des " + hillName + " zu ergreifen!";
-    var endingMessage = "Der Kampf neigt sich dem Ende zu!";
-
-  }
-  else if (language.toLocaleLowerCase() == "spanish") {
-    if (urlParams.get('championName') === null) {
-      championName = "Lider";
-      hillName = urlParams.get('hillName');
-      if (hillName === null) {
-        hillName = "Colina";
-      }
-    }
-    var noJoinMessage = "Nadie entró,  por lo tanto no hay nuevo " + championName + " de la " + hillName + "!";
-    var winnerMessage = " es " + championName + " de la Colina!";
-    var preupdateMessage = "Quedan ";
-    var updateMessage = " segundos para entrar en la batalla, escribe !join para ver si puedes llevarte el título de  " + championName + " de la " + hillName + "!";
-    var endingMessage = "La batalla está a punto de comenzar!";
-
-  }
-}
 
 connectws();
 
