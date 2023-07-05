@@ -17,84 +17,83 @@
 //
 //  Credit to: https://vrflad.com/champion
 
-var joinCommand = '!join'
+var joinCommand = 'lets fight';
 
 var weaponsObjects = {
     'teapot': {
-        'file': 'teapot.png', 
-        'left': 'transform: rotate(45deg) translate(30px,-30px)', 
+        'file': 'teapot.png',
+        'left': 'transform: rotate(45deg) translate(30px,-30px)',
         'right': 'transform: rotate(-45deg) translate(-30px,-30px)',
         'command': ['teapot', 'tea', 'pot']
-    }, 
+    },
     'number 1 fan finger': {
-        'file': 'no1.png', 
-        'left': 'transform: rotate(45deg) translate(35px,-50px)', 
+        'file': 'no1.png',
+        'left': 'transform: rotate(45deg) translate(35px,-50px)',
         'right': 'transform: rotate(-45deg) translate(-35px,-50px)',
         'command': ['1', 'one', 'num']
-    }, 
-    'plunger':{
-        'file': 'plunger.png', 
-        'left': 'transform: rotate(10deg) translate(55px,-20px) scaleX(-1)',
-        'right': 'transform: rotate(-10deg) translate(-55px,-20px)',
+    },
+    'plunger': {
+        'file': 'plunger.png',
+        'left': 'transform: rotate(10deg) translate(55px,-20px)',
+        'right': 'transform: rotate(-10deg) translate(-55px,-20px) scaleX(-1)',
         'command': ['plunger', 'dunny']
     },
     'doughnut': {
-        'file': 'doughnut.png', 
-        'left': 'transform: rotate(30deg) translate(10px,-60px)', 
+        'file': 'doughnut.png',
+        'left': 'transform: rotate(30deg) translate(10px,-60px)',
         'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
         'command': ['doughnut', 'donut']
     },
-    'thong':{
-        'file': 'thong.png', 
-        'left': 'transform: rotate(30deg) translate(10px,-60px)', 
+    'thong': {
+        'file': 'thong.png',
+        'left': 'transform: rotate(30deg) translate(10px,-60px)',
         'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
         'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
     },
     'giant match': {
-        'file': 'match.png', 
-        'left': 'transform: rotate(30deg) translate(40px,-20px)', 
+        'file': 'match.png',
+        'left': 'transform: rotate(30deg) translate(40px,-20px)',
         'right': 'transform: rotate(-30deg) translate(-40px,-20px)',
         'command': ['fire', 'match', 'aussie summer']
     },
     'frying pan': {
-        'file': 'pan.png', 
-        'left': 'transform: rotate(0deg) translate(60px,-10px) scaleX(-1)', 
-        'right': 'transform: rotate(0deg) translate(-60px,-10px)',
+        'file': 'pan.png',
+        'left': 'transform: rotate(0deg) translate(60px,-10px)',
+        'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
         'command': ['pan', 'hot flat', 'pancake maker']
     }
-}
+};
 var maxemotes = 20;
 var divnumber = 0;
 var winner = 0;
 var audio = [];
 var soundplay = 0;
 
-var weaponNames = Object.keys(weaponsObjects)
+var weaponNames = Object.keys(weaponsObjects);
 // adds the name of each weapon for code readabilty
-for (let i = 0; i < weaponNames.length; i++){
+for (let i = 0; i < weaponNames.length; i++) {
     let weapon = weaponsObjects[weaponNames[i]]
     weapon.name = weaponNames[i]
-    weapon.regex = new RegExp(pattern=weapon.command.join('|'));
-}
+    weapon.regex = new RegExp(pattern = weapon.command.join('|'));
+};
 
-var sides = ['left', 'right']
+var sides = ['left', 'right'];
 
 const urlParams = new URLSearchParams(window.location.search);
 
 var wsPort = urlParams.get('wsPort');
-if ( wsPort === null ) {
+if (wsPort === null) {
     wsPort = 8080;
-}
-
+};
 
 var championName = urlParams.get('championName');
 if (championName === null) {
     championName = "King";
-}
+};
 var hillName = urlParams.get('hillName');
 if (hillName === null) {
     hillName = "Hill";
-}
+};
 
 var battleGround = `${championName} of the ${hillName}`;
 
@@ -104,10 +103,11 @@ if (!(server === null)) {
 }
 else {
     server = `ws://localhost:${wsPort}/`;
-}
+};
 
 var ws = new WebSocket(server);
 var weaponnumber = 0;
+var lowerMessage;
 
 function notify(message) {
     ws.send(JSON.stringify(
@@ -123,7 +123,7 @@ function notify(message) {
             },
             "id": "123"
         }));
-}
+};
 
 function setWinner(message) {
     ws.send(JSON.stringify(
@@ -138,9 +138,9 @@ function setWinner(message) {
             },
             "id": "123"
         }));
-}
-
+};
 function connectws() {
+
     //check options - if we have first words:
     ws.onopen = function () {
         ws.send(JSON.stringify(
@@ -159,11 +159,12 @@ function connectws() {
             // grab message and parse JSON
             const msg = event.data;
             const wsdata = JSON.parse(msg);
-            if (typeof wsdata.data != "undefined"){
+
+            if (typeof wsdata.data != "undefined") {
                 if (typeof wsdata.data.message != "undefined") {
-                    var lowermessage = wsdata.data.message.message.toLowerCase();
-                    if (lowermessage.startsWith(joinCommand)) {
-                        addFighter(wsdata.data.message.displayName, lowermsessage);
+                    var lowerMessage = wsdata.data.message.message.toLowerCase();
+                    if (lowerMessage.startsWith(joinCommand)) {
+                        addFighter(wsdata.data.message.displayName, lowerMessage);
                     };
                 }
             }
@@ -171,27 +172,27 @@ function connectws() {
     }
 }
 
-function randomSide(){
-    return sides[Math.floor(Math.random() * 2)]
+function randomSide() {
+    return sides[Math.floor(Math.random() * 2)];
 }
 
-function chooseRandomWeapon(){
-    return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]]
+function chooseRandomWeapon() {
+    return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
 }
 
-function usersWeapon(lowerMessage){
+function usersWeapon(lowerMessage) {
     var choosenWeapon = null;
     var weapon;
-    for (let i = 0; i < weaponNames.length; i++){
+    for (let i = 0; i < weaponNames.length; i++) {
         weapon = weaponsObjects[weaponNames[i]]
-        if ( weapon.regex.exec(lowerMessage) != null ){
+        if (weapon.regex.exec(lowerMessage) != null) {
             choosenWeapon = weapon
         }
     }
-    if ( choosenWeapon === null ){
-       return chooseRandomWeapon()
+    if (choosenWeapon === null) {
+        return chooseRandomWeapon();
     }
-    return choosenWeapon
+    return choosenWeapon;
 }
 
 function addFighter(user, lowerMessage) {
@@ -200,7 +201,7 @@ function addFighter(user, lowerMessage) {
     var xhttp = new XMLHttpRequest();
     console.log("created xmlhttp object");
     xhttp.onreadystatechange = function () {
-        // notify(this.status)
+        alert(this.status)
         if (this.readyState == 4 && this.status == 200) {
             // get display image for the user
             console.log("got a response back");
@@ -211,10 +212,9 @@ function addFighter(user, lowerMessage) {
                 checkUser = document.getElementById(i).getAttribute("user");
                 if (user == checkUser) {
                     addToFight = false;
-                } 
-            }
+                };
+            };
             if (addToFight) {
-                // notify('In Fight')
                 var warp = document.getElementById("confetti-container"),
                     innerWidth = window.innerWidth,
                     innerHeight = window.innerHeight;
@@ -229,11 +229,10 @@ function addFighter(user, lowerMessage) {
                 Div.style.backgroundSize = '100% 100%';
 
                 var weapon = usersWeapon(lowerMessage);
-                notify(weapon.name)
                 var side = randomSide();
-                                
+
                 Div.setAttribute("weapon", weapon.name)
-                Div.innerHTML = `<img style=${weapon[side]} src='static/images/${weapon.file}'/>`;
+                Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
 
                 switch (side) {
                     case 'left':
@@ -256,7 +255,8 @@ function addFighter(user, lowerMessage) {
     };
     xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
     xhttp.send();
-}
+};
+
 
 function fighter_animation_left(element) {
     TweenMax.to(element, 0.1, { scale: 1.5 });
@@ -264,7 +264,7 @@ function fighter_animation_left(element) {
     TweenMax.to(element, 0.9, { y: (innerHeight - 200), yoyo: true, repeat: 0, ease: Power2.easeIn, delay: 0 });
     TweenMax.to(element, 0.6, { y: (innerHeight - (300 + Randomizer(150, 350))), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: .9 });
     TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
-}
+};
 
 function fighter_animation_right(element) {
     TweenMax.to(element, 0.1, { scale: 1.5 });
@@ -274,7 +274,7 @@ function fighter_animation_right(element) {
     TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
     //TweenMax.to(element, 0.75, { y: (innerHeight - (150 + Randomizer(150, 350))), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: .75 });
     //TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
-}
+};
 
 function randomWeapon() {
     var warp = document.getElementById("confetti-container"),
@@ -308,7 +308,7 @@ function randomWeapon() {
         TweenMax.to(Div, 2, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, ease: Back.easeOut, repeat: 0, delay: 0 });
     }
     setTimeout(`removeelement(${Div.id})`, 120000); // Remove after 2 mins
-}
+};
 
 function loseSound() {
     var yeetNumber = Math.floor(Math.random() * 14) + 1;
@@ -323,7 +323,7 @@ function loseSound() {
     else {
         soundplay++;
     }
-}
+};
 
 function yeet(id) {
     element = document.getElementById(id);
@@ -341,7 +341,7 @@ function yeet(id) {
     TweenMax.to(element, 4, { x: x, y: -700, rotationZ: rotZ, yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 1.5, { y: '-=500', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     loseSound();
-}
+};
 
 function winnerTime(id) {
     audio[soundplay] = new Audio('static/sound/cheer.mp3');
@@ -363,11 +363,11 @@ function winnerTime(id) {
     TweenMax.to(element, 3, { y: '-=231', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
     element.style.z = "-1000";
-}
+};
 
 function removeelement(div) {
     document.getElementById(div).remove();
-}
+};
 
 function startFight() {
     ws = new WebSocket(server);
@@ -415,14 +415,11 @@ function startFight() {
 
         }
     }
-}
+};
 
-
-
-// alert("sending this to streamer bot: " + message);
 
 // Randomizer
-function Randomizer(min, max) { return min + Math.random() * (max - min); }
+function Randomizer(min, max) { return min + Math.random() * (max - min); };
 
 function battleSound() {
     audio[soundplay] = new Audio("static/sound/battle.mp3");
@@ -434,7 +431,7 @@ function battleSound() {
     else {
         soundplay++;
     }
-}
+};
 function hornSound() {
     audio[soundplay] = new Audio("static/sound/horn.mp3");
 
@@ -446,7 +443,7 @@ function hornSound() {
     else {
         soundplay++;
     }
-}
+};
 
 //Main function
 
@@ -473,4 +470,4 @@ var randomdelay;
 for (let i = 0; i < 28; i++) {
     randomdelay = 3500 + (i * 2000) + Math.floor(Math.random() * 500) + 1;
     setTimeout("randomWeapon()", randomdelay);
-}
+};
