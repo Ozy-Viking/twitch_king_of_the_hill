@@ -32,9 +32,9 @@ body {
   }
   .pillowpile{
     position: absolute;
-    margin-left: -960px;
+    margin-left: -1070px;
     left: 50%;
-    width: 1920px;
+    width: 2140px;
     bottom: 0px;
     animation: hillanimation 88s;
   }
