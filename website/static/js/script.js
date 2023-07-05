@@ -30,7 +30,7 @@ var weaponsObjects = {
         'file': 'no1.png',
         'left': 'transform: rotate(45deg) translate(35px,-50px)',
         'right': 'transform: rotate(-45deg) translate(-35px,-50px)',
-        'command': ['1', 'one', 'num']
+        'command': ['1', 'one', 'num', 'finger']
     },
     'plunger': {
         'file': 'plunger.png',
