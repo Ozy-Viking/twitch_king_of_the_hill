@@ -17,7 +17,7 @@
 //
 //  Credit to: https://vrflad.com/champion
 
-var joinCommand = 'lets fight';
+var joinCommand = 'fight';
 
 var weaponsObjects = {
     'teapot': {
@@ -36,13 +36,13 @@ var weaponsObjects = {
         'file': 'plunger.png',
         'left': 'transform: rotate(10deg) translate(55px,-20px)',
         'right': 'transform: rotate(-10deg) translate(-55px,-20px) scaleX(-1)',
-        'command': ['plunger', 'dunny']
+        'command': ['plunger', 'dunny', 'toilet']
     },
     'doughnut': {
         'file': 'doughnut.png',
         'left': 'transform: rotate(30deg) translate(10px,-60px)',
         'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
-        'command': ['doughnut', 'donut']
+        'command': ['doughnut', 'donut', 'nut']
     },
     'thong': {
         'file': 'thong.png',
@@ -60,9 +60,10 @@ var weaponsObjects = {
         'file': 'pan.png',
         'left': 'transform: rotate(0deg) translate(60px,-10px)',
         'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
-        'command': ['pan', 'hot flat', 'pancake maker']
+        'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
     }
 };
+
 var maxemotes = 20;
 var divnumber = 0;
 var winner = 0;
@@ -100,8 +101,7 @@ var battleGround = `${championName} of the ${hillName}`;
 var server = urlParams.get('server');
 if (!(server === null)) {
     server = `ws://${server}/`;
-}
-else {
+} else {
     server = `ws://localhost:${wsPort}/`;
 };
 
@@ -139,8 +139,8 @@ function setWinner(message) {
             "id": "123"
         }));
 };
-function connectws() {
 
+function connectws() {
     //check options - if we have first words:
     ws.onopen = function () {
         ws.send(JSON.stringify(
@@ -250,13 +250,11 @@ function addFighter(user, lowerMessage) {
                 // Run animation
                 setTimeout(`removeelement(${Div.id})`, 120000);
             }
-
         }
     };
     xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
     xhttp.send();
 };
-
 
 function fighter_animation_left(element) {
     TweenMax.to(element, 0.1, { scale: 1.5 });
@@ -299,8 +297,7 @@ function randomWeapon() {
         //TweenMax.to(Div, 1, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, repeat: 0, delay: 0 });
         //TweenMax.to(Div, 1.5, { y: '+=200', repeat: 0,  ease: Power2.easeIn, delay: 1.2 });
         TweenMax.to(Div, 2, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, ease: Back.easeOut, repeat: 0, delay: 0 });
-    }
-    else {
+    } else {
         TweenMax.to(Div, 7, { x: -(innerWidth * 2), rotationZ: -180, repeat: 0, delay: 0 });
         //TweenMax.to(Div, 1, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, repeat: 0,delay: 0 });
         //TweenMax.to(Div, 1.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeOut, delay: 2 });
@@ -359,8 +356,8 @@ function winnerTime(id) {
 
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 2.5 });
-    TweenMax.to(element, 0.1, { x: '-=40', repeat: 0, ease: Sine.easeInOut, delay: 0 });
-    TweenMax.to(element, 3, { y: '-=231', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
+    TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
+    TweenMax.to(element, 3, { y: '-=225', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
     element.style.z = "-1000";
 };
@@ -377,16 +374,13 @@ function startFight() {
         if (divnumber == 0) {
             // **** No users here - need to handle ****
             setTimeout(notify(message), 10000);
-        }
-        else {
+        } else {
             var user = document.getElementById((winner - 1)).getAttribute("user");
             var winweapon = document.getElementById((winner - 1)).getAttribute("weapon");
             if (winweapon === null) {
                 message = `notify('${user} ${winnerMessage}');`;
-            }
-            else {
+            } else {
                 message = `notify('${user} ${winnerMessage}, using the ${winweapon}.');`;
-
             }
             setTimeout(message, 16000);
             var yeetUser;
@@ -417,7 +411,6 @@ function startFight() {
     }
 };
 
-
 // Randomizer
 function Randomizer(min, max) { return min + Math.random() * (max - min); };
 
@@ -432,6 +425,7 @@ function battleSound() {
         soundplay++;
     }
 };
+
 function hornSound() {
     audio[soundplay] = new Audio("static/sound/horn.mp3");
 
@@ -451,7 +445,8 @@ var noJoinMessage = `No one joined, so no new ${battleGround}!`;
 var winnerMessage = ` is the new ${battleGround}`;
 var preupdateMessage = "";
 var updateMessage = `seconds left to join the fight! Type !join to see if you can take the title of ${battleGround}!`;
-var endingMessage = `The fight is coming to an end! No more people, stay back, stay back. Who through that thong!?!`;
+var endingMessage = `This Is Your Life, and It's Ending One Minute at a Time`;
+// Todo: Have a couple ending messages, rotate through weapons.
 
 connectws();
 
@@ -464,8 +459,9 @@ setTimeout(`notify("5 ${updateMessage}!")`, 56000);
 setTimeout(`notify("${endingMessage}")`, 61000);
 setTimeout('ws.close()', 61000);
 setTimeout('startFight()', 62000);
-setTimeout('hornSound()', 73000);
+setTimeout('hornSound()', 63000);
 setTimeout("battleSound()", 900);
+
 var randomdelay;
 for (let i = 0; i < 28; i++) {
     randomdelay = 3500 + (i * 2000) + Math.floor(Math.random() * 500) + 1;

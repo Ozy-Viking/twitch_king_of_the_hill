@@ -41,11 +41,9 @@ body,
 
 @keyframes hillanimation {
   0%, 100% {
-    
     bottom:-325px;
   }
   2%,98% {
-  
     bottom:0px;
   }
 }
