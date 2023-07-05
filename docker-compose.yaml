@@ -1,8 +1,9 @@
 version: "3.1"
 services:
-    web:
-        image: nginx
-        ports:
-            - 28080:80
-        volumes:
-            - ./website:/usr/share/nginx/html
+  web:
+    image: nginx
+    ports:
+      - 28080:80
+    volumes:
+      - ./website:/usr/share/nginx/html
+    restart: unless-stoped
