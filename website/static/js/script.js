@@ -346,8 +346,7 @@ function winnerTime(id) {
     audio[soundplay].play();
     if (soundplay > 9) {
         soundplay = 0;
-    }
-    else {
+    } else {
         soundplay++;
     }
     element = document.getElementById(id);
@@ -357,7 +356,7 @@ function winnerTime(id) {
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 2.5 });
     TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
-    TweenMax.to(element, 3, { y: '-=225', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
+    TweenMax.to(element, 3, { y: '-=207', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
     element.style.z = "-1000";
 };
@@ -420,21 +419,18 @@ function battleSound() {
     audio[soundplay].play();
     if (soundplay > 9) {
         soundplay = 0;
-    }
-    else {
+    } else {
         soundplay++;
     }
 };
 
 function hornSound() {
     audio[soundplay] = new Audio("static/sound/horn.mp3");
-
     audio[soundplay].volume = 0.4;
     audio[soundplay].play();
     if (soundplay > 9) {
         soundplay = 0;
-    }
-    else {
+    } else {
         soundplay++;
     }
 };
@@ -444,7 +440,7 @@ function hornSound() {
 var noJoinMessage = `No one joined, so no new ${battleGround}!`;
 var winnerMessage = ` is the new ${battleGround}`;
 var preupdateMessage = "";
-var updateMessage = `seconds left to join the fight! Type !join to see if you can take the title of ${battleGround}!`;
+var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 var endingMessage = `This Is Your Life, and It's Ending One Minute at a Time`;
 // Todo: Have a couple ending messages, rotate through weapons.
 
