@@ -73,3 +73,10 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 - [ ] Track win record
 - [ ] Magical all winning thong
 - [ ] Stats in the stream so far
+- [ ] Sausage sanger
+
+## Videos
+
+https://www.youtube.com/watch?v=VzQjQVTmSwQ
+https://www.youtube.com/watch?v=NO3Vl7nApgc
+
