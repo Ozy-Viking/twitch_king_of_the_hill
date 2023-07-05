@@ -18,22 +18,28 @@
 //  Credit to: https://vrflad.com/champion
 
 var language;
-var port = 8080;
+var port = 29080;
 var maxemotes = 20;
 var divnumber = 0;
 var winner = 0;
 var audio = [];
 var soundplay = 0;
-var weaponTransform = {
+var weaponsObjects = {
     'teapot': {'file': 'teapot.png', 'left': 'transform: rotate(45deg) translate(30px,-30px)', 'right': 'transform: rotate(-45deg) translate(-30px,-30px)'}, 
     'number 1 fan finger': {'file': 'no1.png', 'left': 'transform: rotate(45deg) translate(35px,-50px)', 'right': 'transform: rotate(-45deg) translate(-35px,-50px)'}, 
-    'plunger':{'file': 'plunger.png', 'left': 'transform: rotate(10deg) translate(55px,-20px)','right': 'transform: rotate(-10deg) translate(-55px,-20px)'},
+    'plunger':{'file': 'plunger.png', 'left': 'transform: rotate(10deg) translate(55px,-20px) scaleX(-1)','right': 'transform: rotate(-10deg) translate(-55px,-20px)'},
     'doughnut': {'file': 'doughnut.png', 'left': 'transform: rotate(30deg) translate(10px,-60px)', 'right': 'transform: rotate(-30deg) translate(-10px,-60px)'},
     'thong':{'file': 'thong.png', 'left': 'transform: rotate(30deg) translate(10px,-60px)', 'right': 'transform: rotate(-30deg) translate(-10px,-60px)'},
     'giant match': {'file': 'match.png', 'left': 'transform: rotate(30deg) translate(40px,-20px)', 'right': 'transform: rotate(-30deg) translate(-40px,-20px)'},
-    'frying pan': {'file': 'pan.png', 'left': 'transform: rotate(0deg) translate(60px,-10px)', 'right': 'transform: rotate(0deg) translate(-60px,-10px)'}
+    'frying pan': {'file': 'pan.png', 'left': 'transform: rotate(0deg) translate(60px,-10px) scaleX(-1)', 'right': 'transform: rotate(0deg) translate(-60px,-10px)'}
 }
-var weapons = Object.keys(weaponTransform)
+var weaponNames = Object.keys(weaponsObjects)
+// adds the name of each weapon for code readabilty
+for (let i = 0; i < weaponNames.length; i++){
+    weaponsObjects[weaponNames[i]].name = weaponNames[i]
+}
+
+var sides = ['left', 'right']
 
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -55,9 +61,25 @@ if (!(server === null)) {
 else {
     server = `ws://localhost:${port}/`;
 }
+
 var ws = new WebSocket(server);
 var weaponnumber = 0;
 
+function notify(message) {
+    ws.send(JSON.stringify(
+        {
+            "request": "DoAction",
+            "action": {
+                "name": "FightMessage"
+            },
+
+            "args": {
+                "rawInput": message
+
+            },
+            "id": "123"
+        }));
+}
 
 function connectws() {
 
@@ -94,6 +116,14 @@ function connectws() {
     }
 }
 
+function randomSide(){
+    return sides[Math.floor(Math.random() * 2)]
+}
+
+function chooseRandomWeapon(){
+    return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]]
+}
+
 function addFighter(user) {
     var username = user.toLowerCase();
     console.log("starting xmlhttp");
@@ -126,16 +156,15 @@ function addFighter(user) {
                 divnumber++;
                 Div.style.background = 'url(' + xhttp.responseText + ')';
                 Div.style.backgroundSize = '100% 100%';
-                var randomSide = Math.floor(Math.random() * 2) + 1;
-                var randomWeapon = Math.floor(Math.random() * length(weapons));
-                let weapon = weapons[randomWeapon];
-                              
+                let weapon = chooseRandomWeapon();
+                
+                var side = randomSide();
                                 
-                Div.setAttribute("weapon", weapon)
-                Div.innerHTML = `<img style=${weaponTransform[weapon]} src='static/images/${weapon.file}'/>`;
+                Div.setAttribute("weapon", weapon.name)
+                Div.innerHTML = `<img style=${weapon[side]} src='static/images/${weapon.file}'/>`;
 
-                switch (randomSide) {
-                    case 1:
+                switch (side) {
+                    case 'left':
                         // left - TweenLite.set(Div, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
                         TweenLite.set(Div, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
                         fighter_animation_left(Div);
@@ -148,7 +177,6 @@ function addFighter(user) {
                 warp.appendChild(Div);
 
                 // Run animation
-
                 setTimeout(`removeelement(${Div.id})`, 120000);
             }
 
@@ -167,6 +195,7 @@ function fighter_animation_left(element) {
     TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
 
 }
+
 function fighter_animation_right(element) {
     TweenMax.to(element, 0.1, { scale: 1.5 });
     TweenMax.to(element, 2, { x: (innerWidth / 2) - 45, yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
@@ -177,50 +206,26 @@ function fighter_animation_right(element) {
     //TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
 }
 
+
 function randomWeapon() {
     var warp = document.getElementById("confetti-container"),
         innerWidth = window.innerWidth,
         innerHeight = window.innerHeight;
 
     // Load into page
-
     var Div = document.createElement('div');
     Div.id = "weapon" + weaponnumber;
     weaponnumber++;
-    var random = Math.floor(Math.random() * length(weapons)) + 1;
-    switch (random) {
-        case 1:
-            Div.style.background = 'url("static/images/Weapon1.png")';
-            break;
-        case 2:
-            Div.style.background = 'url("static/images/Weapon2.png")';
-            break;
-        case 3:
-            Div.style.background = 'url("static/images/Weapon3.png")';
-            break;
-        case 4:
-            Div.style.background = 'url("static/images/Weapon4.png")';
-            break;
-        case 5:
-            Div.style.background = 'url("static/images/Weapon5.png")';
-            break;
-        case 6:
-            Div.style.background = 'url("static/images/Weapon6.png")';
-            break;
-        default:
-            Div.style.background = 'url("static/images/Weapon7.png")';
+    var weapon = chooseRandomWeapon();
+    Div.style.background = `url("static/images/${weapon.file}")`;
 
-            break;
-    }
     Div.style.backgroundSize = '100% 100%';
-
-
-
     TweenLite.set(Div, { className: 'falling-element', x: innerWidth / 2, y: innerHeight - 150, z: 100 });
     warp.appendChild(Div);
-    var random = Math.floor(Math.random() * 2) + 1;
+
+    var side = randomSide();
     TweenMax.to(Div, 0.01, { scale: 1.5 });
-    if (random == 1) {
+    if (side === 'left') {
         TweenMax.to(Div, 7, { x: (innerWidth * 2), rotationZ: 180, repeat: 0, delay: 0 });
         //TweenMax.to(Div, 1, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, repeat: 0, delay: 0 });
         //TweenMax.to(Div, 1.5, { y: '+=200', repeat: 0,  ease: Power2.easeIn, delay: 1.2 });
@@ -281,6 +286,8 @@ function winnerTime(id) {
     }
     element = document.getElementById(id);
     var user = element.getAttribute("user");
+    // Todo: Add rigged users
+
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 2.5 });
     TweenMax.to(element, 0.1, { x: '-=40', repeat: 0, ease: Sine.easeInOut, delay: 0 });
@@ -356,21 +363,7 @@ function startFight() {
     }
 }
 
-function notify(message) {
-    ws.send(JSON.stringify(
-        {
-            "request": "DoAction",
-            "action": {
-                "name": "FightMessage"
-            },
 
-            "args": {
-                "rawInput": message
-
-            },
-            "id": "123"
-        }));
-}
 
 //alert("sending this to streamer bot: " + message);
 
