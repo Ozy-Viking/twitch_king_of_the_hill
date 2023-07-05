@@ -71,3 +71,5 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 - [ ] Add rigged users 
 - [x] regex weapon choice
 - [ ] Track win record
+- [ ] Magical all winning thong
+- [ ] Stats in the stream so far
