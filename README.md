@@ -34,7 +34,8 @@ wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
 ## Weapon Calls
 
-This is an example of the setup for a weapon
+This is an example of the setup for a weapon.
+
 ```js
 'thong': {
         'file': 'thong.png',
@@ -43,6 +44,7 @@ This is an example of the setup for a weapon
         'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
     },
 ```
+
 - The display name is what will be displayed to the end user i.e. 'number 1 fan finger' is the name of the object. This is auto added as the name in the object i.e. weapon.name.
 - file: the name of the picture within the images folder (`./static/images`).
 - left: This is the css used when entering from the left.
@@ -51,7 +53,7 @@ This is an example of the setup for a weapon
 
 > If you want to flip/invert the image, use ` scaleX(-1)`.
 
-Use: 
+Use:
 
 ```
 {joinCommand} with an amazing FOrmaL ThoNG
@@ -68,3 +70,4 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 - [ ] Kill messages on the top left like COD
 - [ ] Add rigged users 
 - [x] regex weapon choice
+- [ ] Track win record
