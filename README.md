@@ -7,6 +7,7 @@ King of the Hill game for Twitch Streams.
 ```bash
 docker compose up -d
 ```
+image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/repository/docker/ozyviking/twitch-king-of-the-hill/)
 
 To change the port of the to container, default is 28080.
 
