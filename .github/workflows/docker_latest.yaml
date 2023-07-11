@@ -1,4 +1,4 @@
-name: CI to Docker
+name: Latest Docker Tag
 
 on:
   push:
@@ -44,7 +44,6 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
         name: Build and push latest
-        if: github.ref_name == 'main'
         uses: docker/build-push-action@v4
         with:
           context: .

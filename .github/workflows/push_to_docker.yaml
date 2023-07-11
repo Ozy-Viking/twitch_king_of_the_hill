@@ -1,10 +1,10 @@
-name: CI to Docker
+name: All Branches to Docker
 
 on:
   push:
     branches:
-      - "!main"
       - "*"
+      - "!main"
     tags:
       - "v*.*.*"
   # pull_request:
@@ -57,12 +57,3 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      # -
-      #   name: Build and push latest
-      #   if: github.ref_name == 'main'
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: latest
-          # labels: ${{ steps.meta.outputs.labels }}
