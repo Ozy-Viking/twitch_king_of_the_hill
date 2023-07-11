@@ -3,13 +3,9 @@ name: CI to Docker
 on:
   push:
     branches:
-      - "!main"
-      - "*"
+      - "main"
     tags:
       - "v*.*.*"
-  # pull_request:
-  #   branches:
-  #     - "main"
 
 jobs:
   docker:
@@ -28,9 +24,7 @@ jobs:
             ozyviking/twitch-king-of-the-hill
           # generate Docker tags based on the following events/attributes
           tags: |
-            type=ref,event=branch
-            type=ref,event=pr
-            type=semver,pattern={{version}}
+            latest
           labels: |
             type=sha
             type=ref,event=pr
@@ -49,20 +43,11 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       -
-        name: Build and push
-        if: github.ref_name != 'main'
+        name: Build and push latest
+        if: github.ref_name == 'main'
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      # -
-      #   name: Build and push latest
-      #   if: github.ref_name == 'main'
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     context: .
-      #     push: true
-      #     tags: latest
-          # labels: ${{ steps.meta.outputs.labels }}
