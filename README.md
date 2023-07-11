@@ -69,7 +69,7 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 ## Ideas
 
 - [ ] Kill messages on the top left like COD
-- [ ] Add rigged users 
+- [x] Add rigged users 
 - [x] regex weapon choice
 - [ ] Track win record
 - [ ] Magical all winning thong
