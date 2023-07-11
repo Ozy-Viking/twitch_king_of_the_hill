@@ -7,6 +7,7 @@ King of the Hill game for Twitch Streams.
 ```bash
 docker compose up -d
 ```
+image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/repository/docker/ozyviking/twitch-king-of-the-hill/)
 
 To change the port of the to container, default is 28080.
 
@@ -68,8 +69,15 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 ## Ideas
 
 - [ ] Kill messages on the top left like COD
-- [ ] Add rigged users 
+- [x] Add rigged users 
 - [x] regex weapon choice
 - [ ] Track win record
 - [ ] Magical all winning thong
 - [ ] Stats in the stream so far
+- [ ] Sausage sanger
+
+## Videos
+
+https://www.youtube.com/watch?v=VzQjQVTmSwQ
+https://www.youtube.com/watch?v=NO3Vl7nApgc
+

@@ -64,6 +64,8 @@ var weaponsObjects = {
     }
 };
 
+var gameLength = 60; // Seconds
+var riggedUsers = ['Ozy_Viking', 'SassySarah']; // Todo: Get sassy's username
 var maxemotes = 20;
 var divnumber = 0;
 var winner = 0;
@@ -142,6 +144,7 @@ function setWinner(message) {
 
 function connectws() {
     //check options - if we have first words:
+    
     ws.onopen = function () {
         ws.send(JSON.stringify(
             {
@@ -197,14 +200,13 @@ function usersWeapon(lowerMessage) {
 
 function addFighter(user, lowerMessage) {
     var username = user.toLowerCase();
-    console.log("starting xmlhttp");
+    // console.log("starting xmlhttp");
     var xhttp = new XMLHttpRequest();
-    console.log("created xmlhttp object");
+    // console.log("created xmlhttp object");
     xhttp.onreadystatechange = function () {
-        alert(this.status)
         if (this.readyState == 4 && this.status == 200) {
             // get display image for the user
-            console.log("got a response back");
+            // console.log("got a response back");
             //save this to cache between sessions too.
             //check for user being added already (or if already dead and ignore)
             var addToFight = true;
@@ -340,6 +342,23 @@ function yeet(id) {
     loseSound();
 };
 
+function rigged(user, element){
+    // Set Rigged text middle of portrait, Have weapon set.
+    element.innerHTML = element.innerHTML + "<h1 id='rigged' class='rigged'>#RIGGED</h1>"
+    let riggedTitle = document.getElementById('rigged')
+    element.style.zIndex = "0";
+    riggedTitle.style.zIndex = "-1000";
+    TweenMax.set(element, { transformOrigin: "50% 100%" });
+    TweenMax.to(element, 1, { scale: 5 });
+    TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
+    TweenMax.to(element, 3, { y: '-=207', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 }); // -=207
+    TweenMax.to(riggedTitle, 0.1, { x: '-=40', repeat: 0, ease: Sine.easeInOut, delay: 0 });
+    TweenMax.to(riggedTitle, 1, { y: '-=50', repeat: 0, ease: Sine.easeInOut, delay: 2 });
+    TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
+    setTimeout('element.style.z = "-1000"', )
+    element.style.z = "-1000";
+}
+
 function winnerTime(id) {
     audio[soundplay] = new Audio('static/sound/cheer.mp3');
     audio[soundplay].volume = 0.4;
@@ -350,15 +369,18 @@ function winnerTime(id) {
         soundplay++;
     }
     element = document.getElementById(id);
+    console.log(element)
     var user = element.getAttribute("user");
-    // Todo: Add rigged users
-
+    if ( riggedUsers.includes(user) ){
+        rigged(user, element);
+    } else {
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 2.5 });
     TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 3, { y: '-=207', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
     element.style.z = "-1000";
+    };
 };
 
 function removeelement(div) {
@@ -366,8 +388,8 @@ function removeelement(div) {
 };
 
 function startFight() {
-    ws = new WebSocket(server);
-    ws.onopen = function () {
+    // ws = new WebSocket(server);
+    // ws.onopen = function () {
         winner = Math.floor(Math.random() * divnumber) + 1;
         var message = noJoinMessage;
         if (divnumber == 0) {
@@ -406,7 +428,7 @@ function startFight() {
             var rewardCommand = `setWinner('${user}')`;
             setTimeout(rewardCommand, 17000);
 
-        }
+        // }
     }
 };
 
@@ -435,10 +457,14 @@ function hornSound() {
     }
 };
 
+
+
+
+
 //Main function
 
 var noJoinMessage = `No one joined, so no new ${battleGround}!`;
-var winnerMessage = ` is the new ${battleGround}`;
+var winnerMessage = `is the new ${battleGround}`;
 var preupdateMessage = "";
 var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 var endingMessage = `This Is Your Life, and It's Ending One Minute at a Time`;
@@ -446,16 +472,18 @@ var endingMessage = `This Is Your Life, and It's Ending One Minute at a Time`;
 
 connectws();
 
-setTimeout(`notify("60 ${updateMessage}!")`, 1000);
-setTimeout(`notify("45 ${updateMessage}!")`, 16000);
-setTimeout(`notify("30 ${updateMessage}!")`, 31000);
-setTimeout(`notify("15 ${updateMessage}!")`, 46000);
-setTimeout(`notify("10 ${updateMessage}!")`, 51000)
-setTimeout(`notify("5 ${updateMessage}!")`, 56000);
-setTimeout(`notify("${endingMessage}")`, 61000);
-setTimeout('ws.close()', 61000);
-setTimeout('startFight()', 62000);
-setTimeout('hornSound()', 63000);
+var split = gameLength / 12;
+
+setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
+setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
+setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
+setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
+setTimeout(`notify("${Math.floor(split*2)} ${updateMessage}!")`, (gameLength - split * 2 + 1) * 1000)
+setTimeout(`notify("${Math.floor(split)} ${updateMessage}!")`, (gameLength - split + 1) * 1000);
+setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000);
+setTimeout('ws.close()', (gameLength + 1) * 1000);
+setTimeout('startFight()', (gameLength + 2) * 1000);
+setTimeout('hornSound()', (gameLength + 3) * 1000);
 setTimeout("battleSound()", 900);
 
 var randomdelay;

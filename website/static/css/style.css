@@ -39,6 +39,12 @@ body,
   animation: hillanimation 88s;
 }
 
+.rigged {
+  padding: 0px;
+  margin: 0px;
+  color: rgb(210, 10, 10);
+}
+
 @keyframes hillanimation {
   0%, 100% {
     bottom:-325px;
