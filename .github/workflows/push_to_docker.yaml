@@ -3,12 +3,12 @@ name: CI to Docker
 on:
   push:
     branches:
-      - "main"
+      - "*"
     tags:
       - "v*.*.*"
-  # pull_request:
-  #   branches:
-  #     - "main"
+  pull_request:
+    branches:
+      - "main"
 
 jobs:
   docker:
