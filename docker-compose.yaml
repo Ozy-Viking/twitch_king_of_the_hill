@@ -1,9 +1,9 @@
 version: "3.1"
 services:
   web:
-    image: ozyviking/twitch-king-of-the-hill:6-additional-weapons
+    image: ozyviking/twitch-king-of-the-hill:stable
     ports:
       - 28080:80
-    volumes:
-      - ./website:/usr/share/nginx/html
+    # volumes:
+    #   - ./website:/usr/share/nginx/html
     restart: always
