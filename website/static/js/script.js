@@ -97,7 +97,7 @@ var gstring = {
     'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
 };
 
-var gameLength = 10; // Seconds
+var gameLength = 60; // Seconds
 var riggedUsers = ['Ozy_Viking', 'SassySarah']; // Todo: Get sassy's username
 var maxemotes = 20;
 var divnumber = 0;
@@ -237,11 +237,11 @@ function usersWeapon(lowerMessage) {
         choosenWeapon = chooseRandomWeapon();
     }
 
-    if ( choosenWeapon.name == 'thong'){
-       if ( Math.floor( Math.random() * gstringProb ) != 0 ){ // Todo: Fix 
-        choosenWeapon = gstring;
-       };
-    };
+    // if ( choosenWeapon.name == 'thong'){
+    //    if ( Math.floor( Math.random() * gstringProb ) != 0 ){ // BUG: Fix so it displays the winner message
+    //     choosenWeapon = gstring;
+    //    };
+    // };
     return choosenWeapon;
 }
 
@@ -524,7 +524,7 @@ var split = gameLength / 12;
 
 setTimeout("battleSound()", 900);
 setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
-setTimeout(`addFighter('Ozy_Viking', 'thong')`, 1200);
+// setTimeout(`addFighter('Ozy_Viking', 'thong')`, 1200);
 setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);

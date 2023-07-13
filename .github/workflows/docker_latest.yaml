@@ -25,6 +25,7 @@ jobs:
           # generate Docker tags based on the following events/attributes
           tags: |
             stable
+            latest
             type=semver,pattern={{version}}
           labels: |
             type=sha
