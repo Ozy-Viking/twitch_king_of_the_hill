@@ -79,7 +79,13 @@ var weaponsObjects = {
         'left': 'transform: rotate(250deg) translate(-25px,35px)',
         'right': 'transform: rotate(10deg) translate(-35px,25px)',
         'command': ['didgerodoo', 'pipe', 'wind', 'doo']
-    }
+    },
+    'sausage sandwich':{
+        'file': 'sausage_sanga.png',
+        'left': 'transform: rotate(0deg) translate(50px,20px); width: 50px;',
+        'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
+        'command': ['sausage', 'sandwich', 'sanga', 'snag', 'bunning']
+    },
 };
 
 var gstringProb = 10000;
@@ -209,8 +215,8 @@ function connectws() {
 
 function randomSide() {
     // return sides[Math.floor(Math.random() * 2)];
-    return 'left'
-    // return 'right'
+    // return 'left'
+    return 'right'
 }
 
 function chooseRandomWeapon() {
@@ -519,7 +525,7 @@ connectws();
 var split = gameLength / 12;
 
 setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
-setTimeout(`addFighter('Ozy_Viking', 'thong')`, 1200);
+setTimeout(`addFighter('Ozy_Viking', 'bunning')`, 1200);
 setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
