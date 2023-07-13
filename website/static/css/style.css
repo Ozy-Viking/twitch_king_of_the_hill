@@ -42,7 +42,7 @@ body,
 .rigged {
   padding: 0px;
   margin: 0px;
-  color: rgb(210, 10, 10);
+  color: #F25703;
 }
 
 @keyframes hillanimation {

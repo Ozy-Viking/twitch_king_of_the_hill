@@ -61,11 +61,38 @@ var weaponsObjects = {
         'left': 'transform: rotate(0deg) translate(60px,-10px)',
         'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
         'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
+    },
+    'murdered name':{
+        'file': 'Name_Butcher_4000.png',
+        'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',//'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
+        'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
+        'command': ['name', 'murder', 'kill']
+    },
+    'boomerang':{
+        'file': 'Boomerang.png',
+        'left': 'transform: rotate(-10deg) translate(60px,-10px); width: 50px;',
+        'right': 'transform: rotate(-10deg) translate(-40px,-10px) scaleX(-1); width: 50px;',
+        'command': ['boom', 'rang']
+    },
+    'didgerodoo': {
+        'file': 'Didgerodoo.png',
+        'left': 'transform: rotate(250deg) translate(-25px,35px)',
+        'right': 'transform: rotate(10deg) translate(-35px,25px)',
+        'command': ['didgerodoo', 'pipe', 'wind', 'doo']
     }
 };
 
-var gameLength = 60; // Seconds
-var riggedUsers = ['Ozy_Viking', 'SassySarah']; // Todo: Get sassy's username
+var gstringProb = 10000;
+var gstring = {
+    'name': "JD's sexy thong",
+    'file': 'secret_thong.png',
+    'left': 'transform: rotate(-30deg) translate(60px,20px)',
+    'right': 'transform: rotate(30deg) translate(-35px,10px)',
+    'command': ['didgerodoo', 'pipe', 'wind', 'doo']
+};
+
+var gameLength = 5; // Seconds
+var riggedUsers = [];//['Ozy_Viking', 'SassySarah']; // Todo: Get sassy's username
 var maxemotes = 20;
 var divnumber = 0;
 var winner = 0;
@@ -111,72 +138,79 @@ var ws = new WebSocket(server);
 var weaponnumber = 0;
 var lowerMessage;
 
+var altEndingMessages = [
+    `This Is Your Life, and It's Ending One Minute at a Time`
+];
+
 function notify(message) {
-    ws.send(JSON.stringify(
-        {
-            "request": "DoAction",
-            "action": {
-                "name": "FightMessage"
-            },
+    console.log(message);
+    // ws.send(JSON.stringify(
+    //     {
+    //         "request": "DoAction",
+    //         "action": {
+    //             "name": "FightMessage"
+    //         },
 
-            "args": {
-                "rawInput": message
+    //         "args": {
+    //             "rawInput": message
 
-            },
-            "id": "123"
-        }));
+    //         },
+    //         "id": "123"
+    //     }));
 };
 
 function setWinner(message) {
-    ws.send(JSON.stringify(
-        {
-            "request": "DoAction",
-            "action": {
-                "name": "SetFightReward"
-            },
-            "args": {
-                "rawInput": message
+    // ws.send(JSON.stringify(
+    //     {
+    //         "request": "DoAction",
+    //         "action": {
+    //             "name": "SetFightReward"
+    //         },
+    //         "args": {
+    //             "rawInput": message
 
-            },
-            "id": "123"
-        }));
+    //         },
+    //         "id": "123"
+    //     }));
 };
 
 function connectws() {
     //check options - if we have first words:
     
-    ws.onopen = function () {
-        ws.send(JSON.stringify(
-            {
-                "request": "Subscribe",
-                "events": {
-                    "Twitch": [
-                        "ChatMessage"
-                    ]
-                },
-                "id": "123"
-            }
-        ));
+    // ws.onopen = function () {
+    //     ws.send(JSON.stringify(
+    //         {
+    //             "request": "Subscribe",
+    //             "events": {
+    //                 "Twitch": [
+    //                     "ChatMessage"
+    //                 ]
+    //             },
+    //             "id": "123"
+    //         }
+    //     ));
 
-        ws.onmessage = function (event) {
-            // grab message and parse JSON
-            const msg = event.data;
-            const wsdata = JSON.parse(msg);
+    //     ws.onmessage = function (event) {
+    //         // grab message and parse JSON
+    //         const msg = event.data;
+    //         const wsdata = JSON.parse(msg);
 
-            if (typeof wsdata.data != "undefined") {
-                if (typeof wsdata.data.message != "undefined") {
-                    var lowerMessage = wsdata.data.message.message.toLowerCase();
-                    if (lowerMessage.startsWith(joinCommand)) {
-                        addFighter(wsdata.data.message.displayName, lowerMessage);
-                    };
-                }
-            }
-        }
-    }
+    //         if (typeof wsdata.data != "undefined") {
+    //             if (typeof wsdata.data.message != "undefined") {
+    //                 var lowerMessage = wsdata.data.message.message.toLowerCase();
+    //                 if (lowerMessage.startsWith(joinCommand)) {
+    //                     addFighter(wsdata.data.message.displayName, lowerMessage);
+    //                 };
+    //             }
+    //         }
+    //     }
+    // }
 }
 
 function randomSide() {
-    return sides[Math.floor(Math.random() * 2)];
+    // return sides[Math.floor(Math.random() * 2)];
+    return 'left'
+    // return 'right'
 }
 
 function chooseRandomWeapon() {
@@ -186,6 +220,7 @@ function chooseRandomWeapon() {
 function usersWeapon(lowerMessage) {
     var choosenWeapon = null;
     var weapon;
+
     for (let i = 0; i < weaponNames.length; i++) {
         weapon = weaponsObjects[weaponNames[i]]
         if (weapon.regex.exec(lowerMessage) != null) {
@@ -193,7 +228,13 @@ function usersWeapon(lowerMessage) {
         }
     }
     if (choosenWeapon === null) {
-        return chooseRandomWeapon();
+        choosenWeapon = chooseRandomWeapon();
+    }
+
+    if ( choosenWeapon.name == 'thong'){
+       if ( Math.floor( Math.random() * gstringProb ) == 0 ){
+        choosenWeapon = gstring;
+       }
     }
     return choosenWeapon;
 }
@@ -342,12 +383,10 @@ function yeet(id) {
     loseSound();
 };
 
-function rigged(user, element){
+function rigged(element){
     // Set Rigged text middle of portrait, Have weapon set.
     element.innerHTML = element.innerHTML + "<h1 id='rigged' class='rigged'>#RIGGED</h1>"
     let riggedTitle = document.getElementById('rigged')
-    element.style.zIndex = "0";
-    riggedTitle.style.zIndex = "-1000";
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 5 });
     TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
@@ -355,7 +394,6 @@ function rigged(user, element){
     TweenMax.to(riggedTitle, 0.1, { x: '-=40', repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(riggedTitle, 1, { y: '-=50', repeat: 0, ease: Sine.easeInOut, delay: 2 });
     TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
-    setTimeout('element.style.z = "-1000"', )
     element.style.z = "-1000";
 }
 
@@ -372,7 +410,7 @@ function winnerTime(id) {
     console.log(element)
     var user = element.getAttribute("user");
     if ( riggedUsers.includes(user) ){
-        rigged(user, element);
+        rigged(element);
     } else {
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 2.5 });
@@ -457,9 +495,14 @@ function hornSound() {
     }
 };
 
-
-
-
+function generateEndingMessage() {
+    let endingChoice = weaponNames.length + altEndingMessages.length // Randomizer(0, (weaponNames.length + altEndingMessages.length))
+    if ( endingChoice < weaponNames.length ) {
+        return `The fight is coming to an end! Back, Back, no more people. Oi who through that ${chooseRandomWeapon().name}!!`
+    } else {
+        return altEndingMessages[endingChoice - weaponNames.length - 1]
+    }
+};
 
 //Main function
 
@@ -467,14 +510,16 @@ var noJoinMessage = `No one joined, so no new ${battleGround}!`;
 var winnerMessage = `is the new ${battleGround}`;
 var preupdateMessage = "";
 var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
-var endingMessage = `This Is Your Life, and It's Ending One Minute at a Time`;
-// Todo: Have a couple ending messages, rotate through weapons.
+var endingMessage = generateEndingMessage();
+
+
 
 connectws();
 
 var split = gameLength / 12;
 
 setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
+setTimeout(`addFighter('Ozy_Viking', 'thong')`, 1200);
 setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
