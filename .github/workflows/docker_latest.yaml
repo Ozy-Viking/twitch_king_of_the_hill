@@ -24,7 +24,8 @@ jobs:
             ozyviking/twitch-king-of-the-hill
           # generate Docker tags based on the following events/attributes
           tags: |
-            latest
+            stable
+            type=semver,pattern={{version}}
           labels: |
             type=sha
             type=ref,event=pr
@@ -47,6 +48,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
+          file: ./Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
