@@ -92,7 +92,7 @@ var gameLength = Number(urlParams.get('gameLength'));
 if (gameLength === null) {
     gameLength = 60;
 };
-// gameLength = 10;
+gameLength = 60;
 var removeTimeoutTime = (gameLength + 30) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'SassySararr5']; // Todo: Get sassy's username
