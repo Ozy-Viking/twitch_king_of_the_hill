@@ -236,7 +236,7 @@ function usersWeapon(lowerMessage) {
     }
 
     if ( choosenWeapon.name == 'the thong'){
-       if ( true ){ //Randomizer(0, gstringProb) == 69 ){ // tehe
+       if ( Randomizer(0, gstringProb) == 69 ){ // tehe
         return gstring;
        };
     };
@@ -498,7 +498,7 @@ function generateEndingMessage() {
     if ( endingChoice < altEndingMessages.length ) {
         return altEndingMessages[0]; //endingChoice - 1];
     } else {
-        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who through that ${chooseRandomWeapon().name}!?!`;
+        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who through ${chooseRandomWeapon().name}!?!`;
     }
 };
 

@@ -4,6 +4,6 @@ services:
     image: ozyviking/twitch-king-of-the-hill:stable
     ports:
       - 28080:80
-    volumes:
-      - ./website:/usr/share/nginx/html
+    # volumes:
+    #   - ./website:/usr/share/nginx/html
     restart: always
