@@ -1,86 +1,69 @@
-// Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia)
-// Check out the awesome pillow fight version on her stream!
-// This game uses these sounds from freesound.org:
-//   Battle sounds mixed from:
-//     https://freesound.org/people/madmanmusic/sounds/347981/
-//     https://freesound.org/people/freefire66/sounds/175950/
-//     https://freesound.org/people/klavo1985/sounds/349382/
-//   War horn from:
-//     https://freesound.org/people/DeVern/sounds/512490/
-//   Yeet sounds from:
-//     https://freesound.org/people/unfa/sounds/588557/
-//     https://freesound.org/people/Alivvie/sounds/555627/
-//     https://freesound.org/people/hisoul/sounds/520275/
-//     https://freesound.org/people/hisoul/sounds/520268/
-//   Cheer from:
-//      https://freesound.org/people/BeeProductive/sounds/430046/
-//
-//  Credit to: https://vrflad.com/champion
+// Script for King of the Hill
 
 var joinCommand = 'fight';
 
 var weaponsObjects = {
-    'teapot': {
+    'the teapot': {
         'file': 'teapot.png',
         'left': 'transform: rotate(45deg) translate(30px,-30px)',
         'right': 'transform: rotate(-45deg) translate(-30px,-30px)',
         'command': ['teapot', 'tea', 'pot']
     },
-    'number 1 fan finger': {
+    'the number 1 fan finger': {
         'file': 'no1.png',
         'left': 'transform: rotate(45deg) translate(35px,-50px)',
         'right': 'transform: rotate(-45deg) translate(-35px,-50px)',
         'command': ['1', 'one', 'num', 'finger']
     },
-    'plunger': {
+    'the plunger': {
         'file': 'plunger.png',
         'left': 'transform: rotate(10deg) translate(55px,-20px)',
         'right': 'transform: rotate(-10deg) translate(-55px,-20px) scaleX(-1)',
         'command': ['plunger', 'dunny', 'toilet']
     },
-    'doughnut': {
+    'the doughnut': {
         'file': 'doughnut.png',
         'left': 'transform: rotate(30deg) translate(10px,-60px)',
         'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
         'command': ['doughnut', 'donut', 'nut']
     },
-    'thong': {
+    'the thong': {
         'file': 'thong.png',
-        'left': 'transform: rotate(30deg) translate(10px,-60px)',
-        'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
+        'left': 'transform: rotate(30deg) translate(10px,-60px);',
+        'right': 'transform: rotate(-30deg) translate(-10px,-60px);',
         'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
     },
-    'giant match': {
+    'the giant match': {
         'file': 'match.png',
         'left': 'transform: rotate(30deg) translate(40px,-20px)',
         'right': 'transform: rotate(-30deg) translate(-40px,-20px)',
         'command': ['fire', 'match', 'aussie summer']
     },
-    'frying pan': {
+    'the frying pan': {
         'file': 'pan.png',
         'left': 'transform: rotate(0deg) translate(60px,-10px)',
         'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
         'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
     },
-    'murdered name':{
+    'a murdered name':{
         'file': 'Name_Butcher_4000.png',
-        'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',//'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
+        'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;', //'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
         'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
         'command': ['name', 'murder', 'kill']
     },
-    'boomerang':{
+    'the boomerang':{
         'file': 'Boomerang.png',
         'left': 'transform: rotate(-10deg) translate(60px,-10px); width: 50px;',
         'right': 'transform: rotate(-10deg) translate(-40px,-10px) scaleX(-1); width: 50px;',
         'command': ['boom', 'rang']
     },
-    'didgerodoo': {
+    'the didgerodoo': {
         'file': 'Didgerodoo.png',
         'left': 'transform: rotate(250deg) translate(-25px,35px)',
         'right': 'transform: rotate(10deg) translate(-35px,25px)',
         'command': ['didgerodoo', 'pipe', 'wind', 'doo']
     },
-    'sausage sandwich':{
+    'the sausage sanga':{
         'file': 'sausage_sanga.png',
         'left': 'transform: rotate(0deg) translate(50px,20px); width: 50px;',
         'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
@@ -88,18 +71,31 @@ var weaponsObjects = {
     },
 };
 
-var gstringProb = 10000;
+const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams)
+var gstringProb = Number(urlParams.get('gstringProb'));
+if (gameLength === null) {
+    gstringProb = 10000;
+};
+
 var gstring = {
-    'name': "JD's thong",
+    'name': "JD's Sexy Thong",
     'file': 'secret_thong.png',
     'left': 'transform: rotate(-30deg) translate(60px,20px);',
     'right': 'transform: rotate(30deg) translate(-35px,10px);',
     'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
 };
 
-var gameLength = 60; // Seconds
-var riggedUsers = ['Ozy_Viking', 'SassySarah']; // Todo: Get sassy's username
-var maxemotes = 20;
+
+
+var gameLength = Number(urlParams.get('gameLength'));
+if (gameLength === null) {
+    gameLength = 60;
+};
+// gameLength = 10;
+var removeTimeoutTime = (gameLength + 30) * 1000;
+
+var riggedUsers = ['Ozy_Viking', 'SassySararr5']; // Todo: Get sassy's username
 var divnumber = 0;
 var winner = 0;
 var audio = [];
@@ -112,11 +108,14 @@ for (let i = 0; i < weaponNames.length; i++) {
     weapon.name = weaponNames[i]
     weapon.regex = new RegExp(pattern = weapon.command.join('|'));
 };
+console.log(gstring);
+console.log(weaponsObjects['thong']);
 
 var sides = ['left', 'right'];
 
-const urlParams = new URLSearchParams(window.location.search);
-
+function removeelement(div) {
+    document.getElementById(div).remove();
+};
 
 var championName = urlParams.get('championName');
 if (championName === null) {
@@ -182,7 +181,6 @@ function setWinner(message) {
 
 function connectws() {
     //check options - if we have first words:
-    
     ws.onopen = function () {
         ws.send(JSON.stringify(
             {
@@ -211,17 +209,17 @@ function connectws() {
             }
         }
     }
-}
+};
 
 function randomSide() {
     return sides[Math.floor(Math.random() * 2)];
     // return 'left'
     // return 'right'
-}
+};
 
 function chooseRandomWeapon() {
     return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
-}
+};
 
 function usersWeapon(lowerMessage) {
     var choosenWeapon = null;
@@ -237,23 +235,23 @@ function usersWeapon(lowerMessage) {
         choosenWeapon = chooseRandomWeapon();
     }
 
-    // if ( choosenWeapon.name == 'thong'){
-    //    if ( Math.floor( Math.random() * gstringProb ) != 0 ){ // BUG: Fix so it displays the winner message
-    //     choosenWeapon = gstring;
-    //    };
-    // };
+    if ( choosenWeapon.name == 'the thong'){
+       if ( true ){ //Randomizer(0, gstringProb) == 69 ){ // tehe
+        return gstring;
+       };
+    };
     return choosenWeapon;
 }
 
 function addFighter(user, lowerMessage) {
     var username = user.toLowerCase();
-    // console.log("starting xmlhttp");
+    console.log("starting xmlhttp");
     var xhttp = new XMLHttpRequest();
-    // console.log("created xmlhttp object");
+    console.log("created xmlhttp object");
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             // get display image for the user
-            // console.log("got a response back");
+            console.log("got a response back");
             //save this to cache between sessions too.
             //check for user being added already (or if already dead and ignore)
             var addToFight = true;
@@ -274,7 +272,7 @@ function addFighter(user, lowerMessage) {
                 Div.setAttribute("user", user);
                 Div.setAttribute("state", "alive");
                 divnumber++;
-                Div.style.background = 'url(' + xhttp.responseText + ')';
+                Div.style.background = `url(${xhttp.responseText})`;
                 Div.style.backgroundSize = '100% 100%';
 
                 var weapon = usersWeapon(lowerMessage);
@@ -297,7 +295,7 @@ function addFighter(user, lowerMessage) {
                 warp.appendChild(Div);
 
                 // Run animation
-                setTimeout(`removeelement(${Div.id})`, 120000);
+                setTimeout(`removeelement(${Div.id})`, removeTimeoutTime);
             }
         }
     };
@@ -353,7 +351,7 @@ function randomWeapon() {
         //TweenMax.to(Div, 1.5, { y: '+=200', repeat: 0,  ease: Power2.easeIn, delay: 1.2 });
         TweenMax.to(Div, 2, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, ease: Back.easeOut, repeat: 0, delay: 0 });
     }
-    setTimeout(`removeelement(${Div.id})`, 120000); // Remove after 2 mins
+    setTimeout(`removeelement(${Div.id})`, removeTimeoutTime);
 };
 
 function loseSound() {
@@ -383,7 +381,7 @@ function yeet(id) {
             break;
         default:
             break;
-    }
+    };
     TweenMax.to(element, 4, { x: x, y: -700, rotationZ: rotZ, yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 1.5, { y: '-=500', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     loseSound();
@@ -391,15 +389,15 @@ function yeet(id) {
 
 function rigged(element){
     // Set Rigged text middle of portrait, Have weapon set.
-    element.innerHTML = element.innerHTML + "<h1 id='rigged' class='rigged'>#RIGGED</h1>"
-    let riggedTitle = document.getElementById('rigged')
+    element.innerHTML = element.innerHTML + "<h1 id='rigged' class='rigged'>#RIGGED</h1>";
+    let riggedTitle = document.getElementById('rigged');
     TweenMax.set(element, { transformOrigin: "50% 100%" });
     TweenMax.to(element, 1, { scale: 5 });
     TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 3, { y: '-=207', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 }); // -=207
     TweenMax.to(riggedTitle, 0.1, { x: '-=40', repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(riggedTitle, 1, { y: '-=50', repeat: 0, ease: Sine.easeInOut, delay: 2 });
-    TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
+    TweenMax.to(element, 3, { y: '+=1200', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
     element.style.z = "-1000";
     riggedTitle.style.z = "-1000";
 }
@@ -428,38 +426,34 @@ function winnerTime(id) {
     };
 };
 
-function removeelement(div) {
-    document.getElementById(div).remove();
-};
-
 function startFight() {
     ws = new WebSocket(server);
     ws.onopen = function () {
-        winner = Math.floor(Math.random() * divnumber) + 1;
+        winner = Math.floor(Math.random() * divnumber);
         var winnerNotification = noJoinMessage;
         if (divnumber == 0) {
             // **** No users here - need to handle ****
             setTimeout(notify(winnerNotification), 10000);
         } else {
-            var user = document.getElementById((winner - 1)).getAttribute("user");
-            var winweapon = document.getElementById((winner - 1)).getAttribute("weapon");
+            var user = document.getElementById(winner).getAttribute("user");
+            var winweapon = document.getElementById(winner).getAttribute("weapon");
             if (winweapon === null) {
                 winnerNotification = `notify('${user} ${winnerMessage}');`;
             } else {
-                winnerNotification = `notify('${user} ${winnerMessage}, using the ${winweapon}.');`;
+                winnerNotification = `notify('${user} ${winnerMessage}, using ${winweapon}.');`;
             }
             var yeetUser;
             var yeetTime;
             var yeetId;
             var numbers = new Array(divnumber);
             
-            for (i = 0; i < divnumber; i = i + 1) {
+            for (i = 0; i < divnumber; i++) {
                 numbers[i] = i;
-            }
+            };
             numbers.sort(() => Math.random() - 0.5);
             
             for (let i = 0; i < divnumber; i++) {
-                if (numbers[i] != (winner - 1)) {
+                if (numbers[i] != (winner)) {
                     yeetUser = document.getElementById(numbers[i]);
                     yeetTime = (i * 10000) / divnumber;
                     yeetId = `yeet('${numbers[i]}')`
@@ -467,11 +461,9 @@ function startFight() {
                     console.log(`yeeting ID (${i}): ${yeetUser.getAttribute("user")}`);
                 }
             }
-            
-            setTimeout(`winnerTime(${winner - 1})`, 12500);
+            setTimeout(`winnerTime(${winner})`, 12500);
             setTimeout(winnerNotification, 13000);
             setTimeout(`setWinner('${user}')`, 17000);
-
         }
     }
 };
@@ -504,9 +496,9 @@ function hornSound() {
 function generateEndingMessage() {
     let endingChoice = Randomizer(0, (weaponNames.length + altEndingMessages.length - 1))
     if ( endingChoice < altEndingMessages.length ) {
-        return altEndingMessages[endingChoice - 1]
+        return altEndingMessages[0]; //endingChoice - 1];
     } else {
-        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who through that ${chooseRandomWeapon().name}!?!`
+        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who through that ${chooseRandomWeapon().name}!?!`;
     }
 };
 
@@ -530,13 +522,16 @@ setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - s
 setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*2)} ${updateMessage}!")`, (gameLength - split * 2 + 1) * 1000)
 setTimeout(`notify("${Math.floor(split)} ${updateMessage}!")`, (gameLength - split + 1) * 1000);
-setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000);
+setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000); // BUG: Getting undefined i.e. not a vaild ending message. 
 setTimeout('ws.close()', (gameLength + 1) * 1000);
 setTimeout('startFight()', (gameLength + 2) * 1000);
 setTimeout('hornSound()', (gameLength + 3) * 1000);
 
 var randomdelay;
+var randomWeaponSplit = 2000;
 for (let i = 0; i < 28; i++) {
     randomdelay = 3500 + (i * 2000) + Math.floor(Math.random() * 500) + 1;
+    if ( randomdelay <= (gameLength + 1) * 1000 ) {
     setTimeout("randomWeapon()", randomdelay);
+    };
 };
