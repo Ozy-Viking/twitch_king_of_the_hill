@@ -27,11 +27,37 @@ http://localhost:28080/
 
 ### Modification
 
+#### Streamer.bot webstream port
+
 To change the port to what the streamer bot is listening on, change it by search parameters in the url.
 
 http://localhost:28080/?wsPort=8080
 
 wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
+
+#### Streamer.bot Server
+
+If streamer.bot is on a different server to you gaming machine use the search parameter `server`.
+
+http://localhost:28080/?server=192.168.0.10
+
+#### Game Length
+
+To change the game length from 60 seconds use the search parameter gameLength.
+
+http://localhost:28080/?gameLength=60
+
+Bug: When game length is 10 message doesn't show.
+
+#### Champion title and Hill name
+
+http://localhost:28080/?championName=King&hillName=Hill
+
+#### Probability of Sexy Thong
+
+Probability of a thong (flip flop) being a thong (g-string) (1 in x). Default is 10000 i.e. 1/10000.
+
+http://localhost:28080/?gstringProb=10000
 
 ## Weapon Calls
 
@@ -68,16 +94,39 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 
 ## Ideas
 
-- [ ] Kill messages on the top left like COD
-- [x] Add rigged users 
-- [x] regex weapon choice
 - [ ] Track win record
-- [ ] Magical all winning thong
 - [ ] Stats in the stream so far
-- [ ] Sausage sanger
+- [ ] Kill messages on the top left like COD
+
 
 ## Videos
 
 https://www.youtube.com/watch?v=VzQjQVTmSwQ
 https://www.youtube.com/watch?v=NO3Vl7nApgc
 
+---
+
+## Acknowlegements
+
+Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia). 
+Original author is VRFlad: [Champion of the Hill](https://vrflad.com/champion)
+
+### Sound 
+This game uses these sounds from [freesound.org](freesound.org).
+
+Battle sounds mixed from:
+- https://freesound.org/people/madmanmusic/sounds/347981/
+- https://freesound.org/people/freefire66/sounds/175950/
+- https://freesound.org/people/klavo1985/sounds/349382/
+
+War horn from: 
+- https://freesound.org/people/DeVern/sounds/512490/
+
+Yeet sounds from:
+- https://freesound.org/people/unfa/sounds/588557/
+- https://freesound.org/people/Alivvie/sounds/555627/
+- https://freesound.org/people/hisoul/sounds/520275/
+- https://freesound.org/people/hisoul/sounds/520268/
+
+Cheer from:
+- https://freesound.org/people/BeeProductive/sounds/430046/
