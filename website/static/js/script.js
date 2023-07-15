@@ -498,7 +498,7 @@ function generateEndingMessage() {
     if ( endingChoice < altEndingMessages.length ) {
         return altEndingMessages[0]; //endingChoice - 1];
     } else {
-        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who through ${chooseRandomWeapon().name}!?!`;
+        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who threw ${chooseRandomWeapon().name}!?!`;
     }
 };
 
