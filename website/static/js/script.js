@@ -74,7 +74,7 @@ var weaponsObjects = {
 const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams)
 var gstringProb = Number(urlParams.get('gstringProb'));
-if (gameLength === null) {
+if (gameLength === 0) {
     gstringProb = 10000;
 };
 
@@ -89,10 +89,9 @@ var gstring = {
 
 
 var gameLength = Number(urlParams.get('gameLength'));
-if (gameLength === null) {
+if ( gameLength === null | gameLength === 0 ) {
     gameLength = 60;
 };
-gameLength = 60;
 var removeTimeoutTime = (gameLength + 30) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'SassySararr5']; // Todo: Get sassy's username
