@@ -144,8 +144,8 @@ docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
 
 ## Videos
 
-https://www.youtube.com/watch?v=VzQjQVTmSwQ
-https://www.youtube.com/watch?v=NO3Vl7nApgc
+- https://www.youtube.com/watch?v=VzQjQVTmSwQ
+- https://www.youtube.com/watch?v=NO3Vl7nApgc
 
 ---
 
