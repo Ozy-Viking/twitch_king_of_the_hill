@@ -133,7 +133,7 @@ if (wsPort === null) {
 };
 var server = urlParams.get('server');
 if (!(server === null)) {
-    server = `ws://${server}/`;
+    server = `ws://${server}:${wsPort}/`;
 } else {
     server = `ws://localhost:${wsPort}/`;
 };
