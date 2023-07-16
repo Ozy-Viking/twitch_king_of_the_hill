@@ -5,6 +5,6 @@ services:
     container_name: twitch-king-of-the-hill
     ports:
       - 28080:80
-    # volumes:
-    #   - ../website:/usr/share/nginx/html
+    volumes:
+      - ../website:/usr/share/nginx/html
     restart: always

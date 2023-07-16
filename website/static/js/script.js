@@ -57,11 +57,11 @@ var weaponsObjects = {
         'right': 'transform: rotate(-10deg) translate(-40px,-10px) scaleX(-1); width: 50px;',
         'command': ['boom', 'rang']
     },
-    'the didgerodoo': {
-        'file': 'Didgerodoo.png',
+    'the didgeridoo': {
+        'file': 'didgeridoo.png',
         'left': 'transform: rotate(250deg) translate(-25px,35px)',
         'right': 'transform: rotate(10deg) translate(-35px,25px)',
-        'command': ['didgerodoo', 'pipe', 'wind', 'doo']
+        'command': ['didgeridoo', 'pipe', 'wind', 'doo', 'didg']
     },
     'the sausage sanga':{
         'file': 'sausage_sanga.png',
@@ -74,7 +74,7 @@ var weaponsObjects = {
 const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams)
 var gstringProb = Number(urlParams.get('gstringProb'));
-if (gameLength === 0) {
+if (gameLength in [null, 0] ) {
     gstringProb = 10000;
 };
 
@@ -89,12 +89,12 @@ var gstring = {
 
 
 var gameLength = Number(urlParams.get('gameLength'));
-if ( gameLength === null | gameLength === 0 ) {
+if ( gameLength  in [null, 0] ) {
     gameLength = 60;
 };
-var removeTimeoutTime = (gameLength + 30) * 1000;
+var removalTimeoutTime = (gameLength + 30) * 1000;
 
-var riggedUsers = ['Ozy_Viking', 'SassySararr5']; // Todo: Get sassy's username
+var riggedUsers = ['Ozy_Viking', 'sassysarrah5'];
 var divnumber = 0;
 var winner = 0;
 var audio = [];
@@ -212,8 +212,6 @@ function connectws() {
 
 function randomSide() {
     return sides[Math.floor(Math.random() * 2)];
-    // return 'left'
-    // return 'right'
 };
 
 function chooseRandomWeapon() {
@@ -294,7 +292,7 @@ function addFighter(user, lowerMessage) {
                 warp.appendChild(Div);
 
                 // Run animation
-                setTimeout(`removeelement(${Div.id})`, removeTimeoutTime);
+                setTimeout(`removeelement(${Div.id})`, removalTimeoutTime);
             }
         }
     };
@@ -350,7 +348,7 @@ function randomWeapon() {
         //TweenMax.to(Div, 1.5, { y: '+=200', repeat: 0,  ease: Power2.easeIn, delay: 1.2 });
         TweenMax.to(Div, 2, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, ease: Back.easeOut, repeat: 0, delay: 0 });
     }
-    setTimeout(`removeelement(${Div.id})`, removeTimeoutTime);
+    setTimeout(`removeelement(${Div.id})`, removalTimeoutTime);
 };
 
 function loseSound() {
@@ -493,9 +491,9 @@ function hornSound() {
 };
 
 function generateEndingMessage() {
-    let endingChoice = Randomizer(0, (weaponNames.length + altEndingMessages.length - 1))
+    let endingChoice = Randomizer(0, (weaponNames.length + altEndingMessages.length - 1));
     if ( endingChoice < altEndingMessages.length ) {
-        return altEndingMessages[0]; //endingChoice - 1];
+        return altEndingMessages[endingChoice];
     } else {
         return `The fight is coming to an end! Get back, Back, no more people. OI!! Who threw ${chooseRandomWeapon().name}!?!`;
     }
@@ -515,22 +513,21 @@ var split = gameLength / 12;
 
 setTimeout("battleSound()", 900);
 setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
-// setTimeout(`addFighter('Ozy_Viking', 'thong')`, 1200);
 setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
 setTimeout(`notify("${Math.floor(split*2)} ${updateMessage}!")`, (gameLength - split * 2 + 1) * 1000)
 setTimeout(`notify("${Math.floor(split)} ${updateMessage}!")`, (gameLength - split + 1) * 1000);
-setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000); // BUG: Getting undefined i.e. not a vaild ending message. 
+setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000);  
 setTimeout('ws.close()', (gameLength + 1) * 1000);
 setTimeout('startFight()', (gameLength + 2) * 1000);
 setTimeout('hornSound()', (gameLength + 3) * 1000);
 
 var randomdelay;
 var randomWeaponSplit = 2000;
-for (let i = 0; i < 28; i++) {
-    randomdelay = 3500 + (i * 2000) + Math.floor(Math.random() * 500) + 1;
-    if ( randomdelay <= (gameLength + 1) * 1000 ) {
+for (let i = 0; i < 60; i++) {
+    randomdelay = 3500 + (i * randomWeaponSplit) + Math.floor(Math.random() * 500) + 1;
+    if ( randomdelay <= (gameLength + 13.5) * 1000 ) {
     setTimeout("randomWeapon()", randomdelay);
     };
 };
