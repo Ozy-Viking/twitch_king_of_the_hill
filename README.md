@@ -1,23 +1,54 @@
 # Twitch King of the Hill
 
-King of the Hill game for Twitch Streams.
+King of the Hill game for Twitch Streams to engage their audience.
+
+A live example or a stable version you can use in production/live: [https://ozy-viking.github.io/twitch_king_of_the_hill/](https://ozy-viking.github.io/twitch_king_of_the_hill/). It can be modified to your liking using the url modification below. [[#URL]] 
 
 ## Docker Container
+
+Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/repository/docker/ozyviking/twitch-king-of-the-hill/)
+
+### Images
+
+- Stable: Built of main branch.
+- Latest: More bleading edge / higher chance of bugs. Built off every push to github.
+- Branch: Built of the lastest push in that branch.
+- Tags: Built of tagged pushes and will be a current/past stable.
+
+### Docker Compose
 
 ```bash
 docker compose up -d
 ```
-image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/repository/docker/ozyviking/twitch-king-of-the-hill/)
 
-To change the port of the to container, default is 28080.
+To change the port of the to container, default is 28080, change the user port in the `docker-compose.yaml` not the container port, i.e. change the `28080`.
 
-Change the user port in the `docker-compose.yaml` not the container port.
 ```yaml 
 ...
     ports:
       - 28080:80
 ...
 ```
+### QNAP Conatainer Station
+
+To set this container up on a QNAP, install Conatainer Station and then follow these steps:
+
+1. Open Container station.
+1. Click Create on the left.
+1. Search 'twitch-king-of-the-hill'.
+1. Select Docker Hub, you should see 'ozyviking/twitch-king-of-the-hill'.
+1. Click install.
+1. Change image version to stable (or your preference).
+1. Click Advanced Settings.
+1. Click 'network'.
+1. Next to port forwarding click 'Add'.
+1. Under 'Host' type '28080'.
+1. Under 'Container' type '80'.
+1. Click create.
+
+You should be able to access the website on:
+
+http://[QNAP IP addess]:28080/
 
 ## URL
 
@@ -26,6 +57,12 @@ Change the user port in the `docker-compose.yaml` not the container port.
 http://localhost:28080/
 
 ### Modification
+
+To have multiple modifications, simply use an `&` between terms.
+
+http://localhost:28080/?wsPort=8080&gameLength=60
+
+The values that are in each example are the default and are unrequired to be added. Except for the 'Streamer.bot Server' example.
 
 #### Streamer.bot webstream port
 
@@ -37,7 +74,7 @@ wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
 #### Streamer.bot Server
 
-If streamer.bot is on a different server to you gaming machine use the search parameter `server`.
+If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
 
 http://localhost:28080/?server=192.168.0.10
 
@@ -47,7 +84,6 @@ To change the game length from 60 seconds use the search parameter gameLength.
 
 http://localhost:28080/?gameLength=60
 
-Bug: When game length is 10 message doesn't show.
 
 #### Champion title and Hill name
 
@@ -94,10 +130,17 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 
 ## Ideas
 
-- [ ] Track win record
-- [ ] Stats in the stream so far
-- [ ] Kill messages on the top left like COD
+1. [ ] Stats in the stream so far.
+2. [ ] Track win records.
+3. [ ] Kill messages on the top left like COD.
 
+## Testing
+
+To rebuid and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
+
+```bash
+docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
+```
 
 ## Videos
 
