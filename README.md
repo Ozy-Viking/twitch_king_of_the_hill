@@ -1,5 +1,8 @@
 # Twitch King of the Hill
 
+![GitHub release (with filter)](https://img.shields.io/github/v/release/Ozy-Viking/twitch_king_of_the_hill?label=Stable%20Release)
+
+
 King of the Hill game for Twitch Streams to engage their audience.
 
 A live example or a stable version you can use in production/live: [https://ozy-viking.github.io/twitch_king_of_the_hill/](https://ozy-viking.github.io/twitch_king_of_the_hill/). It can be modified to your liking using the url modification below.
@@ -13,7 +16,7 @@ Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/reposit
 - Stable: Built of main branch.
 - Latest: More bleading edge / higher chance of bugs. Built off every push to github.
 - Branch: Built of the lastest push in that branch.
-- Tags: Built of tagged pushes and will be a current/past stable.
+- Tags: Built of tagged pushes ('v0.1.1') and will be a current/past stable.
 
 ### Docker Compose
 
@@ -21,7 +24,7 @@ Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/reposit
 docker compose up -d
 ```
 
-To change the port of the to container, default is 28080, change the user port in the `docker-compose.yaml` not the container port, i.e. change the `28080`.
+To change the port of the to container, default is 28080, change the user port in the `docker-compose.yaml` not the container port, i.e. change the `28080`, not the `80`.
 
 ```yaml 
 ...
@@ -56,7 +59,7 @@ http://[QNAP IP addess]:28080/
 
 http://localhost:28080/
 
-### Modification
+### Modifications
 
 To have multiple modifications, simply use an `&` between terms.
 
@@ -78,9 +81,15 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 
 http://localhost:28080/?server=192.168.0.10
 
+#### Join Command
+
+To change the join command from fight use the search parameter `joinCommand`. There is no issue if you want to use and exclamation command (!join) or not.
+
+http://localhost:28080/?joinCommand=fight
+
 #### Game Length
 
-To change the game length from 60 seconds use the search parameter gameLength.
+To change the game length from 60 seconds use the search parameter `gameLength`.
 
 http://localhost:28080/?gameLength=60
 
@@ -91,7 +100,7 @@ http://localhost:28080/?championName=King&hillName=Hill
 
 #### Probability of Sexy Thong
 
-Probability of a thong (flip flop) being a thong (g-string) (1 in x). Default is 10000 i.e. 1/10000.
+Probability of a thong (flip flop) being a thong (g-string) (1 in x), use `gstringProb`. Default is 10,000 i.e. 1/10,000.
 
 http://localhost:28080/?gstringProb=10000
 
@@ -133,6 +142,8 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [ ] Stats in the stream so far.
 2. [ ] Track win records.
 3. [ ] Kill messages on the top left like COD.
+4. [ ] Echo version in terminal.
+5. [ ] Stop sound at appropriate places.
 
 ## Testing
 
