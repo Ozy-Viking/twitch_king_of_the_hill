@@ -1,6 +1,7 @@
 // Script for King of the Hill
-
-var joinCommand = 'fight';
+// Maintainer Ozy-Viking
+// Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
+// Docker Container: ozyviking/twitch-king-of-the-hill
 
 var weaponsObjects = {
     'the teapot': {
@@ -72,11 +73,8 @@ var weaponsObjects = {
 };
 
 const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams)
 var gstringProb = Number(urlParams.get('gstringProb'));
-if (gameLength in [null, 0] ) {
-    gstringProb = 10000;
-};
+if (gameLength in [null, 0] ) { gstringProb = 10000; };
 
 var gstring = {
     'name': "JD's Sexy Thong",
@@ -86,12 +84,13 @@ var gstring = {
     'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
 };
 
-
+var joinCommand = urlParams.get('joinCommand');
+if (joinCommand === null) { joinCommand = "fight"; };
+joinCommand = joinCommand.toLowerCase()
+var joinCommandRegex = new RegExp(pattern = joinCommand);
 
 var gameLength = Number(urlParams.get('gameLength'));
-if ( gameLength  in [null, 0] ) {
-    gameLength = 60;
-};
+if ( gameLength in [null, 0] ) { gameLength = 60; };
 var removalTimeoutTime = (gameLength + 30) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5'];
@@ -103,8 +102,8 @@ var soundplay = 0;
 var weaponNames = Object.keys(weaponsObjects);
 // adds the name of each weapon for code readabilty
 for (let i = 0; i < weaponNames.length; i++) {
-    let weapon = weaponsObjects[weaponNames[i]]
-    weapon.name = weaponNames[i]
+    let weapon = weaponsObjects[weaponNames[i]];
+    weapon.name = weaponNames[i];
     weapon.regex = new RegExp(pattern = weapon.command.join('|'));
 };
 console.log(gstring);
@@ -112,9 +111,10 @@ console.log(weaponsObjects['thong']);
 
 var sides = ['left', 'right'];
 
-function removeelement(div) {
-    document.getElementById(div).remove();
-};
+// Randomizer
+function Randomizer(min, max) { return min + Math.floor(Math.random() * (max - min)); };
+
+function removeelement(div) { document.getElementById(div).remove(); };
 
 var championName = urlParams.get('championName');
 if (championName === null) {
@@ -141,7 +141,14 @@ if (!(server === null)) {
 var ws = new WebSocket(server);
 var weaponnumber = 0;
 var lowerMessage;
+var noJoinMessage = `No one joined, so no new ${battleGround}!`;
+var winnerMessage = `is the new ${battleGround}`;
+var preupdateMessage = "";
+var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
+var updateMessageRegex = new RegExp(updateMessage.toLowerCase());
+// Ending message set at end of code.
 
+// Alternate endings.
 var altEndingMessages = [
     `This Is Your Life, and It's Ending One Minute at a Time`
 ];
@@ -154,10 +161,8 @@ function notify(message) {
             "action": {
                 "name": "FightMessage"
             },
-
             "args": {
                 "rawInput": message
-
             },
             "id": "123"
         }));
@@ -200,8 +205,8 @@ function connectws() {
 
             if (typeof wsdata.data != "undefined") {
                 if (typeof wsdata.data.message != "undefined") {
-                    var lowerMessage = wsdata.data.message.message.toLowerCase();
-                    if (lowerMessage.startsWith(joinCommand)) {
+                    let lowerMessage = wsdata.data.message.message.toLowerCase();
+                    if ( (joinCommandRegex.exec(lowerMessage) != null) && (updateMessageRegex.exec(lowerMessage) == null) ){ //lowerMessage.startsWith(joinCommand)) {
                         addFighter(wsdata.data.message.displayName, lowerMessage);
                     };
                 }
@@ -465,9 +470,6 @@ function startFight() {
     }
 };
 
-// Randomizer
-function Randomizer(min, max) { return min + Math.floor(Math.random() * (max - min)); };
-
 function battleSound() {
     audio[soundplay] = new Audio("static/sound/battle.mp3");
     audio[soundplay].volume = 0.2;
@@ -499,35 +501,34 @@ function generateEndingMessage() {
     }
 };
 
-//Main function
-
-var noJoinMessage = `No one joined, so no new ${battleGround}!`;
-var winnerMessage = `is the new ${battleGround}`;
-var preupdateMessage = "";
-var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 var endingMessage = generateEndingMessage();
 
-connectws();
-
-var split = gameLength / 12;
-
-setTimeout("battleSound()", 900);
-setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
-setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
-setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
-setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
-setTimeout(`notify("${Math.floor(split*2)} ${updateMessage}!")`, (gameLength - split * 2 + 1) * 1000)
-setTimeout(`notify("${Math.floor(split)} ${updateMessage}!")`, (gameLength - split + 1) * 1000);
-setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000);  
-setTimeout('ws.close()', (gameLength + 1) * 1000);
-setTimeout('startFight()', (gameLength + 2) * 1000);
-setTimeout('hornSound()', (gameLength + 3) * 1000);
-
-var randomdelay;
-var randomWeaponSplit = 2000;
-for (let i = 0; i < 60; i++) {
-    randomdelay = 3500 + (i * randomWeaponSplit) + Math.floor(Math.random() * 500) + 1;
-    if ( randomdelay <= (gameLength + 13.5) * 1000 ) {
-    setTimeout("randomWeapon()", randomdelay);
+//Main function
+function main () {
+    connectws();
+    
+    var split = gameLength / 12;
+    
+    setTimeout("battleSound()", 900);
+    setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
+    setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
+    setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
+    setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
+    setTimeout(`notify("${Math.floor(split*2)} ${updateMessage}!")`, (gameLength - split * 2 + 1) * 1000)
+    setTimeout(`notify("${Math.floor(split)} ${updateMessage}!")`, (gameLength - split + 1) * 1000);
+    setTimeout(`notify("${endingMessage}")`, (gameLength + 1) * 1000);  
+    setTimeout('ws.close()', (gameLength + 1) * 1000);
+    setTimeout('startFight()', (gameLength + 2) * 1000);
+    setTimeout('hornSound()', (gameLength + 3) * 1000);
+    
+    var randomdelay;
+    var randomWeaponSplit = 2000;
+    for (let i = 0; i < 60; i++) {
+        randomdelay = 3500 + (i * randomWeaponSplit) + Math.floor(Math.random() * 500) + 1;
+        if ( randomdelay <= (gameLength + 1) * 1000 ) {
+        setTimeout("randomWeapon()", randomdelay);
+        };
     };
 };
+
+main();
