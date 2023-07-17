@@ -1,6 +1,6 @@
 # Twitch King of the Hill
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/Ozy-Viking/twitch_king_of_the_hill?label=Release)
+![GitHub release (with filter)](https://img.shields.io/github/v/release/Ozy-Viking/twitch_king_of_the_hill?label=Stable%20Release)
 
 
 King of the Hill game for Twitch Streams to engage their audience.
@@ -142,6 +142,8 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [ ] Stats in the stream so far.
 2. [ ] Track win records.
 3. [ ] Kill messages on the top left like COD.
+4. [ ] Echo version in terminal.
+5. [ ] Stop sound at appropriate places.
 
 ## Testing
 

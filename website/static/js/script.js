@@ -131,6 +131,7 @@ var wsPort = urlParams.get('wsPort');
 if (wsPort === null) {
     wsPort = 8080;
 };
+
 var server = urlParams.get('server');
 if (!(server === null)) {
     server = `ws://${server}:${wsPort}/`;

@@ -5,7 +5,11 @@ services:
     ports:
       - 28080:80
     volumes:
-      - ./website:/usr/share/nginx/html
+      - /Container/container-station-data/twitch-king-of-the-hill/website:/usr/share/nginx/html
+    labels:
+      - com.centurylinklabs.watchtower.enable
+    networks:
+      - default
     restart: always
   watchtower:
     image: containrrr/watchtower
@@ -14,3 +18,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - /etc/localtime:/etc/localtime:ro
+    command:
+      - --schedule 
+      - '0 * 7-18 * * *'
+      - --label-enable
+    networks:
+      - default
+    restart: always
+networks:
+  default:
+    name: king_of_the_hill
