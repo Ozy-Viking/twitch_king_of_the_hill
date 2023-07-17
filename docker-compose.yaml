@@ -7,3 +7,10 @@ services:
     volumes:
       - ./website:/usr/share/nginx/html
     restart: always
+  watchtower:
+    image: containrrr/watchtower
+    environment:
+      - WATCHTOWER_NOTIFICATION_URL=discord://n1ZOX2A01g-99PyYssjL7LLPHtBmUn7TUDiHhvIoC1GdufaRC8FERFOt_eqRbgL92BJe@1130049098490331166
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/localtime:/etc/localtime:ro
