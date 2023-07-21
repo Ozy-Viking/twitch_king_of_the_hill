@@ -517,10 +517,10 @@ function main () {
     
     setTimeout("battleSound()", 900);
     setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
-    setTimeout(`addFighter('Ozy_Viking', 'goon')`, 1000);
-    setTimeout(`addFighter('JDPlays', 'goon')`, 15000);
-    setTimeout(`addFighter('the_rubble', 'goon')`, 24000);
-    setTimeout(`addFighter('Naval_Warlord', 'goon')`, 47000);
+    // setTimeout(`addFighter('Ozy_Viking', 'goon')`, 1000);
+    // setTimeout(`addFighter('JDPlays', 'goon')`, 15000);
+    // setTimeout(`addFighter('the_rubble', 'goon')`, 24000);
+    // setTimeout(`addFighter('Naval_Warlord', 'goon')`, 47000);
     setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
     setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
     setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
