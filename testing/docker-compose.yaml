@@ -7,4 +7,4 @@ services:
       - 28080:80
     volumes:
       - ../website:/usr/share/nginx/html
-    restart: unless-stopped
+    restart: always
