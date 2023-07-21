@@ -144,6 +144,7 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 3. [ ] Kill messages on the top left like COD.
 4. [ ] Echo version in terminal.
 5. [ ] Stop sound at appropriate places.
+6. [ ] Work on sound timings and effects.
 
 ## Testing
 

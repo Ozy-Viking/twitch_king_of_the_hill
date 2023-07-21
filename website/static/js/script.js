@@ -70,6 +70,12 @@ var weaponsObjects = {
         'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
         'command': ['sausage', 'sandwich', 'sanga', 'snag', 'bunning']
     },
+    'goon sack':{
+        'file': 'Goon_Sack.png',
+        'left': 'transform: rotate(0deg) translate(55px,-20px) scaleX(-1); width: 50px;',
+        'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
+        'command': ['goon', 'sack', 'goon of fortune', 'fancy', 'fine dinning']
+    },
 };
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -106,15 +112,22 @@ for (let i = 0; i < weaponNames.length; i++) {
     weapon.name = weaponNames[i];
     weapon.regex = new RegExp(pattern = weapon.command.join('|'));
 };
-console.log(gstring);
-console.log(weaponsObjects['thong']);
 
 var sides = ['left', 'right'];
 
-// Randomizer
+// Randomisers
 function Randomizer(min, max) { return min + Math.floor(Math.random() * (max - min)); };
 
 function removeelement(div) { document.getElementById(div).remove(); };
+
+function randomSide() {
+    return 'left';
+    // return sides[Math.floor(Math.random() * 2)];
+};
+
+function chooseRandomWeapon() {
+    return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
+};
 
 var championName = urlParams.get('championName');
 if (championName === null) {
@@ -214,14 +227,6 @@ function connectws() {
             }
         }
     }
-};
-
-function randomSide() {
-    return sides[Math.floor(Math.random() * 2)];
-};
-
-function chooseRandomWeapon() {
-    return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
 };
 
 function usersWeapon(lowerMessage) {
@@ -503,7 +508,7 @@ function generateEndingMessage() {
 };
 
 var endingMessage = generateEndingMessage();
-
+addFighter('ozy_viking', 'goon')
 //Main function
 function main () {
     connectws();
@@ -512,6 +517,10 @@ function main () {
     
     setTimeout("battleSound()", 900);
     setTimeout(`notify("${Math.floor(split*12)} ${updateMessage}!")`, 1000);
+    setTimeout(`addFighter('ozy_viking', 'goon')`, 1000);
+    setTimeout(`addFighter('jdplays', 'goon')`, 3000);
+    setTimeout(`addFighter('the_rubble', 'goon')`, 5000);
+    setTimeout(`addFighter('naval_warlord', 'goon')`, 7000);
     setTimeout(`notify("${Math.floor(split*9)} ${updateMessage}!")`, (gameLength - split * 9 + 1) * 1000);
     setTimeout(`notify("${Math.floor(split*6)} ${updateMessage}!")`, (gameLength - split * 6 + 1) * 1000);
     setTimeout(`notify("${Math.floor(split*3)} ${updateMessage}!")`, (gameLength - split * 3 + 1) * 1000);
