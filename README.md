@@ -2,7 +2,6 @@
 
 ![GitHub release (with filter)](https://img.shields.io/github/v/release/Ozy-Viking/twitch_king_of_the_hill?label=Stable%20Release)
 
-
 King of the Hill game for Twitch Streams to engage their audience.
 
 A live example or a stable version you can use in production/live: [https://ozy-viking.github.io/twitch_king_of_the_hill/](https://ozy-viking.github.io/twitch_king_of_the_hill/). It can be modified to your liking using the url modification below.
@@ -26,12 +25,13 @@ docker compose up -d
 
 To change the port of the to container, default is 28080, change the user port in the `docker-compose.yaml` not the container port, i.e. change the `28080`, not the `80`.
 
-```yaml 
+```yaml
 ...
     ports:
       - 28080:80
 ...
 ```
+
 ### QNAP Conatainer Station
 
 To set this container up on a QNAP, install Conatainer Station and then follow these steps:
@@ -93,7 +93,6 @@ To change the game length from 60 seconds use the search parameter `gameLength`.
 
 http://localhost:28080/?gameLength=60
 
-
 #### Champion title and Hill name
 
 http://localhost:28080/?championName=King&hillName=Hill
@@ -121,17 +120,17 @@ This is an example of the setup for a weapon.
 - file: the name of the picture within the images folder (`./static/images`).
 - left: This is the css used when entering from the left.
 - right: This is the css used when entering from the right.
-- command: These are the smallest parts, that a user can declare so the system can recognise what they want. Regex is used and the must be in lowercase otherwise they will never be used. Note: if pan is used then no command with pan is usable. If you want to add a command as a priority over another weapons use of it, have that weapon declared higher in the code. 
+- command: These are the smallest parts, that a user can declare so the system can recognise what they want. Regex is used and the must be in lowercase otherwise they will never be used. Note: if pan is used then no command with pan is usable. If you want to add a command as a priority over another weapons use of it, have that weapon declared higher in the code.
 
-> If you want to flip/invert the image, use ` scaleX(-1)`.
+> If you want to flip/invert the image, use `scaleX(-1)`.
 
 Use:
 
-```
+```text
 {joinCommand} with an amazing FOrmaL ThoNG
 ```
 
-Caps does not matter for the user. 
+Caps does not matter for the user.
 
 For Doughnut, both american and british spelling were added. I highly recommend doing so for any other ambiguities. 
 
@@ -163,25 +162,35 @@ docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
 
 ## Acknowlegements
 
-Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia). 
-Original author is VRFlad: [Champion of the Hill](https://vrflad.com/champion)
+This is an exdended version of VRFlad's [Champion of the Hill](https://vrflad.com/champion) for [JDPlay's](https://www.twitch.tv/jdplays) on twitch.
 
-### Sound 
+Originally inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia).
+
+### Image
+
+Some weapons were designed by the_rubble. An amazing member of the community at JDPlays.
+
+### Sound
+
 This game uses these sounds from [freesound.org](freesound.org).
 
 Battle sounds mixed from:
+
 - https://freesound.org/people/madmanmusic/sounds/347981/
 - https://freesound.org/people/freefire66/sounds/175950/
 - https://freesound.org/people/klavo1985/sounds/349382/
 
-War horn from: 
+War horn from:
+
 - https://freesound.org/people/DeVern/sounds/512490/
 
 Yeet sounds from:
+
 - https://freesound.org/people/unfa/sounds/588557/
 - https://freesound.org/people/Alivvie/sounds/555627/
 - https://freesound.org/people/hisoul/sounds/520275/
 - https://freesound.org/people/hisoul/sounds/520268/
 
 Cheer from:
+
 - https://freesound.org/people/BeeProductive/sounds/430046/
