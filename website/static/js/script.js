@@ -46,7 +46,7 @@ var weaponsObjects = {
         'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
         'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
     },
-    'a murdered name':{
+    'a butcher name':{
         'file': 'Name_Butcher_4000.png',
         'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;', //'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
         'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
@@ -176,7 +176,7 @@ var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see 
 
 // Alternate endings.
 var altEndingMessages = [
-    `This Is Your Life, and It's Ending One Minute at a Time`
+    // `This Is Your Life, and It's Ending One Minute at a Time`
 ];
 
 function notify(message) {
@@ -224,7 +224,7 @@ function connectws() {
             }
         ));
         var updateMessageRegex = new RegExp(
-            `${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}`
+            `${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`
             );
 
         ws.onmessage = function (event) {
@@ -481,6 +481,9 @@ function startFight() {
 function playSound(filename, volume = 0.4) {
     audio[soundplay] = new Audio(`static/sound/${filename}`);
     audio[soundplay].volume = volume;
+    if (filename === 'battle.mp3'){
+        audio[soundplay].loop = true;
+    }
     audio[soundplay].play();
     if (soundplay > 9) {
         soundplay = 0;
@@ -515,7 +518,6 @@ function stopAllSound(){
     }
 }
 
-
 function generateEndingMessage() {
     let endingChoice = Randomizer(0, (weaponNames.length + altEndingMessages.length - 1));
     if ( endingChoice < altEndingMessages.length ) {
@@ -545,6 +547,7 @@ function gameLengthSplit(m=1, c=0, floor=false){
     return length
 }
 
+
 function randomWeaponSetup() {
     var randomWeaponSplit = 2000;
     for (let i = 0; i < 60; i++) {
@@ -560,7 +563,7 @@ var endingMessage = generateEndingMessage();
 function main () {
     connectws();
     if (testing){ setTimeout(addTestingPeople, 1000, gameLength, gameLength/2) }
-    
+
     setTimeout(playSound, 900, 'battle.mp3', 0.2);
     setTimeout(notify, gameLengthSplit( 0, 1) * 1000,             `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-9, 1 + gameLength) * 1000,`${gameLengthSplit( 9, 0, true)} ${updateMessage}!`);

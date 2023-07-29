@@ -182,6 +182,8 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 4. [ ] Echo version in terminal.
 5. [x] Stop sound at appropriate places.
 6. [x] Work on sound timings and effects.
+7. [ ] Increase to 80 secs
+8. [ ] Ad warning not working
 
 ## Known Bugs
 
