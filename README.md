@@ -184,10 +184,13 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 6. [x] Work on sound timings and effects.
 7. [ ] Increase to 80 secs
 8. [ ] Ad warning not working
+9. [ ] Last winner name on hill
+10. [ ] Fix teapot left
 
 ## Known Bugs
 
 1. [x] What bugs, please let me know by raiseing an issue.
+2. [ ] Limited to 60 seconds.
 
 ## Testing
 
