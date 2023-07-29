@@ -4,74 +4,98 @@
 // Docker Container: ozyviking/twitch-king-of-the-hill
 
 var weaponsObjects = {
-    'the teapot': {
+    'teapot': {
         'file': 'teapot.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(45deg) translate(30px,-30px)',
         'right': 'transform: rotate(-45deg) translate(-30px,-30px)',
         'command': ['teapot', 'tea', 'pot']
     },
-    'the number 1 fan finger': {
+    'number 1 fan finger': {
         'file': 'no1.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(45deg) translate(35px,-50px)',
         'right': 'transform: rotate(-45deg) translate(-35px,-50px)',
         'command': ['1', 'one', 'num', 'finger']
     },
-    'the plunger': {
+    'plunger': {
         'file': 'plunger.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(10deg) translate(55px,-20px)',
         'right': 'transform: rotate(-10deg) translate(-55px,-20px) scaleX(-1)',
         'command': ['plunger', 'dunny', 'toilet']
     },
-    'the doughnut': {
+    'doughnut': {
         'file': 'doughnut.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(30deg) translate(10px,-60px)',
         'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
         'command': ['doughnut', 'donut', 'nut']
     },
-    'the thong': {
+    'thong': {
         'file': 'thong.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(30deg) translate(10px,-60px);',
         'right': 'transform: rotate(-30deg) translate(-10px,-60px);',
         'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
     },
-    'the giant match': {
+    'giant match': {
         'file': 'match.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(30deg) translate(40px,-20px)',
         'right': 'transform: rotate(-30deg) translate(-40px,-20px)',
         'command': ['fire', 'match', 'aussie summer']
     },
-    'the frying pan': {
+    'frying pan': {
         'file': 'pan.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(0deg) translate(60px,-10px)',
         'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
         'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
     },
-    'a butcher name':{
+    'butchered name':{
         'file': 'Name_Butcher_4000.png',
+        'tense 1': 'a',
+        'tense 2': 'that', // Todo: Implement this!
         'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;', //'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
         'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
-        'command': ['name', 'murder', 'kill']
+        'command': ['name', 'murder', 'butcher', 'kill']
     },
-    'the boomerang':{
+    'boomerang':{
         'file': 'Boomerang.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(-10deg) translate(60px,-10px); width: 50px;',
         'right': 'transform: rotate(-10deg) translate(-40px,-10px) scaleX(-1); width: 50px;',
         'command': ['boom', 'rang']
     },
-    'the didgeridoo': {
+    'didgeridoo': {
         'file': 'didgeridoo.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(250deg) translate(-25px,35px)',
         'right': 'transform: rotate(10deg) translate(-35px,25px)',
         'command': ['didgeridoo', 'pipe', 'wind', 'doo', 'didg']
     },
-    'the sausage sanga':{
+    'sausage sanga':{
         'file': 'sausage_sanga.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(0deg) translate(50px,20px); width: 50px;',
         'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
         'command': ['sausage', 'sandwich', 'sanga', 'snag', 'bunning']
     },
     'goon sack':{
         'file': 'Goon_Sack.png',
+        'tense 1': 'the',
+        'tense 2': 'that',
         'left': 'transform: rotate(0deg) translate(55px,-20px) scaleX(-1); width: 50px;',
         'right': 'transform: rotate(0deg) translate(-30px,-20px); width: 50px;',
         'command': ['goon', 'sack', 'goon of fortune', 'fancy', 'fine dinning', 'pillow']
@@ -85,6 +109,8 @@ if (gameLength in [null, 0] ) { gstringProb = 10000; };
 var gstring = {
     'name': "JD's Sexy Thong",
     'file': 'secret_thong.png',
+    'tense 1': '',
+    'tense 2': '',
     'left': 'transform: rotate(-30deg) translate(60px,20px);',
     'right': 'transform: rotate(30deg) translate(-35px,10px);',
     'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
@@ -97,7 +123,7 @@ var joinCommandRegex = new RegExp(pattern = joinCommand);
 
 var gameLength = Number(urlParams.get('gameLength'));
 if ( gameLength in [null, 0] ) { gameLength = 60; };
-var removalTimeoutTime = (gameLength + 30) * 1000;
+var removalTimeoutTime = (gameLength + 60) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5'];
 riggedUsers = riggedUsers.concat(urlParams.getAll('riggedUser'));
@@ -172,7 +198,7 @@ var winnerMessage = `is the new ${battleGround}`;
 var preupdateMessage = "";
 var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 // Ending message set at end of code.
-
+var battleActive = false;
 
 // Alternate endings.
 var altEndingMessages = [
@@ -278,11 +304,17 @@ function addFighter(user, lowerMessage) {
             //save this to cache between sessions too.
             //check for user being added already (or if already dead and ignore)
             var addToFight = true;
-            for (let i = 0; i < divnumber; i++) {
-                checkUser = document.getElementById(i).getAttribute("user");
-                if ((user == checkUser) & !( testing )) {
-                    addToFight = false;
+            if (battleActive){
+                if (!testing){
+                    for (let i = 0; i < divnumber; i++) {
+                        checkUser = document.getElementById(i).getAttribute("user");
+                        if ((user == checkUser) ) {
+                            addToFight = false;
+                        };
+                    };
                 };
+            } else {
+                addToFight = false; 
             };
             if (addToFight) {
                 var warp = document.getElementById("confetti-container"),
@@ -301,7 +333,7 @@ function addFighter(user, lowerMessage) {
                 var weapon = usersWeapon(lowerMessage);
                 var side = randomSide();
 
-                Div.setAttribute("weapon", weapon.name)
+                Div.setAttribute("weapon", `${weapon['tense 1']} ${weapon.name}`)
                 Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
 
                 switch (side) {
@@ -436,6 +468,7 @@ function winnerTime(id, winnerNotification) {
 };
 
 function startFight() {
+    battleActive = false;
     ws = new WebSocket(server);
     ws.onopen = function () {
         winner = Math.floor(Math.random() * divnumber);
@@ -475,7 +508,7 @@ function startFight() {
             setTimeout(winnerTime, 12500, winner, winnerNotification);
             setTimeout(setWinner, 17000, user);
         }
-    }
+    };
 };
 
 function playSound(filename, volume = 0.4) {
@@ -523,7 +556,8 @@ function generateEndingMessage() {
     if ( endingChoice < altEndingMessages.length ) {
         return altEndingMessages[endingChoice];
     } else {
-        return `The fight is coming to an end! Get back, Back, no more people. OI!! Who threw ${chooseRandomWeapon().name}!?!`;
+        let randWeapon = chooseRandomWeapon()
+        return `The fight is coming to an end! Get back, Back, no more people. OI! Who threw ${randWeapon['tense 2']} ${randWeapon.name}!?!`;
     }
 };
 
@@ -562,8 +596,9 @@ var endingMessage = generateEndingMessage();
 //Main function
 function main () {
     connectws();
+    // hillDecay();
     if (testing){ setTimeout(addTestingPeople, 1000, gameLength, gameLength/2) }
-
+    battleActive = true
     setTimeout(playSound, 900, 'battle.mp3', 0.2);
     setTimeout(notify, gameLengthSplit( 0, 1) * 1000,             `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-9, 1 + gameLength) * 1000,`${gameLengthSplit( 9, 0, true)} ${updateMessage}!`);
@@ -572,6 +607,7 @@ function main () {
     setTimeout(notify, gameLengthSplit(-2, 1 + gameLength) * 1000,`${gameLengthSplit( 2, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-1, 1 + gameLength) * 1000,`${gameLengthSplit( 1, 0, true)} ${updateMessage}!`);
     setTimeout(notify,     (gameLength + 1) * 1000, endingMessage)
+    setTimeout('battleActive = false', (gameLength + 1) * 1000)
     setTimeout(ws.close,   (gameLength + 1) * 1000);
     setTimeout(startFight, (gameLength + 2) * 1000);
 
@@ -579,3 +615,11 @@ function main () {
 };
 
 main();
+
+
+function hillDecay (){
+    // BUG: Not selecting the hill image.
+    let hill = document.getElementById("grassyhill_id");
+    console.log(hill)
+    hill.style.animation = `hillanimation ${gameLength + 28}s`
+}
