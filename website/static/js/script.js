@@ -593,10 +593,17 @@ function randomWeaponSetup() {
 }
 var endingMessage = generateEndingMessage();
 
+function hillDecay (){
+    // BUG: Not selecting the hill image.
+    let hill = document.getElementById("grassyhill_id");
+    console.log(hill)
+    hill.style.animation = `hillanimation ${gameLength + 28}s`
+}
+
 //Main function
 function main () {
     connectws();
-    // hillDecay();
+    hillDecay();
     if (testing){ setTimeout(addTestingPeople, 1000, gameLength, gameLength/2) }
     battleActive = true
     setTimeout(playSound, 900, 'battle.mp3', 0.2);
@@ -616,10 +623,3 @@ function main () {
 
 main();
 
-
-function hillDecay (){
-    // BUG: Not selecting the hill image.
-    let hill = document.getElementById("grassyhill_id");
-    console.log(hill)
-    hill.style.animation = `hillanimation ${gameLength + 28}s`
-}
