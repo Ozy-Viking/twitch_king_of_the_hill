@@ -7,4 +7,9 @@ services:
       - 28080:80
     volumes:
       - ../website:/usr/share/nginx/html
+      - ../website/static:/usr/share/nginx/static
     restart: always
+
+networks:
+  default:
+    name: testingcd
