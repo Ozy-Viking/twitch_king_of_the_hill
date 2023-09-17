@@ -11,6 +11,7 @@ pages=($koth_page $subs_page)
 for page in "${pages[@]}"; do
     echo $page;
     if [[ -e $page ]]; then
-        sed -e "s/(version_tag)/($version)/" $page | tee $page
+        sed -e "s/(version_tag)/($version)/p" $page | tee $page.tmp
+        mv -f ${page}.tmp ${page}
     fi
 done
