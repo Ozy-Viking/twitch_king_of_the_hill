@@ -19,6 +19,9 @@ jobs:
         name: Checkout
         uses: actions/checkout@v3
       -
+        name: Version
+        run: ./scripts/version.sh 'Non-tagged Branch'
+      -
         name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
@@ -31,14 +34,10 @@ jobs:
             latest
             type=ref,event=branch
             type=ref,event=pr
-            type=semver,pattern={{version}}
           labels: |
             type=sha
             type=ref,event=pr
             type=ref,event=branch
-            type=semver,pattern={{version}}
-            type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
       -
         name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2

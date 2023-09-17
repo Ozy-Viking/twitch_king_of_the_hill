@@ -2,8 +2,6 @@ name: Latest Docker Tag
 
 on:
   push:
-    branches:
-      - "main"
     tags:
       - "v*.*.*"
 

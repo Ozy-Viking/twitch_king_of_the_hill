@@ -30,7 +30,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
-        
+
       - name: Version
         run: ./scripts/version.sh ${{github.ref_name}}
 
@@ -69,9 +69,7 @@ jobs:
             stable
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
-            type=semver,pattern={{major}}
-            type=sha
-            
+            type=semver,pattern={{major}}           
           
 
       # Build and push Docker image with Buildx (don't push on PR)
