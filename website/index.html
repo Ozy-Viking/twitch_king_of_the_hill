@@ -5,16 +5,19 @@ Maintainer Ozy-Viking
 Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 Docker Container: ozyviking/twitch-king-of-the-hill
 -->
-<html lang="en" >
-<head>
-    <meta charset="UTF-8">
-    <title>King of the Hill!</title>
-    <link rel="stylesheet" href="./static/css/style.css">
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js'></script>
-    <script src="./static/js/script.js"></script>
-</head>
-<body>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <title>King of the Hill (version_tag)</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
+  </head>
+
+  <body>
     <div id="confetti-container"></div>
-    <img src="./static/images/Grassy_Hill.png" class="grassyhill" id="grassyhill_id"/>
-</body>
+    <img id="grassyhill_id" src="/static/images/Grassy_Hill.png" class="grassyhill" />
+    <script src="/static/js/koth.js" type="module"></script>
+  </body>
+
 </html>

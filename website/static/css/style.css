@@ -36,7 +36,7 @@ body,
   left: 50%;
   width: 2156px;
   bottom: 0px;
-  animation: hillanimation 88s;
+  /* animation: hillanimation 88s; */
 }
 
 .rigged {
