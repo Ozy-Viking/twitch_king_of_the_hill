@@ -10,7 +10,7 @@ pages=($koth_page $subs_page)
 
 for page in "${pages[@]}"; do
     echo $page;
-    # if [[ -e $page ]]; then
-    #     sed -e "s/(version_tag)/($version)/" $page > $page
-    # fi
+    if [[ -e $page ]]; then
+        sed -e "s/(version_tag)/($version)/" $page
+    fi
 done
