@@ -9,7 +9,7 @@ Docker Container: ozyviking/twitch-king-of-the-hill
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sub Stream (version_tag)</title>
+        <title>Sub Stream (v0.1.1)</title>
         <style>
             :root {
                 --shadow-colour: rgb(0, 0, 0);
