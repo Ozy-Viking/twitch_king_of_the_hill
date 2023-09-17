@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Sub Stream (version_tag)</title>
+        <style>
+            :root {
+                --shadow-colour: rgb(0, 0, 0);
+                --font-colour: #fff;
+            }
+
+            div {
+                color: var(--font-colour);
+                text-shadow: 2px 0 var(--shadow-colour), -2px 0 var(--shadow-colour), 0 2px var(--shadow-colour), 0 -2px var(--shadow-colour),
+                    1px 1px var(--shadow-colour), -1px -1px var(--shadow-colour), 1px -1px var(--shadow-colour), -1px 1px var(--shadow-colour);
+                font-family: Inter;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                word-wrap: break-word
+            }
+        </style>
+    </head>
+
+    <body>
+        <div id="display">
+            Rockets For JD to launch: <span id="total"></span><br/>
+            T1 Sub = 1 more rocket to launch<br/>
+            T2 = 2 Rockets, T3 = 6 Rockets
+        </div>
+        <div id="testButtons"></div>
+        <script src="/static/js/subs.js"></script>
+    </body>
+
+</html>

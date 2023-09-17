@@ -55,7 +55,7 @@ http://[QNAP IP addess]:28080/
 
 ## URL
 
-### Standard
+### Standard King of the hill
 
 ```url
 http://localhost:28080/
@@ -185,7 +185,8 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 7. [ ] Increase to 80 secs
 8. [ ] Ad warning not working
 9. [ ] Last winner name on hill
-10. [ ] Fix teapot left
+10. [ ] Fix teapot lefts
+11. [ ] Add version to title.
 
 ## Known Bugs
 
@@ -205,7 +206,6 @@ docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
 - https://www.youtube.com/watch?v=VzQjQVTmSwQ
 - https://www.youtube.com/watch?v=NO3Vl7nApgc
 
----
 
 ## Acknowlegements
 
@@ -240,3 +240,55 @@ Yeet sounds from:
 Cheer from:
 
 - https://freesound.org/people/BeeProductive/sounds/430046/
+
+---
+
+## Stream Subs
+
+### Streambot import fuction
+
+```text
+U0JBRR+LCAAAAAAABADNV9uO2zYQfS/Qf3ANpE/hgqQuJPOWprctsm2xafalKApeRl4hurgUtZcu9t9LSpZtWXLgbpMm+7TmGc6Q58wMRw9ffrFYLG/ANnldLV8soufdQl6ua+uutsu0Xy7zKi/bcre+xGf0jCw3KDjp1x7CD/+zkiUEk4v7xXd3wV1v5hHZuuvaBuyXv+//vMrf5dVqC+7OsiRneHDuAQONtvnabcBlWH7sIxs5iix1MGr8yu/9ymKAOjg3Yb+giqsMM2RMEqM4jiSSmlIksWQYR0JLrobY3ba/WmjDhaq2KPbXoZKqgODT2RZGyJ0uWgPf27r8MW9cbe+9USaLZmQ18HQJDbjFm1aFayqwC123lRsdYWXrdh1sd1Y/fTuykMWtvG8u22oukpWVqcuXekPhBNd1pVtrwUedQZ3NVysvzj6tB9RuvJSlD3TesZwqakyaGsQFTlCMARCngqNEGJpiTzGXcv8CewJxGnFCRIpoFAQyLENCiQRhRhkFoVSWTLe6+3UgM8bkEDkq0zxv+/jj7scfI7KneTZHSKOhgp83KgflFp6exbvaXU+O39St1SPbiUlri4A9azz49vL1s69tyJuJmdeygu58vRARjhRhXCGmmUKxoiniiWFIYya4IIQZoY8IYUycZQQbFDNfLjGOCeJAY5Qwg8FglsgIJltvIV9dhzzCZ/iISBE/BIb8PiixE/TLKwN3HiMj3Z5/Olk+qiAs4gkTGEUkARRzghFPsUbMKKYzLjiPk89FkOh0QW5k0TVYQpNDb6W8u9qgk8P3XW2mY+0xRjSRkkiBsASfwpoAUhGWviuJmOmYZ1LipzBGMKYfnjN6OmcO7tz28XixOJ5+awsZ+N5uXur+XZlhsudKsySGJFFI+T8UQ0RD8yaeMEIikyaZzujTuPrwTMX/oty7Gp679o20eQg21PeGwymFYTJp3NFD+QHF5ZUMJX61cfk+dwYy2RZuyOs5EnpBMs4zjplGKWGh/1KvhYgzFEdcKkOpiPT0ITxFEDp5JLcDxsTfaXrg05/NH0Ko7u0cgbouCrluwOzhA7wTeDrORZnPTwGZ74mMoJgKg0TCuJ82Uk60wlwL+r+Oc/6VuICmkSuYH+E+xdj2lOll6DDPrLw9r9at+y+9JfK5ykxCEDHUpzLPNBJ+qEPdiMGYMsDTz6W3fORc7v8Z7Pt0HLkYBumj3zF9R5sIiI8c1bevMne+fb1t5tJhC+8Ou+91eVEbsNJn/cHss/ctcohcnf/aLI+cJn/S58G2urqh10d+FfIN7HK+gifFkFddCc8Ud1mbw8dhECDE+6oL6Fv5KFJRa7mpytHGfFXVFr6p3a4gDuP1Jufh8JUsZgw2r81wwdm6HyA8szGo/J7N7Q4OWj88jjzLBt5A1eQuv4G53auiVrJ4VdeFqW8n1+99z2Pz/W/le5z7ra9lfKxEXF4OiRtWPPz4DxULYbu/EAAA
+```
+
+Ensure you set a Persistant Global Varibal called subsURL.
+
+### Modifications
+
+#### Base url
+
+http://localhost:28080/subs
+
+#### Streamer.bot webstream port
+
+To change the port to what the streamer bot is listening on, change it by search parameters in the url.
+
+```url
+http://localhost:28080/subs?wsPort=8080
+```
+
+wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
+
+#### Streamer.bot Server
+
+If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
+
+```url
+http://localhost:28080/subs?server=192.168.0.10
+```
+
+#### Reset Count
+
+You can either use the preconfigured command `!resetsubs` or add reset to the search parameter/s.
+
+```url
+http://localhost:28080/subs?reset
+```
+
+#### Testing
+
+This will add buttons so you can manually simulate subs and reset count.
+
+```url
+http://localhost:28080/subs?reset
+```

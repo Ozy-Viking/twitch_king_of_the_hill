@@ -60,7 +60,7 @@ var weaponsObjects = {
         'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
         'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
     },
-    'butchered name':{
+    'butchered name': {
         'file': 'Name_Butcher_4000.png',
         'tense 1': 'a',
         'tense 2': 'that', // Todo: Implement this!
@@ -68,7 +68,7 @@ var weaponsObjects = {
         'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
         'command': ['name', 'murder', 'butcher', 'kill']
     },
-    'boomerang':{
+    'boomerang': {
         'file': 'Boomerang.png',
         'tense 1': 'the',
         'tense 2': 'that',
@@ -84,7 +84,7 @@ var weaponsObjects = {
         'right': 'transform: rotate(10deg) translate(-35px,25px)',
         'command': ['didgeridoo', 'pipe', 'wind', 'doo', 'didg']
     },
-    'sausage sanga':{
+    'sausage sanga': {
         'file': 'sausage_sanga.png',
         'tense 1': 'the',
         'tense 2': 'that',
@@ -92,7 +92,7 @@ var weaponsObjects = {
         'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
         'command': ['sausage', 'sandwich', 'sanga', 'snag', 'bunning']
     },
-    'goon sack':{
+    'goon sack': {
         'file': 'Goon_Sack.png',
         'tense 1': 'the',
         'tense 2': 'that',
@@ -104,7 +104,7 @@ var weaponsObjects = {
 
 const urlParams = new URLSearchParams(window.location.search);
 var gstringProb = Number(urlParams.get('gstringProb'));
-if (gameLength in [null, 0] ) { gstringProb = 10000; };
+if (gameLength in [null, 0]) { gstringProb = 10000; };
 
 var gstring = {
     'name': "JD's Sexy Thong",
@@ -117,12 +117,12 @@ var gstring = {
 };
 
 var joinCommand = urlParams.get('joinCommand');
-if (joinCommand === null) { joinCommand = "fight"; };
+if (joinCommand == null) { joinCommand = "king"; };
 joinCommand = joinCommand.toLowerCase()
-var joinCommandRegex = new RegExp(pattern = joinCommand);
+var joinCommandRegex = new RegExp(joinCommand, "i");
 
 var gameLength = Number(urlParams.get('gameLength'));
-if ( gameLength in [null, 0] ) { gameLength = 60; };
+if (gameLength in [null, 0]) { gameLength = 60; };
 var removalTimeoutTime = (gameLength + 60) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5'];
@@ -139,7 +139,7 @@ var weaponNames = Object.keys(weaponsObjects);
 for (let i = 0; i < weaponNames.length; i++) {
     let weapon = weaponsObjects[weaponNames[i]];
     weapon.name = weaponNames[i];
-    weapon.regex = new RegExp(pattern = weapon.command.join('|'));
+    weapon.regex = new RegExp(weapon.command.join('|'), "i");
 };
 
 var sides = ['left', 'right'];
@@ -184,7 +184,7 @@ if (!(server === null)) {
 };
 
 var testing = urlParams.get('testing');
-if ( (testing != null) & (testing != 'false') ) {
+if ((testing != null) & (testing != 'false')) {
     testing = true;
 } else {
     testing = false;
@@ -249,9 +249,7 @@ function connectws() {
                 "id": "123"
             }
         ));
-        var updateMessageRegex = new RegExp(
-            `${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`
-            );
+        var updateMessageRegex = new RegExp(`${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`, "i");
 
         ws.onmessage = function (event) {
             // grab message and parse JSON
@@ -261,7 +259,7 @@ function connectws() {
             if (typeof wsdata.data != "undefined") {
                 if (typeof wsdata.data.message != "undefined") {
                     let lowerMessage = wsdata.data.message.message.toLowerCase();
-                    if ( (joinCommandRegex.exec(lowerMessage) != null) && (updateMessageRegex.exec(lowerMessage) == null) ){ //lowerMessage.startsWith(joinCommand)) {
+                    if ((joinCommandRegex.exec(lowerMessage) != null) && (updateMessageRegex.exec(lowerMessage) == null)) { //lowerMessage.startsWith(joinCommand)) {
                         addFighter(wsdata.data.message.displayName, lowerMessage);
                     };
                 }
@@ -284,10 +282,10 @@ function usersWeapon(lowerMessage) {
         choosenWeapon = chooseRandomWeapon();
     }
 
-    if ( choosenWeapon.name == 'the thong'){
-       if ( Randomizer(0, gstringProb) == 69 ){ // tehe
-        return gstring;
-       };
+    if (choosenWeapon.name == 'the thong') {
+        if (Randomizer(0, gstringProb) == 69) { // tehe
+            return gstring;
+        };
     };
     return choosenWeapon;
 }
@@ -304,17 +302,17 @@ function addFighter(user, lowerMessage) {
             //save this to cache between sessions too.
             //check for user being added already (or if already dead and ignore)
             var addToFight = true;
-            if (battleActive){
-                if (!testing){
+            if (battleActive) {
+                if (!testing) {
                     for (let i = 0; i < divnumber; i++) {
                         checkUser = document.getElementById(i).getAttribute("user");
-                        if ((user == checkUser) ) {
+                        if ((user == checkUser)) {
                             addToFight = false;
                         };
                     };
                 };
             } else {
-                addToFight = false; 
+                addToFight = false;
             };
             if (addToFight) {
                 var warp = document.getElementById("confetti-container"),
@@ -432,7 +430,7 @@ function yeet(id) {
     loseSound();
 };
 
-function rigged(element){
+function rigged(element) {
     // Set Rigged text middle of portrait, Have weapon set.
     element.innerHTML = element.innerHTML + "<h1 id='rigged' class='rigged'>#RIGGED</h1>";
     let riggedTitle = document.getElementById('rigged');
@@ -455,15 +453,15 @@ function winnerTime(id, winnerNotification) {
 
     element = document.getElementById(id);
     var user = element.getAttribute("user");
-    if ( riggedUsers.includes(user) ){
+    if (riggedUsers.includes(user)) {
         rigged(element);
     } else {
-    TweenMax.set(element, { transformOrigin: "50% 100%" });
-    TweenMax.to(element, 1, { scale: 2.5 });
-    TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
-    TweenMax.to(element, 3, { y: '-=207', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
-    TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
-    element.style.z = "-1000";
+        TweenMax.set(element, { transformOrigin: "50% 100%" });
+        TweenMax.to(element, 1, { scale: 2.5 });
+        TweenMax.to(element, 0.1, { x: '-=20', repeat: 0, ease: Sine.easeInOut, delay: 0 });
+        TweenMax.to(element, 3, { y: '-=207', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
+        TweenMax.to(element, 3, { y: '+=831', yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 10 });
+        element.style.z = "-1000";
     };
 };
 
@@ -493,7 +491,7 @@ function startFight() {
                 numbers[i] = i;
             };
             numbers.sort(() => Math.random() - 0.5);
-            
+
             for (let i = 0; i < divnumber; i++) {
                 if (numbers[i] != (winner)) {
                     yeetUser = document.getElementById(numbers[i]);
@@ -514,7 +512,7 @@ function startFight() {
 function playSound(filename, volume = 0.4) {
     audio[soundplay] = new Audio(`static/sound/${filename}`);
     audio[soundplay].volume = volume;
-    if (filename === 'battle.mp3'){
+    if (filename === 'battle.mp3') {
         audio[soundplay].loop = true;
     }
     audio[soundplay].play();
@@ -525,35 +523,35 @@ function playSound(filename, volume = 0.4) {
     }
 };
 
-function setVolume(localSound, localdiff){
+function setVolume(localSound, localdiff) {
     localSound.volume += localdiff;
     localSound.play();
 }
 
-function changeVolume(audioID, newVolume, timeSpan){
+function changeVolume(audioID, newVolume, timeSpan) {
     let sections = 10;
     let localSplit = timeSpan / sections;
     let currentVolume = audio[audioID].volume;
     let diff = (newVolume - currentVolume) / sections;
-    for (let i = 0; i < sections; i++){
-        setTimeout(setVolume, localSplit*i, audio[audioID], diff);
+    for (let i = 0; i < sections; i++) {
+        setTimeout(setVolume, localSplit * i, audio[audioID], diff);
     }
 }
 
-function stopAllSound(){
-    for (let i = 0; i < audio.length; i ++){
+function stopAllSound() {
+    for (let i = 0; i < audio.length; i++) {
         let sound = audio[i]
         try {
             sound.volume = 0.2;
             sound.pause();
             sound = null;
-        } catch {}
+        } catch { }
     }
 }
 
 function generateEndingMessage() {
     let endingChoice = Randomizer(0, (weaponNames.length + altEndingMessages.length - 1));
-    if ( endingChoice < altEndingMessages.length ) {
+    if (endingChoice < altEndingMessages.length) {
         return altEndingMessages[endingChoice];
     } else {
         let randWeapon = chooseRandomWeapon()
@@ -561,9 +559,9 @@ function generateEndingMessage() {
     }
 };
 
-function addTestingPeople( totalGameLength, numberPeople=10 ){
+function addTestingPeople(totalGameLength, numberPeople = 10) {
     var testingPeople = ['Ozy_Viking', 'JDPlays', 'the_rubble', 'Naval_Warlord']
-    function randomPlayer(){
+    function randomPlayer() {
         return testingPeople[Math.floor(Math.random() * testingPeople.length)]
     }
     for (let i = 0; i < numberPeople; i++) {
@@ -573,9 +571,9 @@ function addTestingPeople( totalGameLength, numberPeople=10 ){
 }
 
 var split = gameLength / 12;
-function gameLengthSplit(m=1, c=0, floor=false){
+function gameLengthSplit(m = 1, c = 0, floor = false) {
     let length = m * split + c
-    if ( floor ){
+    if (floor) {
         length = Math.floor(length)
     }
     return length
@@ -593,7 +591,7 @@ function randomWeaponSetup() {
 }
 var endingMessage = generateEndingMessage();
 
-function hillDecay (){
+function hillDecay() {
     // BUG: Not selecting the hill image.
     let hill = document.getElementById("grassyhill_id");
     console.log(hill)
@@ -601,21 +599,21 @@ function hillDecay (){
 }
 
 //Main function
-function main () {
+function main() {
     connectws();
     hillDecay();
-    if (testing){ setTimeout(addTestingPeople, 1000, gameLength, gameLength/2) }
+    if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }
     battleActive = true
     setTimeout(playSound, 900, 'battle.mp3', 0.2);
-    setTimeout(notify, gameLengthSplit( 0, 1) * 1000,             `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-9, 1 + gameLength) * 1000,`${gameLengthSplit( 9, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-6, 1 + gameLength) * 1000,`${gameLengthSplit( 6, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-3, 1 + gameLength) * 1000,`${gameLengthSplit( 3, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-2, 1 + gameLength) * 1000,`${gameLengthSplit( 2, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-1, 1 + gameLength) * 1000,`${gameLengthSplit( 1, 0, true)} ${updateMessage}!`);
-    setTimeout(notify,     (gameLength + 1) * 1000, endingMessage)
+    setTimeout(notify, gameLengthSplit(0, 1) * 1000, `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-9, 1 + gameLength) * 1000, `${gameLengthSplit(9, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-6, 1 + gameLength) * 1000, `${gameLengthSplit(6, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-3, 1 + gameLength) * 1000, `${gameLengthSplit(3, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-2, 1 + gameLength) * 1000, `${gameLengthSplit(2, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-1, 1 + gameLength) * 1000, `${gameLengthSplit(1, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, (gameLength + 1) * 1000, endingMessage)
     setTimeout('battleActive = false', (gameLength + 1) * 1000)
-    setTimeout(ws.close,   (gameLength + 1) * 1000);
+    setTimeout(ws.close, (gameLength + 1) * 1000);
     setTimeout(startFight, (gameLength + 2) * 1000);
 
     randomWeaponSetup();
