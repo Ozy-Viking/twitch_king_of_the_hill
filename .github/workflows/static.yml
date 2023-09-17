@@ -36,6 +36,8 @@ jobs:
         uses: actions/configure-pages@v3
       - name: Version
         run: ./scripts/version.sh ${{github.ref_name}}
+      - name: Static page ref
+        run: ./scripts/gh_pages.sh
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
