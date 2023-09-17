@@ -245,6 +245,13 @@ Cheer from:
 
 ## Stream Subs
 
+### OBS Setting
+
+Browser:
+
+- Width: 400
+- Height: 100
+
 ### Streambot import fuction
 
 ```text
@@ -253,13 +260,13 @@ U0JBRR+LCAAAAAAABADNV9uO2zYQfS/Qf3ANpE/hgqQuJPOWprctsm2xafalKApeRl4hurgUtZcu9t9L
 
 Ensure you set a Persistant Global Varibal called subsURL.
 
-### Modifications
+### Subs Modifications
 
 #### Base url
 
 http://localhost:28080/subs
 
-#### Streamer.bot webstream port
+#### Subs Streamer.bot webstream port
 
 To change the port to what the streamer bot is listening on, change it by search parameters in the url.
 
@@ -269,12 +276,12 @@ http://localhost:28080/subs?wsPort=8080
 
 wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
-#### Streamer.bot Server
+#### Subs Streamer.bot Server
 
 If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
 
 ```url
-http://localhost:28080/subs?server=192.168.0.10
+http://localhost:28080/subs?server=127.0.0.1
 ```
 
 #### Reset Count
@@ -285,10 +292,10 @@ You can either use the preconfigured command `!resetsubs` or add reset to the se
 http://localhost:28080/subs?reset
 ```
 
-#### Testing
+#### Subs Testing
 
 This will add buttons so you can manually simulate subs and reset count.
 
 ```url
-http://localhost:28080/subs?reset
+http://localhost:28080/subs?testing
 ```
