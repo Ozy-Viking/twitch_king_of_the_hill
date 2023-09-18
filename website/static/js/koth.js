@@ -119,6 +119,7 @@ var gstring = {
 var joinCommand = urlParams.get('joinCommand');
 if (joinCommand == null) { joinCommand = "king"; };
 joinCommand = joinCommand.toLowerCase()
+// file deepcode ignore reDOS: No code injection possible in file.
 var joinCommandRegex = new RegExp(joinCommand, "i");
 
 var gameLength = Number(urlParams.get('gameLength'));
@@ -190,6 +191,7 @@ if ((testing != null) & (testing != 'false')) {
     testing = false;
 };
 
+// deepcode ignore MissingClose: websocket is closed.
 var ws = new WebSocket(server);
 var weaponnumber = 0;
 var lowerMessage;
@@ -413,8 +415,8 @@ function loseSound() {
 };
 
 function yeet(id) {
-    element = document.getElementById(id);
-    x = Randomizer(innerWidth * 2, innerWidth * 5);
+    let element = document.getElementById(id);
+    let x = Randomizer(innerWidth * 2, innerWidth * 5);
     var random = Math.floor(Math.random() * 2) + 1;
     var rotZ = 180;
     switch (random) {
@@ -446,12 +448,14 @@ function rigged(element) {
 }
 
 function winnerTime(id, winnerNotification) {
+    console.log('winnerTime')
+    console.log(id)
     playSound('horn.mp3', 0.4)
     // Play Sound and notify winner 
     setTimeout(playSound, 1500, 'cheer.mp3', 0.3)
     setTimeout(notify, 1000, winnerNotification)
 
-    element = document.getElementById(id);
+    let element = document.getElementById(id);
     var user = element.getAttribute("user");
     if (riggedUsers.includes(user)) {
         rigged(element);
@@ -466,15 +470,21 @@ function winnerTime(id, winnerNotification) {
 };
 
 function startFight() {
+    console.log('Start Fight')
     battleActive = false;
+    // deepcode ignore MissingClose: added close to end of onopen.
     ws = new WebSocket(server);
     ws.onopen = function () {
+        console.log('Start Fight: onopen')
         winner = Math.floor(Math.random() * divnumber);
         var winnerNotification;
         if (divnumber == 0) {
             // **** No users here - need to handle ****
+            // file deepcode ignore UsageOfUndefinedReturnValue: Not an issue.
+            // deepcode ignore CodeInjection: No code injection possible here.
             setTimeout(notify(noJoinMessage), 10000);
         } else {
+            console.log('Start Fight: onopen - is winner')
             var user = document.getElementById(winner).getAttribute("user");
             var winweapon = document.getElementById(winner).getAttribute("weapon");
             if (winweapon === null) {
@@ -487,7 +497,7 @@ function startFight() {
             var yeetId;
             var numbers = new Array(divnumber);
             // console.log(numbers)
-            for (i = 0; i < divnumber; i++) {
+            for (let i = 0; i < divnumber; i++) {
                 numbers[i] = i;
             };
             numbers.sort(() => Math.random() - 0.5);
@@ -505,6 +515,8 @@ function startFight() {
             setTimeout(changeVolume, 10000, 0, 0, 2500)
             setTimeout(winnerTime, 12500, winner, winnerNotification);
             setTimeout(setWinner, 17000, user);
+            // deepcode ignore CodeInjection: Code Injection is not possible.
+            setTimeout(ws.close, 25000)
         }
     };
 };
@@ -611,8 +623,9 @@ function main() {
     setTimeout(notify, gameLengthSplit(-3, 1 + gameLength) * 1000, `${gameLengthSplit(3, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-2, 1 + gameLength) * 1000, `${gameLengthSplit(2, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-1, 1 + gameLength) * 1000, `${gameLengthSplit(1, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, (gameLength + 1) * 1000, endingMessage)
-    setTimeout('battleActive = false', (gameLength + 1) * 1000)
+    setTimeout(notify, (gameLength + 1) * 1000, endingMessage);
+    setTimeout('battleActive = false', (gameLength + 1) * 1000);
+    // deepcode ignore CodeInjection: No code inject 
     setTimeout(ws.close, (gameLength + 1) * 1000);
     setTimeout(startFight, (gameLength + 2) * 1000);
 

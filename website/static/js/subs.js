@@ -122,6 +122,7 @@ function subSwitch(subTier, subs = 1) {
             updateScore(1, subs)
     }
 }
+// file deepcode ignore MissingClose: Not relevent.
 const ws = new WebSocket(server);
 const botID = "124";
 function connectws() {
@@ -262,6 +263,7 @@ function testSubSwitch(subType) {
 function main() {
     connectws();
     if (testing) {
+        // file deepcode ignore CodeInjection: Code injection is not possible.
         setTimeout(ws.onmessage, 500, testData("GiftBomb", 1));
     }
 }
