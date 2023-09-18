@@ -126,7 +126,7 @@ var gameLength = Number(urlParams.get('gameLength'));
 if (gameLength in [null, 0]) { gameLength = 60; };
 var removalTimeoutTime = (gameLength + 60) * 1000;
 
-var riggedUsers = ['Ozy_Viking', 'sassysarrah5'];
+var riggedUsers = ['Ozy_Viking', 'sassysarrah5', 'gotobedchild'];
 riggedUsers = riggedUsers.concat(urlParams.getAll('riggedUser'));
 
 
