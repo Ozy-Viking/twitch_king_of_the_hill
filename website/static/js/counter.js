@@ -27,6 +27,7 @@ const storage = localStorage;
 
 if (testing) {
     const testButtons = document.getElementById('testButtons');
+    // deepcode ignore DOMXSS: No server connection.
     testButtons.innerHTML = `<button onclick="ws.onmessage(testData('${countCommand}'));">Msg: ${countCommand}</button>
                             <button onclick="ws.onmessage(testData('random'));">Msg: random</button>
                              <button onclick="resetCount()">Reset Count</button>`
