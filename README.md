@@ -367,7 +367,7 @@ http://localhost:28080/counter?testing=random text to test
 To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not. The command is also, case insensative i.e. `!SLaPYA` is valid as it starts with !slap.
 
 ```url
-http://localhost:28080/?count=!slap
+http://localhost:28080/counter?count=!slap
 ```
 
 ##### Count Text
@@ -375,7 +375,7 @@ http://localhost:28080/?count=!slap
 To change the text preceding the count use `counter_text`. There is a space between the counter text and the count but add and punctuation marks as needed. `Incoming Sassy Slaps:` is the default but also a valid input.
 
 ```url
-http://localhost:28080/?counter_text=Incoming Sassy Slaps:
+http://localhost:28080/counter?counter_text=Incoming Sassy Slaps:
 ```
 
 ##### Count Timeout
@@ -383,5 +383,5 @@ http://localhost:28080/?counter_text=Incoming Sassy Slaps:
 To stop over spamming or helping prevent multiple people using the command for the same instance use the search parameter `timeout`. If no timeout is given, all inputs are counted. Only use numbers of seconds. For a 10 second timeout, `timeout=10` would be used. If `timeout=10sec` is used then the timeout will be 0.
 
 ```url
-http://localhost:28080/?timeout=0
+http://localhost:28080/counter?timeout=0
 ```
