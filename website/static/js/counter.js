@@ -19,10 +19,25 @@ if (countText == null) {
     countText = "Incoming Sassy Slaps:"
 };
 document.getElementById("counter_text").innerText = countText;
-
 var reset = urlParams.get('reset') != null;
 var testing = urlParams.get('testing') != null;
 var testMsg = urlParams.get('testing');
+var timeout = urlParams.get('timeout');
+var countCommandAllowed = true;
+if (timeout == null) {
+    timeout = 0
+} else {
+    try {
+        timeout = Number(timeout);
+        if (Number.isNaN(timeout)) {
+            timeout = 0;
+        }
+    } catch (error) {
+        timeout = 0;
+    }
+
+}
+console.log(timeout)
 const storage = localStorage;
 
 if (testing) {
@@ -60,7 +75,10 @@ function connectws() {
         const wsdata = JSON.parse(msg);
 
         if (wsdata.event && wsdata.event.source === 'Twitch') {
-            validateCountMessage(wsdata.data.message.message)
+            if (countCommandAllowed) {
+                validateCountMessage(wsdata.data.message.message)
+
+            }
         }
     }
 };
@@ -68,6 +86,10 @@ function connectws() {
 function validateCountMessage(msg = "") {
     if (msg.startsWith(countCommand)) {
         updateCount(1);
+        if (timeout > 0) {
+
+            setCommandLockout(timeout)
+        }
     }
 }
 var countTotal;
@@ -82,6 +104,19 @@ function initCount() {
         console.log("initCount != null")
         updateCount(Number(initCount), set = true)
     }
+}
+
+/**
+ * Sets a cooldown for the command.
+ * @param {number} cooldown - Time in seconds that the count will not increase.
+ */
+function setCommandLockout(cooldown) {
+    console.log("Start Cooldown")
+    countCommandAllowed = false
+    setTimeout(() => {
+        console.log("End Cooldown")
+        countCommandAllowed = true
+    }, cooldown * 1000)
 }
 
 function updateCount(count = 0, set = false) {

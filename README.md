@@ -55,7 +55,13 @@ http://[QNAP IP addess]:28080/
 
 ## URLs
 
-### Standard King of the hill
+Currently there are:
+
+- [King of the hill](https://github.com/Ozy-Viking/twitch_king_of_the_hill#standard-king-of-the-hill)
+- [Subs](https://github.com/Ozy-Viking/twitch_king_of_the_hill#stream-subs)
+- [Counter](https://github.com/Ozy-Viking/twitch_king_of_the_hill#counter)
+
+### King of the hill
 
 ```url
 http://localhost:28080/
@@ -241,20 +247,20 @@ Cheer from:
 
 ---
 
-## Stream Subs
+### Stream Subs
 
 ```url
 http://localhost:28080/subs
 ```
 
-### OBS Setting
+#### OBS Setting
 
 Browser:
 
 - Width: 400
 - Height: 100
 
-### Streambot import function
+#### Streambot import function
 
 ```text
 U0JBRR+LCAAAAAAABADNV9uO2zYQfS/Qf3ANpE/hgqQuJPOWprctsm2xafalKApeRl4hurgUtZcu9t9LSpZtWXLgbpMm+7TmGc6Q58wMRw9ffrFYLG/ANnldLV8soufdQl6ua+uutsu0Xy7zKi/bcre+xGf0jCw3KDjp1x7CD/+zkiUEk4v7xXd3wV1v5hHZuuvaBuyXv+//vMrf5dVqC+7OsiRneHDuAQONtvnabcBlWH7sIxs5iix1MGr8yu/9ymKAOjg3Yb+giqsMM2RMEqM4jiSSmlIksWQYR0JLrobY3ba/WmjDhaq2KPbXoZKqgODT2RZGyJ0uWgPf27r8MW9cbe+9USaLZmQ18HQJDbjFm1aFayqwC123lRsdYWXrdh1sd1Y/fTuykMWtvG8u22oukpWVqcuXekPhBNd1pVtrwUedQZ3NVysvzj6tB9RuvJSlD3TesZwqakyaGsQFTlCMARCngqNEGJpiTzGXcv8CewJxGnFCRIpoFAQyLENCiQRhRhkFoVSWTLe6+3UgM8bkEDkq0zxv+/jj7scfI7KneTZHSKOhgp83KgflFp6exbvaXU+O39St1SPbiUlri4A9azz49vL1s69tyJuJmdeygu58vRARjhRhXCGmmUKxoiniiWFIYya4IIQZoY8IYUycZQQbFDNfLjGOCeJAY5Qwg8FglsgIJltvIV9dhzzCZ/iISBE/BIb8PiixE/TLKwN3HiMj3Z5/Olk+qiAs4gkTGEUkARRzghFPsUbMKKYzLjiPk89FkOh0QW5k0TVYQpNDb6W8u9qgk8P3XW2mY+0xRjSRkkiBsASfwpoAUhGWviuJmOmYZ1LipzBGMKYfnjN6OmcO7tz28XixOJ5+awsZ+N5uXur+XZlhsudKsySGJFFI+T8UQ0RD8yaeMEIikyaZzujTuPrwTMX/oty7Gp679o20eQg21PeGwymFYTJp3NFD+QHF5ZUMJX61cfk+dwYy2RZuyOs5EnpBMs4zjplGKWGh/1KvhYgzFEdcKkOpiPT0ITxFEDp5JLcDxsTfaXrg05/NH0Ko7u0cgbouCrluwOzhA7wTeDrORZnPTwGZ74mMoJgKg0TCuJ82Uk60wlwL+r+Oc/6VuICmkSuYH+E+xdj2lOll6DDPrLw9r9at+y+9JfK5ykxCEDHUpzLPNBJ+qEPdiMGYMsDTz6W3fORc7v8Z7Pt0HLkYBumj3zF9R5sIiI8c1bevMne+fb1t5tJhC+8Ou+91eVEbsNJn/cHss/ctcohcnf/aLI+cJn/S58G2urqh10d+FfIN7HK+gifFkFddCc8Ud1mbw8dhECDE+6oL6Fv5KFJRa7mpytHGfFXVFr6p3a4gDuP1Jufh8JUsZgw2r81wwdm6HyA8szGo/J7N7Q4OWj88jjzLBt5A1eQuv4G53auiVrJ4VdeFqW8n1+99z2Pz/W/le5z7ra9lfKxEXF4OiRtWPPz4DxULYbu/EAAA
@@ -262,9 +268,9 @@ U0JBRR+LCAAAAAAABADNV9uO2zYQfS/Qf3ANpE/hgqQuJPOWprctsm2xafalKApeRl4hurgUtZcu9t9L
 
 Ensure you set a Persistent Global Variable called subsURL.
 
-### Subs Modifications
+#### Subs Modifications
 
-#### Subs Streamer.bot webstream port
+##### Subs Streamer.bot webstream port
 
 To change the port to what the streamer bot is listening on, change it by search parameters in the url.
 
@@ -274,7 +280,7 @@ http://localhost:28080/subs?wsPort=8080
 
 wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
-#### Subs Streamer.bot Server
+##### Subs Streamer.bot Server
 
 If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
 
@@ -282,7 +288,7 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 http://localhost:28080/subs?server=127.0.0.1
 ```
 
-#### Subs Reset Count
+##### Subs Reset Count
 
 You can either use the pre-configured command `!resetsubs` or add reset to the search parameter/s.
 
@@ -290,7 +296,7 @@ You can either use the pre-configured command `!resetsubs` or add reset to the s
 http://localhost:28080/subs?reset
 ```
 
-#### Subs Testing
+##### Subs Testing
 
 This will add buttons so you can manually simulate subs and reset count.
 
@@ -299,7 +305,8 @@ http://localhost:28080/subs?testing
 ```
 
 ---
-## Counter
+
+### Counter
 
 ```url
 http://localhost:28080/counter
@@ -307,9 +314,9 @@ http://localhost:28080/counter
 
 Counter is used for counting a specific message sent through chat. It uses a check to see if the message starts with a 'count command'. For example, if the command is '!slap' then as long as the first 5 characters start with '!slap' then it will increase the count.
 
-### Subs Modifications
+#### Counter Modifications
 
-#### Counter Streamer.bot webstream port
+##### Counter Streamer.bot webstream port
 
 To change the port to what the streamer bot is listening on, change it by search parameters in the URL.
 
@@ -319,7 +326,7 @@ http://localhost:28080/counter?wsPort=8080
 
 wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
-#### Counter Streamer.bot Server
+##### Counter Streamer.bot Server
 
 If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port as well if it is not on the default 8080.
 
@@ -327,7 +334,7 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 http://localhost:28080/counter?server=127.0.0.1
 ```
 
-#### Counter Reset Count
+##### Counter Reset Count
 
 You can either use the preconfigured command `!resetcount or add reset to the search parameter/s.
 
@@ -335,7 +342,7 @@ You can either use the preconfigured command `!resetcount or add reset to the se
 http://localhost:28080/counter?reset
 ```
 
-#### Counter Testing
+##### Counter Testing
 
 This will add buttons so you can manually simulate the command and reset the count.
 
@@ -348,14 +355,16 @@ You can also add optional text to test as a message.
 ```url
 http://localhost:28080/counter?testing=random text to test
 ```
-#### Count Command
+
+##### Count Command
 
 To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not.  
 
 ```url
 http://localhost:28080/?count=!slap
 ```
-#### Count Text
+
+##### Count Text
 
 To change the text preceding the count use `counter_text`. There is a space between the counter text and the count but add and punctuation marks as needed. `Incoming Sassy Slaps:` is the default but also a valid input.
 
@@ -363,4 +372,10 @@ To change the text preceding the count use `counter_text`. There is a space betw
 http://localhost:28080/?counter_text=Incoming Sassy Slaps:
 ```
 
+##### Count Timeout
 
+To stop over spamming or helping prevent multiple people using the command for the same instance use the search parameter `timeout`. If no timeout is given, all inputs are counted. Only use numbers of seconds. For a 10 second timeout, `timeout=10` would be used. If `timeout=10sec` is used then the timeout will be 0.
+
+```url
+http://localhost:28080/?timeout=0
+```
