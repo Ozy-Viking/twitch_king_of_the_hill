@@ -77,7 +77,7 @@ function initScore(tierInt) {
     if (reset) {
         initTierScore = 0
     }
-    if (initScore != null) {
+    if (initTierScore != null) {
         return Number(initTierScore)
     }
     storage.setItem(tierName[tierInt], 0)
@@ -262,9 +262,9 @@ function testSubSwitch(subType) {
 
 function main() {
     connectws();
-    if (testing) {
-        // file deepcode ignore CodeInjection: Code injection is not possible.
-        setTimeout(ws.onmessage, 500, testData("GiftBomb", 1));
-    }
+    // if (testing) {
+    //     // file deepcode ignore CodeInjection: Code injection is not possible.
+    //     setTimeout(ws.onmessage, 500, testData("GiftBomb", 1));
+    // }
 }
 main();

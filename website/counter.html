@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <!-- 
-    King of the Hill
-    Maintainer Ozy-Viking
-    Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
-    Docker Container: ozyviking/twitch-king-of-the-hill
+King of the Hill
+Maintainer Ozy-Viking
+Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
+Docker Container: ozyviking/twitch-king-of-the-hill
 -->
 <html lang="en">
+
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Sub Stream (version_tag)</title>
+        <title>Counter (version_tag)</title>
         <style>
             :root {
                 --shadow-colour: rgb(0, 0, 0);
@@ -32,12 +33,10 @@
 
     <body>
         <div id="display">
-            Rockets For JD to launch: <span id="total"></span><br />
-            T1 Sub = 1 more rocket to launch<br />
-            T2 = 2 Rockets, T3 = 6 Rockets
+            <span id="counter_text"></span> <span id="count"></span>
         </div>
         <div id="testButtons"></div>
-        <script src="/static/js/subs.js"></script>
+        <script src="/static/js/counter.js"></script>
     </body>
 
 </html>
