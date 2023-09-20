@@ -16,7 +16,7 @@ if (countCommand == null) {
 };
 var countText = urlParams.get('text');
 if (countText == null) {
-    countText = "Incoming Sassy Slaps:"
+    countText = "Slap Count:"
 };
 document.getElementById("counter_text").innerText = countText;
 var reset = urlParams.get('reset') != null;
@@ -84,8 +84,8 @@ function connectws() {
             authUsers = [...authUsers, wsdata.platforms.twitch.broadcastUserName]
         }
         if (wsdata.event && wsdata.event.source === 'Twitch') {
-            if (wsdata.data.message.message.toLowerCase().startsWith(setCountCommand)) {
-                console.log(wsdata.data.message.message)
+            if (wsdata.data.message.message.toLowerCase().startsWith(setCountCommand) && (authUsers.includes(wsdata.data.message.username) || (wsdata.data.message.role >= 3))) {
+                console.log(wsdata.data.message.role)
                 let newCount = Number(wsdata.data.message.message.split(" ")[1]);
                 console.log(newCount)
                 if (!Number.isNaN(newCount)) {
@@ -99,7 +99,6 @@ function connectws() {
 };
 
 function validateCountMessage(msg = "") {
-
     if (msg.toLowerCase().startsWith(countCommand)) {
         updateCount(1);
         if (timeout > 0) {

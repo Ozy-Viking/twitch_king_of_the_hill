@@ -41,7 +41,7 @@ var reset = urlParams.get('reset') != null;
 var testing = urlParams.get('testing') != null;
 const storage = localStorage;
 const setSubCount = "!setsubcount"
-var authUser = ['ozy_viking',];
+var authUsers = ['ozy_viking',];
 const tier = {
     1: 0,
     2: 0,
@@ -164,7 +164,7 @@ function connectws() {
         const wsdata = JSON.parse(msg);
         // console.log(wsdata.event && wsdata.event.source === 'Twitch')
         if (wsdata.id == "1") {
-            authUser = [...authUser, wsdata.platforms.twitch.broadcastUserName]
+            authUsers = [...authUsers, wsdata.platforms.twitch.broadcastUserName]
         }
         if (wsdata.event && wsdata.event.source === 'Twitch') {
             // console.log(wsdata.data.message.username)
@@ -173,7 +173,7 @@ function connectws() {
                 subSwitch(wsdata.data.subTier)
             } else if (wsdata.event.type == "GiftBomb") {
                 subSwitch(wsdata.data.subTier, wsdata.data.gifts)
-            } else if (["Whisper", "ChatMessage"].includes(wsdata.event.type) && authUser.includes(wsdata.data.message.username)) {
+            } else if (["Whisper", "ChatMessage"].includes(wsdata.event.type) && (authUsers.includes(wsdata.data.message.username)||(wsdata.data.message.role >= 3))) {
                 if (wsdata.data.message.message.toLowerCase().startsWith(setSubCount)) {
                     console.log(wsdata.data.message.message)
                     let newCount = wsdata.data.message.message.split(" ").slice(1);
