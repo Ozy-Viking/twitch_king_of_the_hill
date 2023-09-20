@@ -193,6 +193,7 @@ if ((testing != null) & (testing != 'false')) {
 
 // deepcode ignore MissingClose: websocket is closed.
 var ws = new WebSocket(server);
+const botID = "123";
 var weaponnumber = 0;
 var lowerMessage;
 var noJoinMessage = `No one joined, so no new ${battleGround}!`;
@@ -218,7 +219,7 @@ function notify(message) {
             "args": {
                 "rawInput": message
             },
-            "id": "123"
+            "id": botID
         }));
 };
 
@@ -233,7 +234,7 @@ function setWinner(message) {
                 "rawInput": message
 
             },
-            "id": "123"
+            "id": botID
         }));
 };
 
@@ -248,7 +249,7 @@ function connectws() {
                         "ChatMessage"
                     ]
                 },
-                "id": "123"
+                "id": botID
             }
         ));
         var updateMessageRegex = new RegExp(`${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`, "i");
