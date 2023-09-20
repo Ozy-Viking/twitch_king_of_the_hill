@@ -33,6 +33,7 @@ if (testing) {
                              <button onclick="resetCount()">Reset Count</button>`
 }
 
+// deepcode ignore MissingClose: Intentionally never closed.
 const ws = new WebSocket(server);
 const botID = "125";
 function connectws() {
