@@ -53,7 +53,7 @@ You should be able to access the website on:
 
 http://[QNAP IP addess]:28080/
 
-## URL
+## URLs
 
 ### Standard King of the hill
 
@@ -61,7 +61,7 @@ http://[QNAP IP addess]:28080/
 http://localhost:28080/
 ```
 
-### Modifications
+#### Modifications
 
 To have multiple modifications, simply use an `&` between terms.
 
@@ -71,7 +71,7 @@ http://localhost:28080/?wsPort=8080&gameLength=60
 
 The values that are in each example are the default and are unrequired to be added. Except for the 'Streamer.bot Server' example.
 
-#### Streamer.bot webstream port
+##### Streamer.bot webstream port
 
 To change the port to what the streamer bot is listening on, change it by search parameters in the url.
 
@@ -81,7 +81,7 @@ http://localhost:28080/?wsPort=8080
 
 wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
-#### Streamer.bot Server
+##### Streamer.bot Server
 
 If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
 
@@ -89,7 +89,7 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 http://localhost:28080/?server=192.168.0.10
 ```
 
-#### Join Command
+##### Join Command
 
 To change the join command from fight use the search parameter `joinCommand`. There is no issue if you want to use and exclamation command (!join) or not.
 
@@ -97,7 +97,7 @@ To change the join command from fight use the search parameter `joinCommand`. Th
 http://localhost:28080/?joinCommand=fight
 ```
 
-#### Game Length
+##### Game Length
 
 To change the game length from 60 seconds use the search parameter `gameLength`.
 
@@ -105,13 +105,13 @@ To change the game length from 60 seconds use the search parameter `gameLength`.
 http://localhost:28080/?gameLength=60
 ```
 
-#### Champion title and Hill name
+##### Champion title and Hill name
 
 ```url
 http://localhost:28080/?championName=King&hillName=Hill
 ```
 
-#### Probability of Sexy Thong
+##### Probability of Sexy Thong
 
 Probability of a thong (flip flop) being a thong (g-string) (1 in x), use `gstringProb`. Default is 10,000 i.e. 1/10,000.
 
@@ -119,7 +119,7 @@ Probability of a thong (flip flop) being a thong (g-string) (1 in x), use `gstri
 http://localhost:28080/?gstringProb=10000
 ```
 
-#### Additional Rigged Users
+##### Additional Rigged Users
 
 If you want to add an additional rigged user use the search parametre `riggedUser`. You can add as many as you would like.
 
@@ -127,7 +127,7 @@ If you want to add an additional rigged user use the search parametre `riggedUse
 http://localhost:28080/?riggedUser=Ozy_Viking&riggedUser=Not_Ozy_Viking
 ```
 
-#### Testing Setup
+##### Testing Setup
 
 If you want a bunch of random players to jump in for testing, use `testing=true`.
 
@@ -141,7 +141,7 @@ or
 http://localhost:28080/?testing
 ```
 
-## Weapon Calls
+#### Weapon Calls
 
 This is an example of the setup for a weapon.
 
@@ -172,9 +172,7 @@ Caps does not matter for the user.
 
 For Doughnut, both american and british spelling were added. I highly recommend doing so for any other ambiguities.
 
----
-
-## Ideas
+### Ideas
 
 1. [ ] Stats in the stream so far.
 2. [ ] Track win records.
@@ -188,12 +186,12 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 10. [ ] Fix teapot lefts
 11. [ ] Add version to title.
 
-## Known Bugs
+### Known Bugs
 
 1. [x] What bugs, please let me know by raiseing an issue.
 2. [ ] Limited to 60 seconds.
 
-## Testing
+### Testing
 
 To rebuid and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
 
@@ -201,13 +199,13 @@ To rebuid and test changes use the docker compose yaml in the testing folder. En
 docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
 ```
 
-## Videos
+### Videos
 
 - https://www.youtube.com/watch?v=VzQjQVTmSwQ
 - https://www.youtube.com/watch?v=NO3Vl7nApgc
 
 
-## Acknowlegements
+### Acknowlegements
 
 Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia). 
 Original author is VRFlad: [Champion of the Hill](https://vrflad.com/champion)
@@ -245,6 +243,10 @@ Cheer from:
 
 ## Stream Subs
 
+```url
+http://localhost:28080/subs
+```
+
 ### OBS Setting
 
 Browser:
@@ -252,19 +254,15 @@ Browser:
 - Width: 400
 - Height: 100
 
-### Streambot import fuction
+### Streambot import function
 
 ```text
 U0JBRR+LCAAAAAAABADNV9uO2zYQfS/Qf3ANpE/hgqQuJPOWprctsm2xafalKApeRl4hurgUtZcu9t9LSpZtWXLgbpMm+7TmGc6Q58wMRw9ffrFYLG/ANnldLV8soufdQl6ua+uutsu0Xy7zKi/bcre+xGf0jCw3KDjp1x7CD/+zkiUEk4v7xXd3wV1v5hHZuuvaBuyXv+//vMrf5dVqC+7OsiRneHDuAQONtvnabcBlWH7sIxs5iix1MGr8yu/9ymKAOjg3Yb+giqsMM2RMEqM4jiSSmlIksWQYR0JLrobY3ba/WmjDhaq2KPbXoZKqgODT2RZGyJ0uWgPf27r8MW9cbe+9USaLZmQ18HQJDbjFm1aFayqwC123lRsdYWXrdh1sd1Y/fTuykMWtvG8u22oukpWVqcuXekPhBNd1pVtrwUedQZ3NVysvzj6tB9RuvJSlD3TesZwqakyaGsQFTlCMARCngqNEGJpiTzGXcv8CewJxGnFCRIpoFAQyLENCiQRhRhkFoVSWTLe6+3UgM8bkEDkq0zxv+/jj7scfI7KneTZHSKOhgp83KgflFp6exbvaXU+O39St1SPbiUlri4A9azz49vL1s69tyJuJmdeygu58vRARjhRhXCGmmUKxoiniiWFIYya4IIQZoY8IYUycZQQbFDNfLjGOCeJAY5Qwg8FglsgIJltvIV9dhzzCZ/iISBE/BIb8PiixE/TLKwN3HiMj3Z5/Olk+qiAs4gkTGEUkARRzghFPsUbMKKYzLjiPk89FkOh0QW5k0TVYQpNDb6W8u9qgk8P3XW2mY+0xRjSRkkiBsASfwpoAUhGWviuJmOmYZ1LipzBGMKYfnjN6OmcO7tz28XixOJ5+awsZ+N5uXur+XZlhsudKsySGJFFI+T8UQ0RD8yaeMEIikyaZzujTuPrwTMX/oty7Gp679o20eQg21PeGwymFYTJp3NFD+QHF5ZUMJX61cfk+dwYy2RZuyOs5EnpBMs4zjplGKWGh/1KvhYgzFEdcKkOpiPT0ITxFEDp5JLcDxsTfaXrg05/NH0Ko7u0cgbouCrluwOzhA7wTeDrORZnPTwGZ74mMoJgKg0TCuJ82Uk60wlwL+r+Oc/6VuICmkSuYH+E+xdj2lOll6DDPrLw9r9at+y+9JfK5ykxCEDHUpzLPNBJ+qEPdiMGYMsDTz6W3fORc7v8Z7Pt0HLkYBumj3zF9R5sIiI8c1bevMne+fb1t5tJhC+8Ou+91eVEbsNJn/cHss/ctcohcnf/aLI+cJn/S58G2urqh10d+FfIN7HK+gifFkFddCc8Ud1mbw8dhECDE+6oL6Fv5KFJRa7mpytHGfFXVFr6p3a4gDuP1Jufh8JUsZgw2r81wwdm6HyA8szGo/J7N7Q4OWj88jjzLBt5A1eQuv4G53auiVrJ4VdeFqW8n1+99z2Pz/W/le5z7ra9lfKxEXF4OiRtWPPz4DxULYbu/EAAA
 ```
 
-Ensure you set a Persistant Global Varibal called subsURL.
+Ensure you set a Persistent Global Variable called subsURL.
 
 ### Subs Modifications
-
-#### Base url
-
-http://localhost:28080/subs
 
 #### Subs Streamer.bot webstream port
 
@@ -284,9 +282,9 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 http://localhost:28080/subs?server=127.0.0.1
 ```
 
-#### Reset Count
+#### Subs Reset Count
 
-You can either use the preconfigured command `!resetsubs` or add reset to the search parameter/s.
+You can either use the pre-configured command `!resetsubs` or add reset to the search parameter/s.
 
 ```url
 http://localhost:28080/subs?reset
@@ -299,3 +297,70 @@ This will add buttons so you can manually simulate subs and reset count.
 ```url
 http://localhost:28080/subs?testing
 ```
+
+---
+## Counter
+
+```url
+http://localhost:28080/counter
+```
+
+Counter is used for counting a specific message sent through chat. It uses a check to see if the message starts with a 'count command'. For example, if the command is '!slap' then as long as the first 5 characters start with '!slap' then it will increase the count.
+
+### Subs Modifications
+
+#### Counter Streamer.bot webstream port
+
+To change the port to what the streamer bot is listening on, change it by search parameters in the URL.
+
+```url
+http://localhost:28080/counter?wsPort=8080
+```
+
+wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
+
+#### Counter Streamer.bot Server
+
+If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port as well if it is not on the default 8080.
+
+```url
+http://localhost:28080/counter?server=127.0.0.1
+```
+
+#### Counter Reset Count
+
+You can either use the preconfigured command `!resetcount or add reset to the search parameter/s.
+
+```url
+http://localhost:28080/counter?reset
+```
+
+#### Counter Testing
+
+This will add buttons so you can manually simulate the command and reset the count.
+
+```url
+http://localhost:28080/counter?testing
+```
+
+You can also add optional text to test as a message.
+
+```url
+http://localhost:28080/counter?testing=random text to test
+```
+#### Count Command
+
+To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not.  
+
+```url
+http://localhost:28080/?count=!slap
+```
+#### Count Text
+
+To change the text preceding the count use `counter_text`. There is a space between the counter text and the count but add and punctuation marks as needed. `Incoming Sassy Slaps:` is the default but also a valid input.
+
+```url
+http://localhost:28080/?counter_text=Incoming Sassy Slaps:
+```
+
+
