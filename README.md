@@ -358,7 +358,7 @@ http://localhost:28080/counter?testing=random text to test
 
 ##### Count Command
 
-To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not.  
+To change the count command from !slap use the search parameter `count`. There is no issue if you want to use and exclamation command (!slap) or not. The command is also, case insensative i.e. `!SLaPYA` is valid as it starts with !slap.
 
 ```url
 http://localhost:28080/?count=!slap

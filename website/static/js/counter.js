@@ -84,14 +84,15 @@ function connectws() {
 };
 
 function validateCountMessage(msg = "") {
-    if (msg.startsWith(countCommand)) {
+
+    if (msg.toLowerCase().startsWith(countCommand)) {
         updateCount(1);
         if (timeout > 0) {
-
             setCommandLockout(timeout)
         }
     }
 }
+
 var countTotal;
 initCount();
 
