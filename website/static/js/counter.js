@@ -24,6 +24,8 @@ var testing = urlParams.get('testing') != null;
 var testMsg = urlParams.get('testing');
 var timeout = urlParams.get('timeout');
 var countCommandAllowed = true;
+const setCountCommand = "!setcount"
+var authUsers = ["ozy_viking"];
 if (timeout == null) {
     timeout = 0
 } else {
@@ -68,16 +70,29 @@ function connectws() {
                 "id": botID
             }
         ));
+        ws.send(JSON.stringify(
+            {
+                "request": "GetBroadcaster",
+                "id": "1"
+            }));
     }
 
     ws.onmessage = function (event) {
         const msg = event.data;
         const wsdata = JSON.parse(msg);
-
+        if (wsdata.id == "1") {
+            authUsers = [...authUsers, wsdata.platforms.twitch.broadcastUserName]
+        }
         if (wsdata.event && wsdata.event.source === 'Twitch') {
-            if (countCommandAllowed) {
+            if (wsdata.data.message.message.toLowerCase().startsWith(setCountCommand)) {
+                console.log(wsdata.data.message.message)
+                let newCount = Number(wsdata.data.message.message.split(" ")[1]);
+                console.log(newCount)
+                if (!Number.isNaN(newCount)) {
+                    updateCount(count = newCount, set = true)
+                }
+            } else if (countCommandAllowed) {
                 validateCountMessage(wsdata.data.message.message)
-
             }
         }
     }

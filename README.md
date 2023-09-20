@@ -268,6 +268,10 @@ U0JBRR+LCAAAAAAABADNV9uO2zYQfS/Qf3ANpE/hgqQuJPOWprctsm2xafalKApeRl4hurgUtZcu9t9L
 
 Ensure you set a Persistent Global Variable called subsURL.
 
+#### Subs Setting
+
+In the chat use `!setsubcount  10` this will set the count to 10 or if you know the tier amounts you can use `!setsubcount 0 2 1`. Only streamer and myself can do that.
+
 #### Subs Modifications
 
 ##### Subs Streamer.bot webstream port
@@ -316,9 +320,13 @@ Counter is used for counting a specific message sent through chat. It uses a che
 
 #### Counter Command for streamerbot
 
-```
+```base64
 U0JBRR+LCAAAAAAABADVVtuO2zYQfQ+Qf3D9HHqpmyUGKIo0QNu8tEG23ZeiMIbkyCYiiS5FrddZ7L+X1GVtWXKxCFqgfRGgOXMhz+EM+fj61WKxvEdTK10t3y6iN61BlXtt7N2zOezMpapU2ZQn+5KuwlWw7FG04GyP/sf9VlCid/mENdrFe91U/luWUMkuwPlAY3faeK9fvhw3d+qzqrbP4GlVy2BFV/QZkFgLo/a2B5fe/NStQcJoDSC8U+0sv3eWxQC1sJI+PslZlmeQkFTEAYkzuiaZZIKkQc4TZBCxIBtqt2F/Ntj4rVVNUZzbsQJeoM9pTYMj5EEUjcQfjC5/UrXV5uiccijqkdfAmPGMtYSNym6Nbvbths+tUBzgWH9qqrmMxpGty3eip2qCC12Jxhh0lWZQa9R260Q4p++Cwj5Lq+qHlk2+zrM0SCSRnEUkTigQlsRA1hHEjmWZr8PgfANnQnAexgDrlERAKYmRSgKICYEEIaAiiHkkJqH2uPekxTS4RK7KMc/bOf50+vljRPb0PM0RUgus8OdezduG1wtHz+KztrvJ8mvdGPHs24qOZnFbwL6e+Dam8E47a/f125sb/eVI7tuWWW2V3TV8pfSNPSgrdhtv3eh8Y3e42amiuBFd5u/aszXJ7M5Bhe3eOhEjGvEgzbhriZSTmIeuJRKZEkFTlrEgSF1/XBExpJS7jgES0jB1+rOUQAiUyJzKNBZRIthU/wOq7c6fQdfmVwSOsktg6IeLNnyB9qqS+OCrjTR/8z+V9FB/dMP625DRjP6bygY5wzXmQIRIQhKv89Ap6xo1S3LOGQMnMPuvKBu+XNl7KNppHtDJAkt4uOvRCdaN1pmxecZYHodpziLXC5BkJI5YSBgNMzffMFojxIIH0dcw5pYa/vOcBS+fgD/6Yu0YHIFCF/6UozzDB7hPOPh3l+goxXCPXL2uu8aaTF96Zal7NKWyFuVvdX+JzcNXNqO+6jqbe/aM8JMWk/tWVe0rYeb9UGp5eQgHtnytb9qpLia1Ci2gv/pHoWpbaYPfa/tOdEHTip3LBz9gKihmHPb+dVbbfrzNPy4GiM4EelH+Jrg5wV6ax6dRZqjxFqtaWXWPc9HbQnMo3mtdSH2YbL/LPY/NP7K2rtvtr13z0Wsn2qpyOGfti/T1q6e/AJ6d18pfCwAA
 ```
+
+#### Counter Setting
+
+In the chat use `!setcount 10` this will set the count to 10. Only streamer and myself can do that.
 
 #### Counter Modifications
 

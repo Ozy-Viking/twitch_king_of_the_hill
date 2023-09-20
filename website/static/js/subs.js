@@ -40,7 +40,8 @@ if (!(server === null)) {
 var reset = urlParams.get('reset') != null;
 var testing = urlParams.get('testing') != null;
 const storage = localStorage;
-
+const setSubCount = "!setsubcount"
+var authUser = ['ozy_viking',];
 const tier = {
     1: 0,
     2: 0,
@@ -140,11 +141,20 @@ function connectws() {
                         "ReSub",
                         "GiftSub",
                         "GiftBomb",
+                        "ChatMessage",
+                        "Whisper"
                     ]
                 },
                 "id": botID
             }
         ));
+        ws.send(JSON.stringify(
+            {
+                "request": "GetBroadcaster",
+                "id": "1"
+            }));
+
+
     }
 
     ws.onmessage = function (event) {
@@ -153,13 +163,38 @@ function connectws() {
         // console.log(event.data)
         const wsdata = JSON.parse(msg);
         // console.log(wsdata.event && wsdata.event.source === 'Twitch')
-
+        if (wsdata.id == "1") {
+            authUser = [...authUser, wsdata.platforms.twitch.broadcastUserName]
+        }
         if (wsdata.event && wsdata.event.source === 'Twitch') {
-            console.log(wsdata.event.type, wsdata.data.subTier)
+            // console.log(wsdata.data.message.username)
+            // console.log(wsdata.event.type, wsdata.data.subTier)
             if (["Sub", "ReSub", "GiftSub"].includes(wsdata.event.type)) {
                 subSwitch(wsdata.data.subTier)
             } else if (wsdata.event.type == "GiftBomb") {
                 subSwitch(wsdata.data.subTier, wsdata.data.gifts)
+            } else if (["Whisper", "ChatMessage"].includes(wsdata.event.type) && authUser.includes(wsdata.data.message.username)) {
+                if (wsdata.data.message.message.toLowerCase().startsWith(setSubCount)) {
+                    console.log(wsdata.data.message.message)
+                    let newCount = wsdata.data.message.message.split(" ").slice(1);
+                    for (let i = 0; i < newCount.length; i++) {
+                        newCount[i] = Number(newCount[i])
+                        if (Number.isNaN(newCount[i])) {
+                            newCount[i] = 0
+                        }
+                    }
+                    if (newCount.length == 1) {
+                        updateScore(1, newCount[0], set = true)
+                        updateScore(2, 0, set = true)
+                        updateScore(3, 0, set = true)
+                    } else if (newCount.length == 3) {
+                        updateScore(1, newCount[0], set = true)
+                        updateScore(2, newCount[1], set = true)
+                        updateScore(3, newCount[2], set = true)
+                    }
+
+                }
+
             }
         }
     }
