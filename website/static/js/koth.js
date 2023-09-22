@@ -63,7 +63,7 @@ var weaponsObjects = {
     'butchered name': {
         'file': 'Name_Butcher_4000.png',
         'tense 1': 'a',
-        'tense 2': 'that', // Todo: Implement this!
+        'tense 2': 'that',
         'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;', //'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
         'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
         'command': ['name', 'murder', 'butcher', 'kill']

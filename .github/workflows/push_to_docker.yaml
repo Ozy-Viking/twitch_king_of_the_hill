@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
       -
         name: Version
-        run: ./scripts/version.sh 'Non-tagged Branch'
+        run: ./scripts/version.sh 'Non-tagged ${{github.ref_name}}'
       -
         name: Docker meta
         id: meta
@@ -35,7 +35,6 @@ jobs:
             type=ref,event=branch
             type=ref,event=pr
           labels: |
-            type=sha
             type=ref,event=pr
             type=ref,event=branch
       -
