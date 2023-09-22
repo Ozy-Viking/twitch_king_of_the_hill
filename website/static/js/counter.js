@@ -16,7 +16,7 @@ if (countCommand == null) {
 };
 var countText = urlParams.get('text');
 if (countText == null) {
-    countText = "Slap Count:"
+    countText = "Slap Counter:"
 };
 document.getElementById("counter_text").innerText = countText;
 var reset = urlParams.get('reset') != null;

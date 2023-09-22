@@ -1,7 +1,9 @@
+@import url("https://fonts.cdnfonts.com/css/tw-cen-mt-std");
+
 body {
-    overflow: hidden;
-  }
-  
+  overflow: hidden;
+}
+
 html,
 body,
 #container {
@@ -15,13 +17,13 @@ body,
   position: absolute;
   top: 0;
   left: 0;
-  }
+}
 
 .falling-element {
   width: 75px;
   height: 75px;
   position: absolute;
-  background-size:   100%;
+  background-size: 100%;
 }
 
 .lurking-element {
@@ -30,27 +32,46 @@ body,
   position: absolute;
   background-size: 100%;
 }
-.grassyhill{
+.grassyhill {
   position: absolute;
   margin-left: -1070px;
   left: 50%;
   width: 2156px;
   bottom: 0px;
-  /* animation: hillanimation 88s; */
+  animation: hillanimation 88s;
 }
 
 .rigged {
   padding: 0px;
   margin: 0px;
-  color: #F25703;
+  color: #f25703;
 }
 
 @keyframes hillanimation {
-  0%, 100% {
-    bottom:-325px;
+  0%,
+  100% {
+    bottom: -325px;
   }
-  2%,98% {
-    bottom:0px;
+  2%,
+  98% {
+    bottom: 0px;
   }
 }
-  
+:root {
+  --shadow-colour: rgb(0, 0, 0);
+  --font-colour: #fff;
+}
+
+#display {
+  color: var(--font-colour);
+  text-shadow: 2px 0 var(--shadow-colour), -2px 0 var(--shadow-colour),
+    0 2px var(--shadow-colour), 0 -2px var(--shadow-colour),
+    1px 1px var(--shadow-colour), -1px -1px var(--shadow-colour),
+    1px -1px var(--shadow-colour), -1px 1px var(--shadow-colour);
+  font-size: 40px;
+  font-family: "Tw Cen MT Std", Inter;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  word-wrap: break-word;
+}
