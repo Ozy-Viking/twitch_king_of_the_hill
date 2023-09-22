@@ -64,7 +64,8 @@ function connectws() {
                 "request": "Subscribe",
                 "events": {
                     "Twitch": [
-                        "ChatMessage"
+                        "ChatMessage",
+                        "Whisper"
                     ]
                 },
                 "id": botID
