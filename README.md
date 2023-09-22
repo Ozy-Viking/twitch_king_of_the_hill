@@ -1,6 +1,6 @@
 # Twitch King of the Hill
 
-![GitHub release (with filter)](https://img.shields.io/github/v/release/Ozy-Viking/twitch_king_of_the_hill?label=Stable%20Release)
+![GitHub tag (with filter)](https://img.shields.io/github/v/tag/ozy-viking/twitch_king_of_the_hill?logo=github&label=Latest%20Tag)![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/ozyviking/twitch-king-of-the-hill/stable?logo=docker&label=Stable%20Version&color=blue)![Docker Image Version (tag latest semver)](https://img.shields.io/docker/v/ozyviking/twitch-king-of-the-hill/latest?logo=docker&label=Latest%20Version&color=blue)
 
 King of the Hill game for Twitch Streams to engage their audience.
 
