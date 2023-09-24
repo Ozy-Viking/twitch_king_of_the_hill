@@ -15,14 +15,11 @@ jobs:
   docker:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v3
-      -
-        name: Version
-        run: ./scripts/version.sh 'Non-tagged ${{github.ref_name}}'
-      -
-        name: Docker meta
+      - name: Version
+        run: ./scripts/version.sh '${{github.ref_name}}'
+      - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
         with:
@@ -37,18 +34,15 @@ jobs:
           labels: |
             type=ref,event=pr
             type=ref,event=branch
-      -
-        name: Set up Docker Buildx
+      - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      -
-        name: Login to Docker Hub
+      - name: Login to Docker Hub
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
+      - name: Build and push
         if: github.ref_name != 'main'
         uses: docker/build-push-action@v4
         with:

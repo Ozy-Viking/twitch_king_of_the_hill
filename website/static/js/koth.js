@@ -184,12 +184,9 @@ if (!(server === null)) {
     server = `ws://localhost:${wsPort}/`;
 };
 
-var testing = urlParams.get('testing');
-if ((testing != null) & (testing != 'false')) {
-    testing = true;
-} else {
-    testing = false;
-};
+var testing = !([null, 'false'].includes(urlParams.get('testing')));
+console.log(`testing: ${testing}`)
+
 
 // deepcode ignore MissingClose: websocket is closed.
 var ws = new WebSocket(server);
@@ -258,7 +255,7 @@ function connectws() {
             // grab message and parse JSON
             const msg = event.data;
             const wsdata = JSON.parse(msg);
-
+            console.log(wsdata.data.message)
             if (typeof wsdata.data != "undefined") {
                 if (typeof wsdata.data.message != "undefined") {
                     let lowerMessage = wsdata.data.message.message.toLowerCase();
@@ -305,11 +302,11 @@ function addFighter(user, lowerMessage) {
             //save this to cache between sessions too.
             //check for user being added already (or if already dead and ignore)
             var addToFight = true;
-            if (battleActive) {
+            if (battleActive) { // Todo: Maybe issue.
                 if (!testing) {
                     for (let i = 0; i < divnumber; i++) {
-                        checkUser = document.getElementById(i).getAttribute("user");
-                        if ((user == checkUser)) {
+                        let checkUser = document.getElementById(i).getAttribute("user");
+                        if (user == checkUser) {
                             addToFight = false;
                         };
                     };
@@ -573,13 +570,13 @@ function generateEndingMessage() {
 };
 
 function addTestingPeople(totalGameLength, numberPeople = 10) {
-    var testingPeople = ['Ozy_Viking', 'JDPlays', 'the_rubble', 'Naval_Warlord']
+    var testingPeople = ['Ozy_Viking', 'JDPlays', 'the_rubble', 'Naval_Warlord', 'steveo0938']
     function randomPlayer() {
         return testingPeople[Math.floor(Math.random() * testingPeople.length)]
     }
     for (let i = 0; i < numberPeople; i++) {
         let randomdelay = (totalGameLength * Math.random()) * 1000;
-        setTimeout(addFighter, randomdelay, randomPlayer(), chooseRandomWeapon().command[0]);
+        setTimeout(testEvent, randomdelay, randomPlayer(), chooseRandomWeapon().command[0]);
     };
 }
 
@@ -607,7 +604,6 @@ var endingMessage = generateEndingMessage();
 function hillDecay() {
     // BUG: Not selecting the hill image.
     let hill = document.getElementById("grassyhill_id");
-    console.log(hill)
     hill.style.animation = `hillanimation ${gameLength + 28}s`
 }
 
@@ -635,3 +631,47 @@ function main() {
 
 main();
 
+function testEvent(user = "ozy_viking", weapon = "thong") {
+    class TestEvent {
+        constructor(data) {
+            this.data = JSON.stringify(data);
+        }
+    };
+    ws.onmessage(new TestEvent({
+        "timeStamp": "2022-01-30T21:32:04.4588947-05:00",
+        "event": {
+            "source": "Twitch",
+            "type": "ChatMessage"
+        },
+        "data": {
+            "message": {
+                "msgId": "a0d32df1-d3ca-4fd7-87fb-6c4e958550f0",
+                "userId": 1231453,
+                "username": user,
+                "role": 1,
+                "subscriber": true,
+                "displayName": user,
+                "channel": "<broadcaster's channel name>",
+                "message": `${joinCommand} ${weapon}`, /* The message the user sent */
+                "isHighlighted": false,
+                "isMe": false,
+                "isCustomReward": false,
+                "isAnonymous": false,
+                "isReply": false,
+                "bits": 0,
+                "hasBits": false,
+                "emotes": [
+                    {
+                        "id": "300400304",
+                        "type": "Twitch",
+                        "name": "nate121Raid",
+                        "startIndex": 5,
+                        "endIndex": 15,
+                        "imageUrl": "https://static-cdn.jtvnw.net/emoticons/v2/300400304/default/dark/2.0"
+                    }
+                ],
+                "cheerEmotes": []
+            }
+        }
+    }))
+}

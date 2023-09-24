@@ -190,7 +190,7 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 8. [ ] Ad warning not working
 9. [ ] Last winner name on hill
 10. [ ] Fix teapot lefts
-11. [ ] Add version to title.
+11. [x] Add version to title.
 
 ### Known Bugs
 
@@ -270,7 +270,7 @@ Ensure you set a Persistent Global Variable called subsURL.
 
 #### Subs Setting
 
-In the chat use `!setsubcount  10` this will set the count to 10 or if you know the tier amounts you can use `!setsubcount 0 2 1`. Only streamer and myself can do that.
+In the chat use `!setsubcount 10` this will set the count to 10 or if you know the tier amounts you can use `!setsubcount 0 2 1`. Only streamer and myself can do that.
 
 #### Subs Modifications
 
