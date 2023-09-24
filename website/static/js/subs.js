@@ -140,7 +140,7 @@ function connectws() {
                         "Sub",
                         "ReSub",
                         "GiftSub",
-                        "GiftBomb",
+                        // "GiftBomb",
                         "ChatMessage",
                         "Whisper"
                     ]
@@ -172,8 +172,8 @@ function connectws() {
             if (["Sub", "ReSub", "GiftSub"].includes(wsdata.event.type)) {
                 subSwitch(wsdata.data.subTier)
             } else if (wsdata.event.type == "GiftBomb") {
-                subSwitch(wsdata.data.subTier, wsdata.data.gifts)
-            } else if (["Whisper", "ChatMessage"].includes(wsdata.event.type) && (authUsers.includes(wsdata.data.message.username)||(wsdata.data.message.role >= 3))) {
+                // subSwitch(wsdata.data.subTier, wsdata.data.gifts)
+            } else if (["Whisper", "ChatMessage"].includes(wsdata.event.type) && (authUsers.includes(wsdata.data.message.username) || (wsdata.data.message.role >= 3))) {
                 if (wsdata.data.message.message.toLowerCase().startsWith(setSubCount)) {
                     console.log(wsdata.data.message.message)
                     let newCount = wsdata.data.message.message.split(" ").slice(1);

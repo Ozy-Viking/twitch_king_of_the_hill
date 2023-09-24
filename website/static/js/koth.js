@@ -468,7 +468,6 @@ function winnerTime(id, winnerNotification) {
 };
 
 function startFight() {
-    console.log('Start Fight')
     battleActive = false;
     // deepcode ignore MissingClose: added close to end of onopen.
     ws = new WebSocket(server);
