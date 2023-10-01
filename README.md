@@ -61,6 +61,22 @@ You should be able to access the website on:
 
 http://[QNAP IP addess]:28080/
 
+### Resource Limiter
+
+These values within the docker compose file are used to limit the resouces available. If the container isn't responding due to lag, I would suspent from large amount of traffic, try increasing either or both limits (or removing them for not limit).
+
+```yaml
+services:
+  web:
+    ...
+    deploy:
+      resources:
+        limits:
+          cpus: "2"
+          memory: 2gb
+    ...
+```
+
 ## URLs
 
 Currently there are:
