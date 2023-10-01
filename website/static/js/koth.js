@@ -103,6 +103,22 @@ var weaponsObjects = {
 };
 
 const urlParams = new URLSearchParams(window.location.search);
+
+function modifyStyleSheet(element, selector, value) {
+    // Getting the stylesheet
+    const stylesheet = document.styleSheets[0];
+    let elementRules;
+
+    // looping through all its rules and getting your rule
+    for (let i = 0; i < stylesheet.cssRules.length; i++) {
+        if (stylesheet.cssRules[i].selectorText === element) {
+            elementRules = stylesheet.cssRules[i];
+        }
+    }
+    // modifying the rule in the stylesheet
+    elementRules.style.setProperty(selector, value);
+}
+
 var gstringProb = Number(urlParams.get('gstringProb'));
 if (gameLength in [null, 0]) { gstringProb = 10000; };
 
@@ -121,9 +137,17 @@ if (joinCommand == null) { joinCommand = "king"; };
 joinCommand = joinCommand.toLowerCase()
 // file deepcode ignore reDOS: No code injection possible in file.
 var joinCommandRegex = new RegExp(joinCommand, "i");
-
+var hillAnimationLength;
 var gameLength = Number(urlParams.get('gameLength'));
-if (gameLength in [null, 0]) { gameLength = 60; };
+if ([null, 0].includes(gameLength)) {
+    gameLength = 60;
+    hillAnimationLength = gameLength + 28
+} else {
+    hillAnimationLength = gameLength + 28
+    modifyStyleSheet(".grassyhill", '--koth-length', `${hillAnimationLength}s`)
+};
+
+
 var removalTimeoutTime = (gameLength + 60) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5', 'gotobedchild'];
@@ -451,6 +475,7 @@ function winnerTime(id, winnerNotification) {
     playSound('horn.mp3', 0.4)
     // Play Sound and notify winner 
     setTimeout(playSound, 1500, 'cheer.mp3', 0.3)
+    setTimeout(changeVolume, 24000, soundplay - 1, 0, 2000, 20)
     setTimeout(notify, 1000, winnerNotification)
 
     let element = document.getElementById(id);
@@ -471,6 +496,8 @@ function startFight() {
     battleActive = false;
     // deepcode ignore MissingClose: added close to end of onopen.
     ws = new WebSocket(server);
+    // ws.onmessage = function (){};
+    // todo: send an unsubscribe for messages.
     ws.onopen = function () {
         console.log('Start Fight: onopen')
         winner = Math.floor(Math.random() * divnumber);
@@ -514,22 +541,34 @@ function startFight() {
             setTimeout(setWinner, 17000, user);
             // deepcode ignore CodeInjection: Code Injection is not possible.
             setTimeout(ws.close, 25000)
+
         }
     };
 };
 
-function playSound(filename, volume = 0.4) {
+function redirectBrowser() {
+    document.location.assign("about:blank");
+    // window.location = "about:blank";
+};
+function playBattleSound(volume = 0.2) {
+    let filename = "battle";
+    if (gameLength < 56) {
+        filename += ".mp3"
+    } else if (gameLength < 112) {
+        filename += "_mid.mp3"
+    } else {
+        filename += "_long.mp3"
+    }
+    console.log(filename)
+    playSound(filename, 0, true)
+    changeVolume(0, volume, 5000, 30)
+}
+function playSound(filename, volume = 0.4, loop = false) {
     audio[soundplay] = new Audio(`static/sound/${filename}`);
     audio[soundplay].volume = volume;
-    if (filename === 'battle.mp3') {
-        audio[soundplay].loop = true;
-    }
+    audio[soundplay].loop = loop;
     audio[soundplay].play();
-    if (soundplay > 9) {
-        soundplay = 0;
-    } else {
-        soundplay++;
-    }
+    soundplay++;
 };
 
 function setVolume(localSound, localdiff) {
@@ -537,12 +576,11 @@ function setVolume(localSound, localdiff) {
     localSound.play();
 }
 
-function changeVolume(audioID, newVolume, timeSpan) {
-    let sections = 10;
-    let localSplit = timeSpan / sections;
+function changeVolume(audioID, newVolume, timeSpan, steps = 10) {
+    let localSplit = timeSpan / steps;
     let currentVolume = audio[audioID].volume;
-    let diff = (newVolume - currentVolume) / sections;
-    for (let i = 0; i < sections; i++) {
+    let diff = (newVolume - currentVolume) / steps;
+    for (let i = 0; i < steps; i++) {
         setTimeout(setVolume, localSplit * i, audio[audioID], diff);
     }
 }
@@ -603,7 +641,7 @@ var endingMessage = generateEndingMessage();
 function hillDecay() {
     // BUG: Not selecting the hill image.
     let hill = document.getElementById("grassyhill_id");
-    hill.style.animation = `hillanimation ${gameLength + 28}s`
+    // hill.style.animation = `hillanimation ${gameLength + 28}s`
 }
 
 //Main function
@@ -612,7 +650,7 @@ function main() {
     hillDecay();
     if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }
     battleActive = true
-    setTimeout(playSound, 900, 'battle.mp3', 0.2);
+    setTimeout(playBattleSound, 900, 0.2);
     setTimeout(notify, gameLengthSplit(0, 1) * 1000, `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-9, 1 + gameLength) * 1000, `${gameLengthSplit(9, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-6, 1 + gameLength) * 1000, `${gameLengthSplit(6, 0, true)} ${updateMessage}!`);
@@ -624,7 +662,7 @@ function main() {
     // deepcode ignore CodeInjection: No code inject 
     setTimeout(ws.close, (gameLength + 1) * 1000);
     setTimeout(startFight, (gameLength + 2) * 1000);
-
+    setTimeout(redirectBrowser, (hillAnimationLength) * 1000);
     randomWeaponSetup();
 };
 

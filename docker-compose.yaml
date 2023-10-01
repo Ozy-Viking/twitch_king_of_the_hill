@@ -2,7 +2,7 @@ version: "3.1"
 name: king-of-the-hill
 services:
   web:
-    image: ozyviking/twitch-king-of-the-hill:0.5.10
+    image: ozyviking/twitch-king-of-the-hill:image_version
     deploy:
       resources:
         limits:
