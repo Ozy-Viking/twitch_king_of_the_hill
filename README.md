@@ -20,10 +20,10 @@ Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/reposit
 
 ### Images
 
-- Stable: Built of main branch.
+- Stable: Built of tagged pushes that are either a patch, minor or major semver bump.
 - Latest: More bleading edge / higher chance of bugs. Built off every push to github.
-- Branch: Built of the lastest push in that branch.
-- Tags: Built of tagged pushes ('v0.1.1') and will be a current/past stable.
+- Branch: Built off the lastest push in that branch.
+- Tags: Built off tagged pushes ('v0.1.1').
 
 ### Docker Compose
 
@@ -65,7 +65,7 @@ http://[QNAP IP addess]:28080/
 
 Currently there are:
 
-- [King of the hill](https://github.com/Ozy-Viking/twitch_king_of_the_hill#standard-king-of-the-hill)
+- [King of the hill](https://github.com/Ozy-Viking/twitch_king_of_the_hill#king-of-the-hill)
 - [Subs](https://github.com/Ozy-Viking/twitch_king_of_the_hill#stream-subs)
 - [Counter](https://github.com/Ozy-Viking/twitch_king_of_the_hill#counter)
 
@@ -196,49 +196,39 @@ Caps does not matter for the user.
 
 For Doughnut, both american and british spelling were added. I highly recommend doing so for any other ambiguities.
 
-### Ideas
+#### Ideas
 
 1. [ ] Stats in the stream so far.
-2. [ ] Track win records.
-3. [ ] Kill messages on the top left like COD.
-4. [ ] Echo version in terminal.
-5. [x] Stop sound at appropriate places.
-6. [x] Work on sound timings and effects.
-7. [ ] Increase to 80 secs
-8. [ ] Ad warning not working
-9. [ ] Last winner name on hill
-10. [ ] Fix teapot lefts
-11. [x] Add version to title.
+1. [ ] Track win records.
+1. [ ] Kill messages on the top left like COD.
+1. [x] Stop sound at appropriate places.
+1. [x] Work on sound timings and effects.
+1. [x] Variable Time
+1. [ ] Ad warning not working
+1. [ ] Last winner name on hill
+1. [ ] Fix teapot lefts
+1. [x] Add version to title.
 
-### Known Bugs
+#### Known Bugs
 
 1. [x] What bugs, please let me know by raiseing an issue.
 2. [ ] Limited to 60 seconds.
 
-### Testing
-
-To rebuid and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
-
-```bash
-docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
-```
-
-### Videos
+#### Videos
 
 - https://www.youtube.com/watch?v=VzQjQVTmSwQ
 - https://www.youtube.com/watch?v=NO3Vl7nApgc
 
-
-### Acknowlegements
+#### Acknowlegements
 
 Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia). 
 Original author is VRFlad: [Champion of the Hill](https://vrflad.com/champion)
 
-### Pictures
+#### Pictures
 
 Special thanks to the_rubble for designing the new imagery!!! The rest are from vrflad's orginal game.
 
-### Sound
+#### Sound
 
 This game uses these sounds from [freesound.org](freesound.org).
 
@@ -410,4 +400,12 @@ To stop over spamming or helping prevent multiple people using the command for t
 
 ```url
 http://localhost:28080/counter?timeout=0
+```
+
+## Testing
+
+To rebuid and test changes use the docker compose yaml in the testing folder. Ensure that the other container is down otherwith you will have conflicting ports.
+
+```bash
+docker compose --file ./testing/docker-compose.yaml up -d --force-recreate
 ```
