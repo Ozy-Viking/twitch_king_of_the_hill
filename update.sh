@@ -2,30 +2,47 @@
 version="v0.1.0"
 set -o errexit
 
-while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
-  -V | --version )
+while getopts ':Vm:sat:p' OPTION; do
+case "$OPTION" in
+  V )
     echo "$version"
     exit
     ;;
-  -m | --message )
-    shift; git=$1;
-    git commit -am "${git}"
+  m )
+    COMMIT=true
+    msg=$OPTARG;
     ;;
-  -s | --status )
-    git status
+  s )
+    STATUS=true
     ;;
-  -a | --all )
-    git add .
+  a )
+    ADD=true
     ;;
-  -t | --tag )
-    shift; git_tag=$1
-    sed -i "s/\(image:.*:\).*$/\1${git_tag}/" ./docker-compose.yaml
+  t )
+    git_tag=$OPTARG
     ;;
-esac; shift; done
-if [[ "$1" == '--' ]]; then shift; fi
+  p )
+    PUSH=$OPTARG
+    ;;
+esac;
+done
+
 
 if [[ -n "$git_tag" ]]; then
-  echo $git_tag
-else
-
-
+  sed -i "s/\(image:.*:\).*$/\1${git_tag}/" ./docker-compose.yaml
+fi
+if [[ -n "$ADD" ]]; then
+  git add .
+fi
+if [[ -n "$COMMIT" ]]; then
+  git commit -am "${msg}"
+fi
+if [[ -n "$git_tag" ]]; then
+  git tag $git_tag
+fi
+if [[ -n "$PUSH" ]]; then
+  git push origin HEAD --tags
+fi
+if [[ -n "$STATUS" ]]; then
+  git status
+fi
