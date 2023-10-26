@@ -38,7 +38,7 @@ if [[ -n "$COMMIT" ]]; then
   git commit -am "${msg}"
 fi
 if [[ -n "$git_tag" ]]; then
-  git tag $git_tag
+  git tag v${git_tag}
 fi
 if [[ -n "$PUSH" ]]; then
   git push origin HEAD --tags
