@@ -20,10 +20,11 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
   -t | --tag )
     shift; git_tag=$1
     sed -i "s/\(image:.*:\).*$/\1${git_tag}/" ./docker-compose.yaml
+    git tag ${git_tag}
     ;;
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
 
 
-# git tag ${git_tag}
+
 
