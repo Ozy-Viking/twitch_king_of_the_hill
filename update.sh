@@ -22,7 +22,7 @@ case "$OPTION" in
     git_tag=$OPTARG
     ;;
   p )
-    PUSH=$OPTARG
+    PUSH=true
     ;;
 esac;
 done
