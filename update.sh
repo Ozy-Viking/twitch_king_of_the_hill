@@ -24,6 +24,8 @@ while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
 esac; shift; done
 if [[ "$1" == '--' ]]; then shift; fi
 
-if [[ -n "$git_tag" ]];
+if [[ -n "$git_tag" ]]; then
+  echo $git_tag
+else
 
 
