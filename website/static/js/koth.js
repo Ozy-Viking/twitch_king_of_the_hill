@@ -2,106 +2,7 @@
 // Maintainer: Ozy-Viking
 // Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 // Docker Container: ozyviking/twitch-king-of-the-hill
-
-var weaponsObjects = {
-    'teapot': {
-        'file': 'teapot.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(45deg) translate(30px,-30px)',
-        'right': 'transform: rotate(-45deg) translate(-30px,-30px)',
-        'command': ['teapot', 'tea', 'pot']
-    },
-    'number 1 fan finger': {
-        'file': 'no1.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(45deg) translate(35px,-50px)',
-        'right': 'transform: rotate(-45deg) translate(-35px,-50px)',
-        'command': ['1', 'one', 'num', 'finger']
-    },
-    'plunger': {
-        'file': 'plunger.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(10deg) translate(55px,-20px)',
-        'right': 'transform: rotate(-10deg) translate(-55px,-20px) scaleX(-1)',
-        'command': ['plunger', 'dunny', 'toilet']
-    },
-    'doughnut': {
-        'file': 'doughnut.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(30deg) translate(10px,-60px)',
-        'right': 'transform: rotate(-30deg) translate(-10px,-60px)',
-        'command': ['doughnut', 'donut', 'nut']
-    },
-    'thong': {
-        'file': 'thong.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(30deg) translate(10px,-60px);',
-        'right': 'transform: rotate(-30deg) translate(-10px,-60px);',
-        'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
-    },
-    'giant match': {
-        'file': 'match.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(30deg) translate(40px,-20px)',
-        'right': 'transform: rotate(-30deg) translate(-40px,-20px)',
-        'command': ['fire', 'match', 'aussie summer']
-    },
-    'frying pan': {
-        'file': 'pan.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(0deg) translate(60px,-10px)',
-        'right': 'transform: rotate(0deg) translate(-60px,-10px) scaleX(-1)',
-        'command': ['pan', 'hot flat', 'pancake maker', 'skillet', 'iron']
-    },
-    'butchered name': {
-        'file': 'Name_Butcher_4000.png',
-        'tense 1': 'a',
-        'tense 2': 'that',
-        'left': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;', //'transform: rotate(-10deg) translate(50px,25px) scaleX(-1); width: 50px;',
-        'right': 'transform: rotate(10deg) translate(-30px,30px); width: 50px;',
-        'command': ['name', 'murder', 'butcher', 'kill']
-    },
-    'boomerang': {
-        'file': 'Boomerang.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(-10deg) translate(60px,-10px); width: 50px;',
-        'right': 'transform: rotate(-10deg) translate(-40px,-10px) scaleX(-1); width: 50px;',
-        'command': ['boom', 'rang']
-    },
-    'didgeridoo': {
-        'file': 'didgeridoo.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(250deg) translate(-25px,35px)',
-        'right': 'transform: rotate(10deg) translate(-35px,25px)',
-        'command': ['didgeridoo', 'pipe', 'wind', 'doo', 'didg']
-    },
-    'sausage sanga': {
-        'file': 'sausage_sanga.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(0deg) translate(50px,20px); width: 50px;',
-        'right': 'transform: rotate(0deg) translate(-30px,20px) scaleX(-1); width: 50px;',
-        'command': ['sausage', 'sandwich', 'sanga', 'snag', 'bunning']
-    },
-    'goon sack': {
-        'file': 'Goon_Sack.png',
-        'tense 1': 'the',
-        'tense 2': 'that',
-        'left': 'transform: rotate(0deg) translate(55px,-20px) scaleX(-1); width: 50px;',
-        'right': 'transform: rotate(0deg) translate(-30px,-20px); width: 50px;',
-        'command': ['goon', 'sack', 'goon of fortune', 'fancy', 'fine dinning', 'pillow']
-    },
-};
-
+import { weaponObjects, weaponNames, weaponCount } from "./weapons.js"
 const urlParams = new URLSearchParams(window.location.search);
 
 function modifyStyleSheet(element, selector, value) {
@@ -159,10 +60,9 @@ var winner = 0;
 var audio = [];
 var soundplay = 0;
 
-var weaponNames = Object.keys(weaponsObjects);
 // adds the name of each weapon for code readabilty
 for (let i = 0; i < weaponNames.length; i++) {
-    let weapon = weaponsObjects[weaponNames[i]];
+    let weapon = weaponObjects[weaponNames[i]];
     weapon.name = weaponNames[i];
     weapon.regex = new RegExp(weapon.command.join('|'), "i");
 };
@@ -172,7 +72,7 @@ var sides = ['left', 'right'];
 // Randomisers
 function Randomizer(min, max) { return min + Math.floor(Math.random() * (max - min)); };
 
-function removeelement(div) { document.getElementById(div).remove(); };
+function removeElement(ID) { document.getElementById(ID).remove(); };
 
 function randomSide() {
     // return 'left';
@@ -181,7 +81,7 @@ function randomSide() {
 };
 
 function chooseRandomWeapon() {
-    return weaponsObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
+    return weaponObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
 };
 
 var championName = urlParams.get('championName');
@@ -297,7 +197,7 @@ function usersWeapon(lowerMessage) {
     var weapon;
 
     for (let i = 0; i < weaponNames.length; i++) {
-        weapon = weaponsObjects[weaponNames[i]]
+        weapon = weaponObjects[weaponNames[i]]
         if (weapon.regex.exec(lowerMessage) != null) {
             choosenWeapon = weapon
         }
@@ -316,15 +216,9 @@ function usersWeapon(lowerMessage) {
 
 function addFighter(user, lowerMessage) {
     var username = user.toLowerCase();
-    // console.log("starting xmlhttp");
     var xhttp = new XMLHttpRequest();
-    // console.log("created xmlhttp object");
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            // get display image for the user
-            // console.log("got a response back");
-            //save this to cache between sessions too.
-            //check for user being added already (or if already dead and ignore)
             var addToFight = true;
             if (battleActive) { // Todo: Maybe issue.
                 if (!testing) {
@@ -362,17 +256,17 @@ function addFighter(user, lowerMessage) {
                     case 'left':
                         // left - TweenLite.set(Div, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
                         TweenLite.set(Div, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
-                        fighter_animation_left(Div);
+                        fighter_animation(Div);
                         break;
                     default:
                         TweenLite.set(Div, { className: 'falling-element', x: innerWidth, y: innerHeight - 110, z: 0 });
-                        fighter_animation_right(Div);
+                        fighter_animation(Div);
                         break;
                 }
                 warp.appendChild(Div);
 
                 // Run animation
-                setTimeout(removeelement, removalTimeoutTime, Div.id);
+                setTimeout(removeElement, removalTimeoutTime, Div.id);
             }
         }
     };
@@ -380,22 +274,12 @@ function addFighter(user, lowerMessage) {
     xhttp.send();
 };
 
-function fighter_animation_left(element) {
+function fighter_animation(element) {
     TweenMax.to(element, 0.1, { scale: 1.5 });
     TweenMax.to(element, 2, { x: (innerWidth / 2) - 45, yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 0.9, { y: (innerHeight - 200), yoyo: true, repeat: 0, ease: Power2.easeIn, delay: 0 });
     TweenMax.to(element, 0.6, { y: (innerHeight - (300 + Randomizer(150, 350))), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: .9 });
     TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
-};
-
-function fighter_animation_right(element) {
-    TweenMax.to(element, 0.1, { scale: 1.5 });
-    TweenMax.to(element, 2, { x: (innerWidth / 2) - 45, yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
-    TweenMax.to(element, 0.9, { y: (innerHeight - 200), yoyo: true, repeat: 0, ease: Power2.easeIn, delay: 0 });
-    TweenMax.to(element, 0.6, { y: (innerHeight - (300 + Randomizer(150, 350))), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: .9 });
-    TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
-    //TweenMax.to(element, 0.75, { y: (innerHeight - (150 + Randomizer(150, 350))), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: .75 });
-    //TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
 };
 
 function randomWeapon() {
@@ -428,7 +312,7 @@ function randomWeapon() {
         //TweenMax.to(Div, 1.5, { y: '+=200', repeat: 0,  ease: Power2.easeIn, delay: 1.2 });
         TweenMax.to(Div, 2, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, ease: Back.easeOut, repeat: 0, delay: 0 });
     }
-    setTimeout(`removeelement(${Div.id})`, removalTimeoutTime);
+    setTimeout(`removeElement(${Div.id})`, removalTimeoutTime);
 };
 
 function loseSound() {
@@ -541,7 +425,6 @@ function startFight() {
             setTimeout(setWinner, 17000, user);
             // deepcode ignore CodeInjection: Code Injection is not possible.
             setTimeout(ws.close, 25000)
-
         }
     };
 };
@@ -638,16 +521,9 @@ function randomWeaponSetup() {
 }
 var endingMessage = generateEndingMessage();
 
-function hillDecay() {
-    // BUG: Not selecting the hill image.
-    let hill = document.getElementById("grassyhill_id");
-    // hill.style.animation = `hillanimation ${gameLength + 28}s`
-}
-
 //Main function
 function main() {
     connectws();
-    hillDecay();
     if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }
     battleActive = true
     setTimeout(playBattleSound, 900, 0.2);
