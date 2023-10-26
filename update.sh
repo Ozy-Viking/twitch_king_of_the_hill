@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 version="v0.1.0"
-set -o errexit
+# set -o errexit
 
 while getopts ':Vm:sat:p' OPTION; do
 case "$OPTION" in
