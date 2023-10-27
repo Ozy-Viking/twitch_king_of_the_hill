@@ -2,36 +2,12 @@
 // Maintainer: Ozy-Viking
 // Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 // Docker Container: ozyviking/twitch-king-of-the-hill
-import { weaponObjects, weaponNames, weaponCount } from "./weapons.js"
+import { weaponObjects, weaponNames, weaponCount, gstring } from "./weapons.js";
+import { modifyStyleSheet, Randomizer, removeElement } from "./util.js";
 const urlParams = new URLSearchParams(window.location.search);
-
-function modifyStyleSheet(element, selector, value) {
-    // Getting the stylesheet
-    const stylesheet = document.styleSheets[0];
-    let elementRules;
-
-    // looping through all its rules and getting your rule
-    for (let i = 0; i < stylesheet.cssRules.length; i++) {
-        if (stylesheet.cssRules[i].selectorText === element) {
-            elementRules = stylesheet.cssRules[i];
-        }
-    }
-    // modifying the rule in the stylesheet
-    elementRules.style.setProperty(selector, value);
-}
 
 var gstringProb = Number(urlParams.get('gstringProb'));
 if (gameLength in [null, 0]) { gstringProb = 10000; };
-
-var gstring = {
-    'name': "JD's Sexy Thong",
-    'file': 'secret_thong.png',
-    'tense 1': '',
-    'tense 2': '',
-    'left': 'transform: rotate(-30deg) translate(60px,20px);',
-    'right': 'transform: rotate(30deg) translate(-35px,10px);',
-    'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
-};
 
 var joinCommand = urlParams.get('joinCommand');
 if (joinCommand == null) { joinCommand = "king"; };
@@ -54,6 +30,7 @@ var removalTimeoutTime = (gameLength + 60) * 1000;
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5', 'gotobedchild'];
 riggedUsers = riggedUsers.concat(urlParams.getAll('riggedUser'));
 
+var riggedWinners = [];
 
 var divnumber = 0;
 var winner = 0;
@@ -69,10 +46,7 @@ for (let i = 0; i < weaponNames.length; i++) {
 
 var sides = ['left', 'right'];
 
-// Randomisers
-function Randomizer(min, max) { return min + Math.floor(Math.random() * (max - min)); };
 
-function removeElement(ID) { document.getElementById(ID).remove(); };
 
 function randomSide() {
     // return 'left';
@@ -81,6 +55,7 @@ function randomSide() {
 };
 
 function chooseRandomWeapon() {
+    // return weaponObjects["thong"];
     return weaponObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
 };
 
@@ -99,7 +74,6 @@ var wsPort = urlParams.get('wsPort');
 if (wsPort === null) {
     wsPort = 8080;
 };
-
 
 var server = urlParams.get('server');
 if (!(server === null)) {
@@ -206,8 +180,8 @@ function usersWeapon(lowerMessage) {
         choosenWeapon = chooseRandomWeapon();
     }
 
-    if (choosenWeapon.name == 'the thong') {
-        if (Randomizer(0, gstringProb) == 69) { // tehe
+    if (choosenWeapon.name == 'thong') {
+        if (Randomizer(0, gstringProb) == 0) {
             return gstring;
         };
     };
@@ -220,7 +194,7 @@ function addFighter(user, lowerMessage) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             var addToFight = true;
-            if (battleActive) { // Todo: Maybe issue.
+            if (battleActive) {
                 if (!testing) {
                     for (let i = 0; i < divnumber; i++) {
                         let checkUser = document.getElementById(i).getAttribute("user");
@@ -248,7 +222,9 @@ function addFighter(user, lowerMessage) {
 
                 var weapon = usersWeapon(lowerMessage);
                 var side = randomSide();
-
+                if (weapon.name == gstring.name) {
+                    riggedWinners.push(Div.id)
+                }
                 Div.setAttribute("weapon", `${weapon['tense 1']} ${weapon.name}`)
                 Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
 
@@ -384,7 +360,11 @@ function startFight() {
     // todo: send an unsubscribe for messages.
     ws.onopen = function () {
         console.log('Start Fight: onopen')
-        winner = Math.floor(Math.random() * divnumber);
+        if (riggedWinners.length) {
+            winner = riggedWinners[Randomizer(0, riggedWinners.length)]
+        } else {
+            winner = Math.floor(Math.random() * divnumber);
+        }
         var winnerNotification;
         if (divnumber == 0) {
             // **** No users here - need to handle ****
@@ -430,6 +410,7 @@ function startFight() {
 };
 
 function redirectBrowser() {
+
     document.location.assign("about:blank");
     // window.location = "about:blank";
 };
@@ -538,6 +519,7 @@ function main() {
     // deepcode ignore CodeInjection: No code inject 
     setTimeout(ws.close, (gameLength + 1) * 1000);
     setTimeout(startFight, (gameLength + 2) * 1000);
+    setTimeout(removeElement, (hillAnimationLength - 0.5) * 1000, "grassyhill_id")
     setTimeout(redirectBrowser, (hillAnimationLength) * 1000);
     randomWeaponSetup();
 };
