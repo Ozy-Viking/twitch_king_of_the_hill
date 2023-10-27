@@ -208,13 +208,13 @@ export const weaponObjects = {
     "right": "transform: translate(-25px,-20px) rotate(0deg); width: 50px;",
     "command": ["ring", "where is it"]
   },
-  "sleeping bot": {
+  "lazy bots": {
     "file": "sleep.png",
     "tense 1": "the",
     "tense 2": "that",
     "left": "transform: translate(50px,-20px) rotate(0deg); width: 50px;",
     "right": "transform: translate(-25px,-20px) rotate(0deg); width: 50px;",
-    "command": ["sleep"]
+    "command": ["sleep", "lazy", "bots"]
   },
   "spagehtti": {
     "file": "Spaghetti.png",
