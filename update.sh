@@ -35,7 +35,7 @@ if [[ -n "$ADD" ]]; then
   git add .
 fi
 if [[ -n "$COMMIT" ]]; then
-  git commit -am "${msg}"
+  git commit -a --allow-empty -m "${msg}"
 fi
 if [[ -n "$git_tag" ]]; then
   git tag v${git_tag}
