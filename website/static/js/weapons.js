@@ -160,13 +160,13 @@ export const weaponObjects = {
     "right": "transform: translate(-25px,-20px) rotate(0deg) scale(1.3); width: 50px;",
     "command": ["herd", "9 tails", "whip"]
   },
-  "cat holding a heart": {
+  "JDLove": {
     "file": "Holding_Heart_Cat.png",
     "tense 1": "the",
     "tense 2": "that",
     "left": "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
     "right": "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
-    "command": ["heart", "hug"]
+    "command": ["heart", "hug", "love"]
   },
   "cat litter": {
     "file": "Litter_badge.png",
@@ -200,7 +200,7 @@ export const weaponObjects = {
     "right": "transform: translate(-25px,-20px) rotate(0deg) scale(1.5); width: 50px;",
     "command": ["purple", "conveyor", "belt"]
   },
-  "sassy's wedding ring": {
+  "Ring": {
     "file": "Ring.png",
     "tense 1": "Sassy's",
     "tense 2": "that",
@@ -224,13 +224,13 @@ export const weaponObjects = {
     "right": "transform: translate(-25px,30px) rotate(0deg) scale(1.25); width: 50px;",
     "command": ["spag", "conveyor", "belt", "meal"]
   },
-  "wack from a cat with a bat": {
+  "CatCombat": {
     "file": "Wack.png",
     "tense 1": "the",
     "tense 2": "that",
     "left": "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     "right": "transform: translate(-25px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
-    "command": ["bat", "paddle"]
+    "command": ["bat", "paddle", "wack", "cat combat"]
   },
   "combat wombat": {
     "file": "Wombat.png",
