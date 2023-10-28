@@ -242,9 +242,32 @@ export const weaponObjects = {
   },
 }
 
+
 export const weaponNames = Object.keys(weaponObjects)
 
 export const weaponCount = weaponNames.length
+
+export const weaponObjectsTesting = {
+  "seabus": {
+    "file": "seaBus.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    "left": "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
+    "right": "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    "command": ["seabus"]
+  },
+  "factorio belt map": {
+    "file": "factorio.png",
+    "tense 1": "a",
+    "tense 2": "that",
+    "left": "transform:translate(10px,0px) rotate(225deg) scaleY(-1); width: 100px;",
+    "right": "transform:translate(-20px,0px) rotate(-45deg); width: 100px;",
+    "command": ["factorio"]
+  },
+}
+export const weaponNamesTesting = Object.keys(weaponObjectsTesting)
+
+export const weaponCountTesting = weaponNamesTesting.length
 
 export const gstring = {
   'name': "JD's Sexy Thong",
@@ -260,5 +283,11 @@ export const gstring = {
 for (let i = 0; i < weaponNames.length; i++) {
   let weapon = weaponObjects[weaponNames[i]];
   weapon.name = weaponNames[i];
+  weapon.regex = new RegExp(weapon.command.join('|'), "i");
+};
+// adds the name of each weapon for code readabilty
+for (let i = 0; i < weaponNamesTesting.length; i++) {
+  let weapon = weaponObjectsTesting[weaponNamesTesting[i]];
+  weapon.name = weaponNamesTesting[i];
   weapon.regex = new RegExp(weapon.command.join('|'), "i");
 };

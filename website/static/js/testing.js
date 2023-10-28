@@ -1,5 +1,6 @@
 // import { winnerMessage } from "./koth.js"
-import { weaponObjects, weaponNames, weaponCount } from "./weapons.js"
+import { weaponObjects, weaponNames, weaponCount } from "./weapons.js";
+import { weaponCountTesting, weaponNamesTesting, weaponObjectsTesting } from "./weapons.js";
 import { Randomizer, modifyStyleSheet } from "./util.js";
 var testingUser = "Ozy_Viking";
 
@@ -114,8 +115,10 @@ function weaponTest(annimationSide = null, inputWeapon = null) {
     if (annimationSide) {
         side = annimationSide
     }
-    if (inputWeapon) {
+    if (weaponNames.includes(inputWeapon)) {
         weapon = weaponObjects[inputWeapon]
+    } else if (weaponNamesTesting.includes(inputWeapon)) {
+        weapon = weaponObjectsTesting[inputWeapon]
     }
     addFighter(testingUser, weapon);
     document.getElementById("winnerNotification").innerText = winnerNotification()
@@ -158,6 +161,7 @@ function winnerTime(id, winnerNotification) {
 
 function addButtons() {
     const buttonDiv = document.getElementById("buttonDiv")
+    const testingWeaponButtonDiv = document.getElementById("testingWeaponButtonDiv")
     const sideButtonDiv = document.getElementById("sideButtonDiv")
     const hillButtonDiv = document.getElementById("hillButtonDiv")
     weaponNames.forEach(name => {
@@ -166,6 +170,13 @@ function addButtons() {
         btn.onclick = () => { weaponTest(side, name) }
         btn.innerText = name;
         buttonDiv.appendChild(btn);
+    })
+    weaponNamesTesting.forEach(name => {
+        var btn = document.createElement('button');
+        btn.id = name;
+        btn.onclick = () => { weaponTest(side, name) }
+        btn.innerText = name;
+        testingWeaponButtonDiv.appendChild(btn);
     })
     sides.forEach(element => {
         var btn = document.createElement('button');
@@ -189,7 +200,7 @@ function addButtons() {
         }
     });
     sideButtonDiv.appendChild(inputBox);
-    
+
 
     ["grassyhill_1", "grassyhill_2", "grassyhill_3"].forEach(hillName => {
         var btn = document.createElement('button');
