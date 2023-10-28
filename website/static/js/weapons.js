@@ -216,7 +216,7 @@ export const weaponObjects = {
     "right": "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     "command": ["sleep", "lazy", "bot"]
   },
-  "spagehtti": {
+  "spaghetti": {
     "file": "Spaghetti.png",
     "tense 1": "JD's",
     "tense 2": "that",

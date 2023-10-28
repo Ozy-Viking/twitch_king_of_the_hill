@@ -30,6 +30,7 @@ jobs:
             type=semver,pattern={{major}}.{{minor}}
             type=semver,pattern={{major}}
             type=match,pattern=halloween
+            type=match,pattern=christmas
           labels: |
             type=sha
             type=ref,event=pr
