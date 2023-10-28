@@ -162,8 +162,8 @@ export const weaponObjects = {
   },
   "JDLove": {
     "file": "Holding_Heart_Cat.png",
-    "tense 1": "the",
-    "tense 2": "that",
+    "tense 1": "",
+    "tense 2": "",
     "left": "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
     "right": "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     "command": ["heart", "hug", "love"]
@@ -254,4 +254,11 @@ export const gstring = {
   'left': 'transform: rotate(-30deg) translate(60px,20px);',
   'right': 'transform: rotate(30deg) translate(-35px,10px);',
   'command': ['thong', 'flip flop', 'formal thong', 'safety boot']
+};
+
+// adds the name of each weapon for code readabilty
+for (let i = 0; i < weaponNames.length; i++) {
+  let weapon = weaponObjects[weaponNames[i]];
+  weapon.name = weaponNames[i];
+  weapon.regex = new RegExp(weapon.command.join('|'), "i");
 };

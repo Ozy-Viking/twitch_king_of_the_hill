@@ -64,7 +64,6 @@ body,
   }
 }
 
-
 #display {
   color: var(--font-colour);
   text-shadow: 2px 0 var(--shadow-colour), -2px 0 var(--shadow-colour),
@@ -77,4 +76,65 @@ body,
   font-weight: 600;
   line-height: normal;
   word-wrap: break-word;
+}
+
+div#buttonDisp {
+  position: absolute;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  left: auto;
+  right: auto;
+  text-align: center;
+}
+
+div.testingButtons {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+}
+
+.testing.grassyhill {
+  animation: none;
+}
+
+#grassyhill_1 {
+  opacity: 0;
+}
+
+#grassyhill_2 {
+  opacity: 0;
+}
+
+#grassyhill_3 {
+  opacity: 0;
+}
+div#winnerNotification{
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  text-align: center;
+}
+.display{
+  font-family: "Tw Cen MT Std", Inter;
+  font-style: normal;
+}
+div#winnerNotification{
+  margin-top: 10px;
+  padding: 5px 0px ;
+  border: rgba(0,0,0,0.8) solid;
+  text-align: center;
+}
+#testing_user{
+  text-align: center;
+  margin: 0px 10px;
+}
+div#buttonDisp> div > button{
+  margin: 2px;
+  padding: 3px;
+  font-family: "Tw Cen MT Std", Inter;
+  /* font-style: 600; */
+  font-size: 25px;
 }

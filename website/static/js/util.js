@@ -29,4 +29,4 @@ export function Randomizer(min, max) { return min + Math.floor(Math.random() * (
  * Deletes an HTML element.
  * @param {string} ID - ID of the element to be deleted.  
  */
-export function removeElement(ID) { document.getElementById(ID).remove(); };
+export function removeElement(ID) { document.getElementById(ID).remove() };

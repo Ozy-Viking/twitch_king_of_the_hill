@@ -3,12 +3,13 @@
 // Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 // Docker Container: ozyviking/twitch-king-of-the-hill
 import { weaponObjects, weaponNames, weaponCount, gstring } from "./weapons.js";
+
 import { modifyStyleSheet, Randomizer, removeElement } from "./util.js";
 const urlParams = new URLSearchParams(window.location.search);
 
 var gstringProb = Number(urlParams.get('gstringProb'));
-if (gameLength in [null, 0]) { gstringProb = 10000; };
-
+if (gstringProb == 0) { gstringProb = 10000; };
+console.log(gstringProb)
 var joinCommand = urlParams.get('joinCommand');
 if (joinCommand == null) { joinCommand = "king"; };
 joinCommand = joinCommand.toLowerCase()
@@ -24,7 +25,6 @@ if ([null, 0].includes(gameLength)) {
     modifyStyleSheet(".grassyhill", '--koth-length', `${hillAnimationLength}s`)
 };
 
-
 var removalTimeoutTime = (gameLength + 60) * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5', 'gotobedchild'];
@@ -37,16 +37,7 @@ var winner = 0;
 var audio = [];
 var soundplay = 0;
 
-// adds the name of each weapon for code readabilty
-for (let i = 0; i < weaponNames.length; i++) {
-    let weapon = weaponObjects[weaponNames[i]];
-    weapon.name = weaponNames[i];
-    weapon.regex = new RegExp(weapon.command.join('|'), "i");
-};
-
 var sides = ['left', 'right'];
-
-
 
 function randomSide() {
     // return 'left';
@@ -501,12 +492,13 @@ function randomWeaponSetup() {
     };
 }
 var endingMessage = generateEndingMessage();
-
+console.log(gstringProb)
 //Main function
 function main() {
     connectws();
     if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }
     battleActive = true
+
     setTimeout(playBattleSound, 900, 0.2);
     setTimeout(notify, gameLengthSplit(0, 1) * 1000, `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
     setTimeout(notify, gameLengthSplit(-9, 1 + gameLength) * 1000, `${gameLengthSplit(9, 0, true)} ${updateMessage}!`);

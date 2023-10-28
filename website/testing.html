@@ -14,41 +14,21 @@ Docker Container: ozyviking/twitch-king-of-the-hill
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.0/TweenMax.min.js"></script>
     <script src="/static/js/testing.js" type="module"></script>
     <style>
-      #buttonDisp {
-        position: absolute;
-        width: 100%;
-        margin-left: auto;
-        margin-right: auto;
-        left: auto;
-        right: auto;
-      }
 
-      button {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      #buttonDiv {
-        max-width: 1024px;
-        margin-left: auto;
-        margin-right: auto;
-      }
-      
-      #sideButtonDiv {
-        padding-top: 20px;
-        max-width: 1024px;
-        margin-left: auto;
-        margin-right: auto;
-      }
     </style>
   </head>
 
   <body>
     <div id="buttonDisp">
-      <div id="buttonDiv"></div>
-      <div id="sideButtonDiv"></div>
+      <div class="testingButtons" id="buttonDiv"></div>
+      <div class="testingButtons" id="hillButtonDiv"></div>
+      <div class="testingButtons" id="sideButtonDiv"></div>
+      <div class="display" id="winnerNotification"></div>
     </div>
     <div id="confetti-container"></div>
+    <img class="testing grassyhill" id="grassyhill_1" src="/static/images/Grassy_Hill.png" />
+    <img class="testing grassyhill" id="grassyhill_2" src="/static/images/King_of_the_hill_barrows_edition.png" />
+    <img class="testing grassyhill" id="grassyhill_3" src="/static/images/King_of_the_hill_barrows_edition_2.png" />
 
   </body>
 
