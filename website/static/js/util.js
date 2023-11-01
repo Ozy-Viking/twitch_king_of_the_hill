@@ -28,5 +28,27 @@ export function Randomizer(min, max) { return min + Math.floor(Math.random() * (
 /**
  * Deletes an HTML element.
  * @param {string} ID - ID of the element to be deleted.  
+ * @param {boolean} debug - Console.log(element) before deleting  
  */
-export function removeElement(ID) { document.getElementById(ID).remove() };
+export function removeElement(ID, debug = false) {
+    if (debug) { console.log("ID", ID) }
+    let element = document.getElementById(ID)
+    if (debug) { console.log("element", element) }
+    element.remove()
+};
+
+export function boolSwitch(value) {
+    return value == true ? false : true
+}
+
+export function redirectBrowser(url = "about:blank") {
+    document.location.assign(url);
+}
+
+export const sides = ['left', 'right'];
+
+export function randomSide(side = null) {
+    if (side) { return side }
+    side = sides[Math.floor(Math.random() * 2)]
+    return side;
+};

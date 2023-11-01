@@ -153,10 +153,10 @@ http://localhost:28080/?championName=King&hillName=Hill
 
 ##### Probability of Sexy Thong
 
-Probability of a thong (flip flop) being a thong (g-string) (1 in x), use `gstringProb`. Default is 10,000 i.e. 1/10,000.
+Probability of a thong (flip flop) being a thong (g-string) (1 in x), use `gstringProb`. Default is 1,000 i.e. 1/1,000.
 
 ```url
-http://localhost:28080/?gstringProb=10000
+http://localhost:28080/?gstringProb=1000
 ```
 
 ##### Additional Rigged Users
@@ -220,15 +220,16 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [x] Stop sound at appropriate places.
 1. [x] Work on sound timings and effects.
 1. [x] Variable Time
-1. [ ] Ad warning not working
-1. [ ] Last winner name on hill
-1. [ ] Fix teapot lefts
+1. [x] Ad warning not working
+1. [x] Last winner name on hill
+1. [x] Fix teapot lefts
 1. [x] Add version to title.
+1. [ ] Make some weapons throwable.
 
 #### Known Bugs
 
-1. [x] What bugs, please let me know by raiseing an issue.
-2. [ ] Limited to 60 seconds.
+1. [x] What bugs, please let me know by raising an issue.
+2. [x] Limited to 60 seconds.
 
 #### Videos
 
@@ -237,12 +238,12 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 
 #### Acknowlegements
 
-Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia). 
+Inspired as a birthday gift for Ostrogothia (https://twitch.tv/Ostrogothia).
 Original author is VRFlad: [Champion of the Hill](https://vrflad.com/champion)
 
 #### Pictures
 
-Special thanks to the_rubble for designing the new imagery!!! The rest are from vrflad's orginal game.
+Special thanks to @the_rubble for designing the new imagery!!! The rest are from vrflad's orginal game.
 
 #### Sound
 
