@@ -1,10 +1,12 @@
 import { removeElement, sides } from "../util.js"
 import { motionDown, riggedMotion, winnerMotion, winnerMotionExit } from "./playerMotion.js"
+import { notify } from "./streamerBot.js";
 import { weaponObjects, weaponObjectsTesting, weaponNames, weaponNamesTesting } from "./weapons.js"
 
 const scaleLastWinner = 2;
+const winStreakNumber = 3;
 const storage = localStorage;
-var winnerHistory = getWinnerHistory()
+export var winnerHistory = getWinnerHistory()
 
 export function lastWinner() {
     return JSON.parse(storage.getItem("koth"))
@@ -74,7 +76,7 @@ export function lastWinnerDiv() {
             // Load into page
             var Div = document.createElement('div');
             Div.id = "lastWinner";
-            Div.setAttribute("user", currentKing.user);
+            Div.setAttribute("user", currentKing.username);
             Div.style.background = `url(${xhttp.responseText})`;
             Div.style.backgroundSize = '100% 100%';
             Div.setAttribute("weapon", `${weapon.name}`)
@@ -115,4 +117,21 @@ export function clearWinnerHistory() {
     storage.removeItem("koth")
     storage.removeItem("winnerHistory")
     winnerHistory = {}
+}
+function winStreakCondition(win) {
+    if (win < winStreakNumber) {
+        return false
+    } else if ((win % winStreakNumber) === 0) {
+        return true
+    } else {
+        return false
+    }
+}
+
+export function winStreakNotify(ws, botID, username) {
+    let wins = winnerHistory[username];
+    if (winStreakCondition(wins)) {
+        let winStreakMessage = `Well done @${username}, You have won ${wins} times this stream. If you keep this up, you will have to untangle this spaghetti on stream.`
+        notify(ws, botID, winStreakMessage)
+    }
 }

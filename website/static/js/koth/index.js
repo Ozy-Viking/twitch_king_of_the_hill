@@ -11,7 +11,7 @@ import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } fro
 import { redirectBrowser } from "../util.js";
 import { randomSide, sides } from "../util.js";
 import { notify, setWinner, connectws } from "./streamerBot.js";
-import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner } from "./lastWinner.js";
+import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner, winStreakNotify, winnerHistory } from "./lastWinner.js";
 const urlParams = new URLSearchParams(window.location.search);
 
 const classicNegation = ["false", "no"]
@@ -75,6 +75,7 @@ if (hillName === null) {
 var battleGround = `${championName} of the ${hillName}`;
 
 const showLastWinner = !(["false", "no"].includes(urlParams.get('lastWinner')))
+const winStreak = !(["false", "no"].includes(urlParams.get('winStreak')))
 
 var wsPort = urlParams.get('wsPort');
 if (wsPort === null) {
@@ -87,7 +88,7 @@ if (!(server === null)) {
 } else {
     server = `ws://localhost:${wsPort}/`;
 };
-var testing = !([null, 'false'].includes(urlParams.get('testing')));
+var testing = !([null, ...classicNegation].includes(urlParams.get('testing')));
 
 // deepcode ignore MissingClose: websocket is closed.
 var ws = new WebSocket(server);
@@ -245,9 +246,11 @@ function winnerTime(id, winNotification) {
     setTimeout(notify, 1000, ws, botID, winNotification)
 
     let element = document.getElementById(id);
-    var user = element.getAttribute("user");
+    const user = element.getAttribute("user");
     let rigged = riggedUsers.includes(user)
-
+    if (winStreak) {
+        setTimeout(winStreakNotify, 2000, ws, botID, user)
+    }
     setLastWinner(user, element.getAttribute('weapon'), element.getAttribute('side'), rigged)
 
     if (rigged) {
@@ -369,6 +372,9 @@ function closeWS(ws) {
         console.error(error)
     }
 }
+
+
+
 
 //Main function
 function main() {

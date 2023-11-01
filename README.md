@@ -181,6 +181,40 @@ or
 http://localhost:28080/?testing
 ```
 
+##### Show Last Winner
+
+By default the last winner will be displayed, to not show them use the search parametre `lastWinner`.
+
+```url
+http://localhost:28080/?lastWinner=no
+http://localhost:28080/?lastWinner=false
+```
+
+##### Message Win Streaks
+
+By default the win streaks will be sent through to twich chate, to not have them use the search parametre `winStreak`. Curently every 3 wins.
+
+```url
+http://localhost:28080/?winStreak=no
+http://localhost:28080/?winStreak=false
+```
+
+##### Reset Winner History
+
+To reset/clear the win history use the search parametre `reset`.
+
+```url
+http://localhost:28080/?reset
+http://localhost:28080/?reset=true
+```
+
+To not reset either don't add it or equal it to either `false` or `no`.
+
+```url
+http://localhost:28080/?reset=false
+http://localhost:28080/?reset=no
+```
+
 #### Weapon Calls
 
 This is an example of the setup for a weapon.
@@ -214,7 +248,7 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 
 #### Ideas
 
-1. [ ] Stats in the stream so far.
+1. [x] Stats in the stream so far.
 1. [ ] Track win records.
 1. [ ] Kill messages on the top left like COD.
 1. [x] Stop sound at appropriate places.
