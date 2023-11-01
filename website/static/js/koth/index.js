@@ -43,24 +43,15 @@ const postGameLength = fightDelay + totalYeetTime + delayToCeremony + winnerMoti
 const GLPGL = gameLength + postGameLength
 const hillAnimationCSS = 0.02 // 2%
 const hillAnimationLength = (GLPGL / (1 - 2 * hillAnimationCSS) - GLPGL) / 2;
-// console.log(hillAnimationLength)
 const totalGameLength = hillAnimationLength + gameLength + postGameLength + hillAnimationLength
 modifyStyleSheet(".grassyhill", '--koth-length', `${totalGameLength}s`)
-// console.log(totalGameLength, totalGameLength * 0.02)
-var removalTimeoutTime = totalGameLength * 1000;
 
 var riggedUsers = ['Ozy_Viking', 'sassysarrah5', 'gotobedchild'];
 riggedUsers = riggedUsers.concat(urlParams.getAll('riggedUser'));
 
 var riggedWinners = [];
-
 var divnumber = 0;
 var winner = 0;
-
-function chooseRandomWeapon() {
-    // return weaponObjects["thong"];
-    return weaponObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
-};
 
 var championName = urlParams.get('championName');
 if (championName === null) {
@@ -106,6 +97,9 @@ var altEndingMessages = [
     // `This Is Your Life, and It's Ending One Minute at a Time`
 ];
 
+function chooseRandomWeapon() {
+    return weaponObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
+};
 
 function userJoining() {
     ws.send(JSON.stringify(
@@ -215,8 +209,7 @@ function addFighter(user, lowerMessage) {
                 }
                 warp.appendChild(Div);
 
-                // Run animation
-                // setTimeout(removeElement, removalTimeoutTime, Div.id);
+                setTimeout(removeElement, totalGameLength * 1000, Div.id);
             }
         }
     };
@@ -234,7 +227,7 @@ function randomWeapon() {
     Div.style.backgroundSize = '100% 100%';
     warp.appendChild(Div);
     randomSideMotion(Div)
-    setTimeout(removeElement, removalTimeoutTime, Div.id);
+    setTimeout(removeElement, totalGameLength * 1000, Div.id);
 };
 
 function winnerTime(id, winNotification) {
@@ -339,8 +332,8 @@ function addTestingPeople(totalGameLength, numberPeople = 10) {
     };
 };
 
-var split = gameLength / 12;
 function gameLengthSplit(m = 1, c = 0, floor = false) {
+    var split = gameLength / 12;
     let length = m * split + c
     if (floor) {
         length = Math.floor(length)
@@ -372,9 +365,6 @@ function closeWS(ws) {
         console.error(error)
     }
 }
-
-
-
 
 //Main function
 function main() {

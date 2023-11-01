@@ -105,8 +105,7 @@ export function removeLastWinner(id = "lastWinner") {
         if (storage.koth) {
             let element = document.getElementById(id)
             winnerMotionExit(element, true)
-            setTimeout(removeElement, (motionDown) * 1000, id, true)
-            setTimeout(console.log, (motionDown) * 1000, "remove id", (motionDown) * 1000)
+            setTimeout(removeElement, (motionDown) * 1000, id)
         }
     } catch (error) {
         console.error(error)
