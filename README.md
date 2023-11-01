@@ -215,6 +215,7 @@ http://localhost:28080/?reset=true
 To not reset either don't add it or equal it to either `false` or `no`.
 
 ```url
+http://localhost:28080/
 http://localhost:28080/?reset=false
 http://localhost:28080/?reset=no
 ```
