@@ -1,10 +1,11 @@
 import { removeElement, sides } from "../util.js"
 import { motionDown, riggedMotion, winnerMotion, winnerMotionExit } from "./playerMotion.js"
 import { notify } from "./streamerBot.js";
+import { winStreak } from "./urlParams.js";
 import { weaponObjects, weaponObjectsTesting, weaponNames, weaponNamesTesting } from "./weapons.js"
 
 const scaleLastWinner = 2;
-const winStreakNumber = 3;
+const winStreakNumber = winStreak;
 const storage = localStorage;
 export var winnerHistory = getWinnerHistory()
 

@@ -3,39 +3,31 @@
 // Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 // Docker Container: ozyviking/twitch-king-of-the-hill
 
-import { weaponObjects, weaponNames, weaponCount, gstring } from "./weapons.js";
-import { winnerMotion, riggedMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";
+import { weaponObjects, weaponNames, gstring } from "./weapons.js";
+import { winnerMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";
 import { modifyStyleSheet, Randomizer, removeElement } from "../util.js";
-import { kothTestEvent as testEvent, randomPlayer, testingPeople } from "./test.js";
+import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
 import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } from "./sound.js";
 import { redirectBrowser } from "../util.js";
-import { randomSide, sides } from "../util.js";
+import { randomSide } from "../util.js";
 import { notify, setWinner, connectws } from "./streamerBot.js";
 import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner, winStreakNotify, winnerHistory } from "./lastWinner.js";
-const urlParams = new URLSearchParams(window.location.search);
+import {
+    championName,
+    gameLength,
+    gstringProb,
+    hillName,
+    joinCommand,
+    reset,
+    riggedUsers,
+    server,
+    showLastWinner,
+    testing,
+    winStreak
+} from "./urlParams.js";
 
-const classicNegation = ["false", "no"]
-
-var gstringProb = Number(urlParams.get('gstringProb'));
-if (gstringProb == 0) { gstringProb = 1000; };
-
-var joinCommand = urlParams.get('joinCommand');
-if (joinCommand == null) { joinCommand = "king"; };
-joinCommand = joinCommand.toLowerCase()
 // file deepcode ignore reDOS: No code injection possible in file.
-var joinCommandRegex = new RegExp(joinCommand, "i");
-
-const reset = ![null, ...classicNegation].includes(urlParams.get('reset'))
-if (reset) {
-    console.warn("Clearing History");
-    clearWinnerHistory()
-}
-
-export var gameLength = Number(urlParams.get('gameLength'));
-if ([null, 0].includes(gameLength)) {
-    gameLength = 60;
-};
-
+const joinCommandRegex = new RegExp(joinCommand, "i");
 const totalYeetTime = 10
 const delayToCeremony = 2.5
 const fightDelay = 1;
@@ -44,58 +36,31 @@ const GLPGL = gameLength + postGameLength
 const hillAnimationCSS = 0.02 // 2%
 const hillAnimationLength = (GLPGL / (1 - 2 * hillAnimationCSS) - GLPGL) / 2;
 const totalGameLength = hillAnimationLength + gameLength + postGameLength + hillAnimationLength
-modifyStyleSheet(".grassyhill", '--koth-length', `${totalGameLength}s`)
-
-var riggedUsers = ['Ozy_Viking', 'sassysarrah5', 'gotobedchild'];
-riggedUsers = riggedUsers.concat(urlParams.getAll('riggedUser'));
-
-var riggedWinners = [];
-var divnumber = 0;
-var winner = 0;
-
-var championName = urlParams.get('championName');
-if (championName === null) {
-    championName = "King";
-};
-
-var hillName = urlParams.get('hillName');
-if (hillName === null) {
-    hillName = "Hill";
-};
-
-var battleGround = `${championName} of the ${hillName}`;
-
-const showLastWinner = !(["false", "no"].includes(urlParams.get('lastWinner')))
-const winStreak = !(["false", "no"].includes(urlParams.get('winStreak')))
-
-var wsPort = urlParams.get('wsPort');
-if (wsPort === null) {
-    wsPort = 8080;
-};
-
-var server = urlParams.get('server');
-if (!(server === null)) {
-    server = `ws://${server}:${wsPort}/`;
-} else {
-    server = `ws://localhost:${wsPort}/`;
-};
-var testing = !([null, ...classicNegation].includes(urlParams.get('testing')));
+const battleGround = `${championName} of the ${hillName}`;
+const botID = "123";
+const noJoinMessage = `No one joined, so no new ${battleGround}!`;
+const winnerMessage = `is the new ${battleGround}`;
+const updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
 
 // deepcode ignore MissingClose: websocket is closed.
 var ws = new WebSocket(server);
-
-const botID = "123";
 var weaponnumber = 0;
-var noJoinMessage = `No one joined, so no new ${battleGround}!`;
-var winnerMessage = `is the new ${battleGround}`;
-var updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
+var riggedWinners = [];
+var divnumber = 0;
+var winner = 0;
 // Ending message set at end of code.
 var battleActive = false;
-
-// Alternate endings.
+// Alternate endings messages.
 var altEndingMessages = [
     // `This Is Your Life, and It's Ending One Minute at a Time`
 ];
+
+if (reset) {
+    console.warn("Clearing History");
+    clearWinnerHistory()
+}
+
+modifyStyleSheet(".grassyhill", '--koth-length', `${totalGameLength}s`)
 
 function chooseRandomWeapon() {
     return weaponObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
@@ -118,10 +83,6 @@ function userJoining() {
         // grab message and parse JSON
         const msg = event.data;
         const wsdata = JSON.parse(msg);
-
-        // try {
-        //     console.log(wsdata.data.message);
-        // } catch (error) {}
         if (typeof wsdata.data != "undefined") {
             if (typeof wsdata.data.message != "undefined") {
                 let lowerMessage = wsdata.data.message.message.toLowerCase();
@@ -231,7 +192,6 @@ function randomWeapon() {
 };
 
 function winnerTime(id, winNotification) {
-    // console.log(id)
     playSound('horn.mp3', 0.4)
     // Play Sound and notify winner 
     setTimeout(playSound, 1500, 'cheer.mp3', 0.3)
@@ -324,6 +284,7 @@ function generateEndingMessage() {
         return `The fight is coming to an end! Get back, Back, no more people. OI! Who threw ${randWeapon['tense 2']} ${randWeapon.name}!?!`;
     }
 };
+var endingMessage = generateEndingMessage();
 
 function addTestingPeople(totalGameLength, numberPeople = 10) {
     for (let i = 0; i < numberPeople; i++) {
@@ -355,8 +316,6 @@ function displayLastWinner() {
     lastWinnerDiv()
     setTimeout(removeLastWinner, gameLength * 1000)
 }
-
-var endingMessage = generateEndingMessage();
 
 function closeWS(ws) {
     try {

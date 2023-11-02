@@ -6,13 +6,7 @@ King of the Hill game for Twitch Streams to engage their audience.
 
 A live example or a stable version you can use in production/live: [https://ozy-viking.github.io/twitch_king_of_the_hill/](https://ozy-viking.github.io/twitch_king_of_the_hill/). It can be modified to your liking using the url modification below.
 
-## NEW
-
-A new StartFight to relace the old one. Also added, 'End of Stream Cleanup' event which triggers when OBS stopped streaming. This should only happen when the OBS stop stream button is pressed. This is to set the source for king of the hill to 'about:blank'. This is re1uired as this change update, the JavaScript is controlling the length of the game via the parameter 'gameLength=60'. This removed the need to ensure this timed is changed in multiple spots.
-
-```base64
-U0JBRR+LCAAAAAAABADdWNtu3DYQfS/Qf1C3cJ/CDe+iDARF6tZN0DYFktYvRVDwMtpVo8tWouy4gf+9lLRrryxt4hgOkHafVjPDIXmGc3ikd19+EUWLc6ibrCoXxxF71BuyYlPV/uzaTAdzkZVZ0RY39gVe0iVZbL3gdbC96x7CY6kL6EJewEX0yuvaR6fZau2H4ODXrV9XdRfx6z+Xf55lb7Jyde08359CLAlBtd1NFNwOGltnG78NeQmbXFuILqu2jpp+rrSbK7rI/Dry66yJqhKW0aIbfjWs1unRarXtkjXB8sdgiXau3p25bh6BNcOCaWSVlIhLx1DiYooApLaKy9Qyu1tjP+zvFtoOhLLN8307lNrk0OX0dQsjz1ubtw5O66p4ljW+qi9DUKrzZhS1w/aH0kVVGuCtQRfRSQ66bDejFazqKlhC6Miq8wt92bxsy7nktS5dVTy1W3QnfluVtq1rKP2c19fZahWqt4/kLTT3EOWKOcWFRFQYgjhjFCUpJAgIZzEkClNM91c+THG56XZPhLjtOYjrZNedf999dfPweoTU9FzM7aaxUMKLbVVetaaJAojRm8qvJ6tvwiG117E/hVPfldCvIXqW5fkkvK3zLk6bqvXHJtflm0lIKEgJ/Tqf96AyzAyJlUGxjQ3ihkqkhIuRxXGiEkJil9hJkqEeicUydowh53ga6mEp0kwmiLJYKJBUO0YmQy+gb+zjCC/xgVoxdduxO5i3WuMOZcxKB2+72Ub1e/S+8pzrvO/DxZmus/QyynzUc0J+GV2soYygdE3ooaKzbmpoGnDLGZjzga++Pj3F4XcAQkGkFsIAoglXiCtrwpGmHLFw0kFbI2Ih7wMhwTh5eBDJ3Zvgx26yvhNej+kgz/UmILbn37lvqjIl01hjFyDRSAQSQJxjjnSckHBKwXJsXJxiMUumi0TohAuVoFgxgXgCJCDMHRIqxYxLSlw6Ks6D0W1/jY1usVEV3tvMnwPn2qoowkQDSzggFkQcWp0zHFo9Vigx2qBUcqqZZgrEoSNORSIVxQI5rCnimhtkYswQw9pgakVKqTnE2hyT+7N2v/P/Em2vvd8cP35MkiCTpFqSJcHkmCqs8ONvPTQ+pPlmFXL+DOXKr58c3fw/Omj/q8rKk6GST476h1++P/qUlwIRjHISYyRTE/otDtpHQWhXSGOswnXNbPLZXAr8Yy6FOutS7mp6g/FkM7v7g0+2ElRs9duwndll9QBqLYAIqUKrmUB1hBik0lAAmzKdcmlwauJ7XQmUPTyC9O4I/m9UD2GM8BhQAjLUB0J9tJUx4qkicSqoolY/7AFfTNJ9Ms0TdMPtbIV+e7b1TnzDTTRzy+zhJVNHmZMB6oBs4H+RoITZGCmpuHKJBCHdPSUOfWjEyMcgNiaELbceZIPF/ivrtfdOjGA4j4kKlOqwDO89lqYoUcwgQnCQQyAYAfXAjHBfANmnVYjDn138IPI+8Br+0frP5JXtazUVgDtpN6i6Q6vaCqeD6xrYbSI38AG0NlAXmffgfm9mVNuCSIklw5QvPjT+AODZvQTeNRZf9Z9QDijoifjMyl5Cz2BbVO42xeyQPDBNqJPeSuDRqGxVVjV8V/mn1lbtvAgeYp6XHupS53MRm+6jUuNPugxQz8vsnQvPDOyq9Z7B7Y27K8m7q1Fm3cArKJvMZ+cwN3qVV0bnJ1WVu+piAsCQ+9pHRiNnP/GsApH7LQ/hQ+faZ8X2APYNGdxX/wJV5h/PEhQAAA==
-```
+To try out the weapons and different features go to  [https://ozy-viking.github.io/twitch_king_of_the_hill/testing](https://ozy-viking.github.io/twitch_king_of_the_hill/testing)
 
 ## Docker Container
 
@@ -22,8 +16,9 @@ Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/reposit
 
 - Stable: Built of tagged pushes that are either a patch, minor or major semver bump.
 - Latest: More bleading edge / higher chance of bugs. Built off every push to github.
-- Branch: Built off the lastest push in that branch.
+- Branch: Built off the latest push in that branch.
 - Tags: Built off tagged pushes ('v0.1.1').
+- Seasonal names: Halloween will be the latest Halloween build etc.
 
 ### Docker Compose
 
@@ -113,7 +108,7 @@ To have multiple modifications, simply use an `&` between terms.
 http://localhost:28080/?wsPort=8080&gameLength=60
 ```
 
-The values that are in each example are the default and are unrequired to be added. Except for the 'Streamer.bot Server' example.
+The values that are in each example are the default and are not required to be added. Except for the 'Streamer.bot Server' example.
 
 ##### Streamer.bot webstream port
 
@@ -127,7 +122,7 @@ wsPort: Websocket port of streamer bot set in streamer bot. Default is 8080.
 
 ##### Streamer.bot Server
 
-If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port aswell if it is not on the default 8080.
+If streamer.bot is on a different server to you gaming machine use the search parameter `server`. Change the webstream port as well if it is not on the default 8080.
 
 ```url
 http://localhost:28080/?server=192.168.0.10
@@ -151,6 +146,8 @@ http://localhost:28080/?gameLength=60
 
 ##### Champion title and Hill name
 
+This will replace the default "King of the Hill" to `[championName] of the [hillName]`.
+
 ```url
 http://localhost:28080/?championName=King&hillName=Hill
 ```
@@ -165,7 +162,7 @@ http://localhost:28080/?gstringProb=1000
 
 ##### Additional Rigged Users
 
-If you want to add an additional rigged user use the search parametre `riggedUser`. You can add as many as you would like.
+If you want to add an additional rigged user use the search parameter `riggedUser`. You can add as many as you would like.
 
 ```url
 http://localhost:28080/?riggedUser=Ozy_Viking&riggedUser=Not_Ozy_Viking
@@ -194,18 +191,26 @@ http://localhost:28080/?lastWinner=no
 http://localhost:28080/?lastWinner=false
 ```
 
+![Show last winner](docs/ShowLastWinner.png)
 ##### Message Win Streaks
 
-By default the win streaks will be sent through to twitch chat, to not have them use the search parametre `winStreak`. Curently every 3 wins.
+By default the win streaks will be sent through to twitch chat, to not have them use the search parameter `winStreak`. Currently every 2 wins.
 
 ```url
 http://localhost:28080/?winStreak=no
 http://localhost:28080/?winStreak=false
+http://localhost:28080/?winStreak=0
+```
+
+When you supply a number, that will be what the win stream is set to.
+
+```url
+http://localhost:28080/?winStreak=2
 ```
 
 ##### Reset Winner History
 
-To reset/clear the win history use the search parametre `reset`.
+To reset/clear the win history use the search parameter `reset`.
 
 ```url
 http://localhost:28080/?reset
@@ -246,8 +251,8 @@ This is an example of the setup for a weapon.
 
 - The display name is what will be displayed to the end user i.e. 'number 1 fan finger' is the name of the object. This is auto added as the name in the object i.e. weapon.name.
 - file: the name of the picture within the images folder (`./static/images`).
-- left: This is the css used when entering from the left.
-- right: This is the css used when entering from the right.
+- left: This is the CSS used when entering from the left.
+- right: This is the CSS used when entering from the right.
 - command: These are the smallest parts, that a user can declare so the system can recognise what they want. Regex is used and the must be in lowercase otherwise they will never be used. Note: if pan is used then no command with pan is usable. If you want to add a command as a priority over another weapons use of it, have that weapon declared higher in the code.
 
 > If you want to flip/invert the image, use `scaleX(-1)`.
