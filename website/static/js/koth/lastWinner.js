@@ -13,6 +13,7 @@ var currentWinStreakWinners = []
 
 export class LastWinner {
     static key = "lastWinner"
+    static divID = "lastWinner"
     constructor(username, weapon, side, rigged = false) {
         this.username = username
         this.weapon = weapon
@@ -33,6 +34,9 @@ export class LastWinner {
     }
     save() {
         storage.setItem(LastWinner.key, this.json)
+    }
+    static exists() {
+        return storage.getItem(LastWinner.key) ? true : false
     }
     static fetch() {
         if (!storage.getItem(LastWinner.key)) {
@@ -188,10 +192,6 @@ function getWinnerHistory(key = "winnerHistory") {
     return tempWinnerHistory ? tempWinnerHistory : { winStreakKey: currentWinStreakWinners }
 }
 
-export function isLastWinner(key = "koth") {
-    return storage.getItem(key) ? true : false
-}
-
 export function lastWinnerDiv() {
     lastWinner = LastWinner.fetch()
     if (lastWinner == undefined) {
@@ -250,9 +250,9 @@ export function lastWinnerDiv() {
     xhttp.send();
 };
 
-export function removeLastWinner(id = "lastWinner") {
+export function removeLastWinner(id = LastWinner.divID) {
     try {
-        if (storage.koth) {
+        if (document.getElementById(id)) {
             let element = document.getElementById(id)
             winnerMotionExit(element, true)
         }
@@ -262,7 +262,7 @@ export function removeLastWinner(id = "lastWinner") {
 }
 
 export function clearWinnerHistory() {
-    storage.removeItem("koth")
+    storage.removeItem(LastWinner.key)
     storage.removeItem("winnerHistory")
     storage.removeItem(winStreakKey)
     storage.removeItem(ConsecutiveCounter.key)

@@ -11,7 +11,7 @@ import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } fro
 import { redirectBrowser } from "../util.js";
 import { randomSide } from "../util.js";
 import { notify, setWinner } from "./streamerBot.js";
-import { LastWinner, clearWinnerHistory, isLastWinner, lastWinner, lastWinnerDiv, removeLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
+import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
 import settings, {
     botID,
     championName,
@@ -327,7 +327,7 @@ function main() {
     connectws(userJoining);
     battleActive = true
     setTimeout(playBattleSound, hillAnimationLength * 1000, 0.2, gameLength);
-    if (isLastWinner() && showLastWinner) {
+    if (LastWinner.exists() && showLastWinner) {
         setTimeout(displayLastWinner, hillAnimationLength * 1000);
     }
     setTimeout(notify, gameLengthSplit(0, hillAnimationLength) * 1000, `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
