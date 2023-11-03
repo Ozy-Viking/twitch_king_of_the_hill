@@ -1,3 +1,6 @@
+import { randomSide } from "../util.js";
+import { weaponCount, weaponNames } from "./weapons.js";
+
 export const urlParams = new URLSearchParams(window.location.search);
 
 const classicNegation = ["false", "no"]
@@ -19,7 +22,6 @@ export const winStreak = winStreakNumber()
 export const winner = urlParams.get('winner') ? Number(urlParams.get('winner')) : Infinity;
 export const winStreakOrder = winStreakOrderCondition(urlParams.get('consecutive'))
 export const debug = winStreakOrderCondition(urlParams.get('debug'))
-
 export default function settings() {
     return {
         "botID": botID,
@@ -60,3 +62,6 @@ function winStreakOrderCondition(value) {
         return "consecutive"
     }
 }
+
+export var weaponName = urlParams.get("weapon") ? urlParams.get("weapon") : weaponName = weaponNames[weaponCount - 1]
+export var side = randomSide(urlParams.get("side"))

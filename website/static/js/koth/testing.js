@@ -2,31 +2,33 @@ import { weaponObjects, weaponNames, weaponCount } from "./weapons.js";
 import { weaponNamesTesting, weaponObjectsTesting } from "./weapons.js";
 import { modifyStyleSheet, boolSwitch, randomSide, sides } from "../util.js";
 import { winnerMotion, winnerMotionExit, riggedMotion, fighterAnimation, yeet } from "./playerMotion.js";
-import { setLastWinner, lastWinnerDiv, removeLastWinner, clearWinnerHistory } from "./lastWinner.js";
+import { lastWinnerDiv, removeLastWinner, clearWinnerHistory, LastWinner } from "./lastWinner.js";
+import settings, {
+    botID,
+    championName,
+    gameLength,
+    gstringProb,
+    hillName,
+    joinCommand,
+    massTesting,
+    reset,
+    riggedUsers,
+    server,
+    showLastWinner,
+    testing,
+    winStreak,
+    weaponName,
+    side as requestSide
+} from "./urlParams.js";
 var testingUser = "Ozy_Viking";
-
-const urlParams = new URLSearchParams(window.location.search);
-var championName = urlParams.get('championName');
-if (championName === null) {
-    championName = "King";
-};
-var hillName = urlParams.get('hillName');
-if (hillName === null) {
-    hillName = "Hill";
-};
-var battleGround = `${championName} of the ${hillName}`;
-var winnerMessage = `is the new ${battleGround}`;
 var activeHill = null;
-
+var side;
 const divnumber = 0;
-var weaponName = urlParams.get("weapon")
-if (weaponName == null) {
-    weaponName = weaponNames[weaponCount - 1]
-}
+const battleGround = `${championName} of the ${hillName}`;
+const winnerMessage = `is the new ${battleGround}`;
 var weapon = weaponObjects[weaponName]
+var rigged = false;
 
-var side = randomSide(urlParams.get("side"))
-console.log(side)
 
 function usersWeapon(choosenWeapon) {
     if (weapon) {
@@ -34,10 +36,6 @@ function usersWeapon(choosenWeapon) {
     }
     return weaponObjects[choosenWeapon];
 }
-// function Randomizer(min, max) { return min + Math.floor(Math.random() * (max - min)); };
-
-
-var rigged = false;
 
 function addFighter(user, lowerMessage) {
     var username = user.toLowerCase();
@@ -63,7 +61,7 @@ function addFighter(user, lowerMessage) {
             Div.style.backgroundSize = '100% 100%';
 
             var weapon = usersWeapon(lowerMessage);
-            var side = randomSide(side);
+            side = randomSide(side);
             Div.setAttribute("side", side);
             Div.setAttribute("weapon", weapon.name)
 
@@ -132,7 +130,7 @@ function winnerTime(id, userSide = side) {
         console.error(error)
     }
     let element = document.getElementById(id);
-    setLastWinner(element.getAttribute("user"), element.getAttribute("weapon"), userSide, rigged)
+    new LastWinner(element.getAttribute("user"), element.getAttribute("weapon"), userSide, rigged).save()
     if (rigged) { //riggedUsers.includes(user)) {
         riggedMotion(element, false);
     } else {
