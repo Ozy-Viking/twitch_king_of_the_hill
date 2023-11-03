@@ -8,10 +8,45 @@ const scaleLastWinner = 2;
 const winStreakNumber = winStreak;
 const storage = localStorage;
 export var winnerHistory = getWinnerHistory()
-const winStreakKey = "Win Streak Key Paid Out"
+
 var currentWinStreakWinners = []
 
+export class LastWinner {
+    static key = "lastWinner"
+    constructor(username, weapon, side, rigged = false) {
+        this.username = username
+        this.weapon = weapon
+        this.side = side
+        this.rigged = rigged
+        addToWinnerHistory(username)
+    }
+    get obj() {
+        return {
+            "username": this.username,
+            "weapon": this.weapon,
+            "side": this.side,
+            "rigged": this.rigged
+        }
+    }
+    get json() {
+        return JSON.stringify(this.obj)
+    }
+    save() {
+        storage.setItem(LastWinner.key, this.json)
+    }
+    static fetch() {
+        if (!storage.getItem(LastWinner.key)) {
+            return undefined
+        }
+        let lw = JSON.parse(storage.getItem(LastWinner.key))
+        return new LastWinner(lw.username, lw.weapon, lw.side, lw.rigged)
+    }
+}
+export var lastWinner;
+const lastWinnerKey = LastWinner.key
+
 class WinCounter {
+    static key = "winCounter"
     #username;
     #wins;
     #history;
@@ -26,7 +61,7 @@ class WinCounter {
     }
 
 }
-
+const winStreakKey = WinCounter.key
 
 class ConsecutiveCounter {
     static key = "consecutiveWinnerHistory";
@@ -128,10 +163,6 @@ class ConsecutiveCounter {
 
 const consecutiveCounter = ConsecutiveCounter.init();
 
-export function lastWinner() {
-    return JSON.parse(storage.getItem("koth"))
-};
-
 function userWinCount(username) {
     return currentWinStreakWinners.filter(x => x == username).length
 }
@@ -161,30 +192,22 @@ export function isLastWinner(key = "koth") {
     return storage.getItem(key) ? true : false
 }
 
-export function setLastWinner(username, weapon, side, rigged = false) {
-    const winner = {
-        "username": username,
-        "weapon": weapon,
-        "side": side,
-        "rigged": rigged
-    }
-    addToWinnerHistory(username)
-    storage.setItem("koth", JSON.stringify(winner))
-}
-
 export function lastWinnerDiv() {
-    const currentKing = lastWinner()
-    let weapon;
-    if (weaponNames.includes(currentKing.weapon)) {
-        weapon = weaponObjects[currentKing.weapon]
-    } else if (weaponNamesTesting.includes(currentKing.weapon)) {
-        weapon = weaponObjectsTesting[currentKing.weapon]
+    lastWinner = LastWinner.fetch()
+    if (lastWinner == undefined) {
+        return
     }
-    var winnerSide = currentKing.side;
+    let weapon;
+    if (weaponNames.includes(lastWinner.weapon)) {
+        weapon = weaponObjects[lastWinner.weapon]
+    } else if (weaponNamesTesting.includes(lastWinner.weapon)) {
+        weapon = weaponObjectsTesting[lastWinner.weapon]
+    }
+    var winnerSide = lastWinner.side;
     // if (sides.includes(winnerSide)) {
     //     winnerSide = "left"
     // }
-    var username = currentKing.username.toLowerCase();
+    var username = lastWinner.username.toLowerCase();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
@@ -203,7 +226,7 @@ export function lastWinnerDiv() {
             // Load into page
             var Div = document.createElement('div');
             Div.id = "lastWinner";
-            Div.setAttribute("user", currentKing.username);
+            Div.setAttribute("user", lastWinner.username);
             Div.style.background = `url(${xhttp.responseText})`;
             Div.style.backgroundSize = '100% 100%';
             Div.setAttribute("weapon", `${weapon.name}`)
@@ -214,9 +237,9 @@ export function lastWinnerDiv() {
 
             let div = document.createElement('div');
             div.id = "lastWinnerName"
-            div.innerText = currentKing.username
+            div.innerText = lastWinner.username
             Div.appendChild(div)
-            if (currentKing.rigged) {
+            if (lastWinner.rigged) {
                 winnerMotion(Div, true, (scaleLastWinner + 0.25), true)
             } else {
                 winnerMotion(Div, true, scaleLastWinner, false)
@@ -242,6 +265,7 @@ export function clearWinnerHistory() {
     storage.removeItem("koth")
     storage.removeItem("winnerHistory")
     storage.removeItem(winStreakKey)
+    storage.removeItem(ConsecutiveCounter.key)
     winnerHistory = {}
 }
 

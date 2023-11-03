@@ -11,7 +11,7 @@ import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } fro
 import { redirectBrowser } from "../util.js";
 import { randomSide } from "../util.js";
 import { notify, setWinner } from "./streamerBot.js";
-import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
+import { LastWinner, clearWinnerHistory, isLastWinner, lastWinner, lastWinnerDiv, removeLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
 import settings, {
     botID,
     championName,
@@ -201,7 +201,7 @@ function winnerTime(id, winNotification) {
     if (winStreak) {
         setTimeout(winStreakHandler, 2000, user)
     }
-    setLastWinner(user, element.getAttribute('weapon'), element.getAttribute('side'), rigged)
+    new LastWinner(user, element.getAttribute('weapon'), element.getAttribute('side'), rigged).save()
 
     if (rigged) {
         winnerMotion(element, false, 4, true);
@@ -285,7 +285,7 @@ var endingMessage = generateEndingMessage();
 function addTestingPeople(totalGameLength, numberPeople = 10) {
     for (let i = 0; i < numberPeople; i++) {
         let randomdelay = (totalGameLength * Math.random()) * 1000;
-        setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer("Ozy_Viking"), chooseRandomWeapon().command[0]);
+        setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer(), chooseRandomWeapon().command[0]);
     };
 };
 
@@ -350,7 +350,7 @@ function main() {
         setTimeout(redirectBrowser, (totalGameLength + 1) * 1000, document.location.href);
     }
     randomWeaponSetup();
-    if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }
+    if (testing) { setTimeout(addTestingPeople, hillAnimationLength * 1000, gameLength, gameLength / 2) }
 };
 
 main();
