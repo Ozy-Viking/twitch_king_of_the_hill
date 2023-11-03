@@ -1,5 +1,7 @@
+import { botID } from "./urlParams.js";
+import { ws } from "./websocket.js";
 
-export function notify(ws, botID, message) {
+export function notify(message) {
     console.log(message);
     ws.send(JSON.stringify(
         {
@@ -14,7 +16,7 @@ export function notify(ws, botID, message) {
         }));
 }
 
-export function setWinner(ws, botID, message) {
+export function setWinner(message) {
     ws.send(JSON.stringify(
         {
             "request": "DoAction",
@@ -26,19 +28,4 @@ export function setWinner(ws, botID, message) {
             },
             "id": botID
         }));
-}
-;
-
-function emptyFunction() { }
-
-
-export function connectws(server, onopen = emptyFunction, onclose = emptyFunction) {
-    const ws = new WebSocket(server)
-    if (onopen.toString() != emptyFunction.toString()) {
-        ws.onopen = onopen
-    }
-    if (onclose.toString() != emptyFunction.toString()) {
-        ws.onclose = onclose
-    }
-    return ws
 };

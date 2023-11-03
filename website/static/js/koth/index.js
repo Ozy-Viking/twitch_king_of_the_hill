@@ -10,14 +10,16 @@ import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
 import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } from "./sound.js";
 import { redirectBrowser } from "../util.js";
 import { randomSide } from "../util.js";
-import { notify, setWinner, connectws } from "./streamerBot.js";
-import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner, winStreakNotify, winnerHistory } from "./lastWinner.js";
+import { notify, setWinner } from "./streamerBot.js";
+import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
 import settings, {
+    botID,
     championName,
     gameLength,
     gstringProb,
     hillName,
     joinCommand,
+    massTesting,
     reset,
     riggedUsers,
     server,
@@ -25,6 +27,7 @@ import settings, {
     testing,
     winStreak
 } from "./urlParams.js";
+import { ws, connectws } from "./websocket.js";
 
 // file deepcode ignore reDOS: No code injection possible in file.
 const joinCommandRegex = new RegExp(joinCommand, "i");
@@ -37,13 +40,11 @@ const hillAnimationCSS = 0.02 // 2%
 const hillAnimationLength = (GLPGL / (1 - 2 * hillAnimationCSS) - GLPGL) / 2;
 const totalGameLength = hillAnimationLength + gameLength + postGameLength + hillAnimationLength
 const battleGround = `${championName} of the ${hillName}`;
-const botID = "123";
 const noJoinMessage = `No one joined, so no new ${battleGround}!`;
 const winnerMessage = `is the new ${battleGround}`;
 const updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
-
 // deepcode ignore MissingClose: websocket is closed.
-var ws = new WebSocket(server);
+
 var weaponnumber = 0;
 var riggedWinners = [];
 var divnumber = 0;
@@ -107,9 +108,7 @@ function usersWeapon(lowerMessage) {
     if (choosenWeapon === null) {
         choosenWeapon = chooseRandomWeapon();
     }
-
     if (choosenWeapon.name === gstring.takeoverName) {
-        console.log("potential thong")
         if (Randomizer(0, gstringProb) == 0) {
             return gstring;
         };
@@ -194,13 +193,13 @@ function winnerTime(id, winNotification) {
     // Play Sound and notify winner 
     setTimeout(playSound, 1500, 'cheer.mp3', 0.3)
     setTimeout(changeVolume, 24000, soundplay - 1, 0, 2000, 20)
-    setTimeout(notify, 1000, ws, botID, winNotification)
+    setTimeout(notify, 1000, winNotification)
 
     let element = document.getElementById(id);
     const user = element.getAttribute("user");
     let rigged = riggedUsers.includes(user)
     if (winStreak) {
-        setTimeout(winStreakNotify, 2000, ws, botID, user)
+        setTimeout(winStreakHandler, 2000, user)
     }
     setLastWinner(user, element.getAttribute('weapon'), element.getAttribute('side'), rigged)
 
@@ -214,7 +213,6 @@ function winnerTime(id, winNotification) {
 
 function winnerNotification(user, winweapon, winMessage = winnerMessage) {
     let winnerMsg;
-    console.log(winweapon)
     if (winweapon === null) {
         winnerMsg = `${user} ${winnerMessage}`;
     } else {
@@ -226,7 +224,7 @@ function winnerNotification(user, winweapon, winMessage = winnerMessage) {
 function startFight() {
     battleActive = false;
     // deepcode ignore MissingClose: added close to end of onopen.
-    ws = connectws(server, fightSequence)
+    connectws(fightSequence)
 };
 
 function fightSequence() {
@@ -240,7 +238,7 @@ function fightSequence() {
         // **** No users here - need to handle ****
         // file deepcode ignore UsageOfUndefinedReturnValue: Not an issue.
         // deepcode ignore CodeInjection: No code injection possible here.
-        setTimeout(notify, 10000, ws, botID, noJoinMessage);
+        setTimeout(notify, 10000, noJoinMessage);
     } else {
         var user = document.getElementById(winner).getAttribute("user");
         var winweapon = document.getElementById(winner).getAttribute("weapon");
@@ -249,7 +247,7 @@ function fightSequence() {
         setTimeout(changeVolume, 0, 0, 0.1, 2500)
         setTimeout(changeVolume, totalYeetTime * 1000, 0, 0, 2500)
         setTimeout(winnerTime, (totalYeetTime + delayToCeremony) * 1000, winner, winnerNotification(user, weaponObjects[winweapon]));
-        setTimeout(setWinner, (totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime), ws, botID, user);
+        setTimeout(setWinner, (totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime), user);
         // deepcode ignore CodeInjection: Code Injection is not possible.
         setTimeout(closeWS, postGameLength * 1000, ws)
     }
@@ -326,19 +324,19 @@ function closeWS(ws) {
 //Main function
 function main() {
     console.log(settings())
-    ws = connectws(server, userJoining);
+    connectws(userJoining);
     battleActive = true
     setTimeout(playBattleSound, hillAnimationLength * 1000, 0.2, gameLength);
     if (isLastWinner() && showLastWinner) {
         setTimeout(displayLastWinner, hillAnimationLength * 1000);
     }
-    setTimeout(notify, gameLengthSplit(0, hillAnimationLength) * 1000, ws, botID, `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-9, hillAnimationLength + gameLength) * 1000, ws, botID, `${gameLengthSplit(9, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-6, hillAnimationLength + gameLength) * 1000, ws, botID, `${gameLengthSplit(6, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-3, hillAnimationLength + gameLength) * 1000, ws, botID, `${gameLengthSplit(3, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-2, hillAnimationLength + gameLength) * 1000, ws, botID, `${gameLengthSplit(2, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, gameLengthSplit(-1, hillAnimationLength + gameLength) * 1000, ws, botID, `${gameLengthSplit(1, 0, true)} ${updateMessage}!`);
-    setTimeout(notify, (gameLength + hillAnimationLength) * 1000, ws, botID, endingMessage);
+    setTimeout(notify, gameLengthSplit(0, hillAnimationLength) * 1000, `${gameLengthSplit(12, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-9, hillAnimationLength + gameLength) * 1000, `${gameLengthSplit(9, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-6, hillAnimationLength + gameLength) * 1000, `${gameLengthSplit(6, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-3, hillAnimationLength + gameLength) * 1000, `${gameLengthSplit(3, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-2, hillAnimationLength + gameLength) * 1000, `${gameLengthSplit(2, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, gameLengthSplit(-1, hillAnimationLength + gameLength) * 1000, `${gameLengthSplit(1, 0, true)} ${updateMessage}!`);
+    setTimeout(notify, (gameLength + hillAnimationLength) * 1000, endingMessage);
     setTimeout('battleActive = false', (gameLength + hillAnimationLength) * 1000);
     // deepcode ignore CodeInjection: No code inject 
     setTimeout(closeWS, (gameLength + hillAnimationLength) * 1000, ws);
@@ -347,6 +345,9 @@ function main() {
     setTimeout(stopAllSound, (totalGameLength) * 1000)
     if (!testing) {
         setTimeout(redirectBrowser, (totalGameLength) * 1000);
+    }
+    if (massTesting) {
+        setTimeout(redirectBrowser, (totalGameLength + 1) * 1000, document.location.href);
     }
     randomWeaponSetup();
     if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }

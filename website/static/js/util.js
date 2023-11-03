@@ -57,3 +57,5 @@ export function randomSide(side = null) {
     side = sides[Math.floor(Math.random() * 2)]
     return side;
 };
+
+export function emptyFunction() { }

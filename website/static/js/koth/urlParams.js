@@ -2,6 +2,7 @@ export const urlParams = new URLSearchParams(window.location.search);
 
 const classicNegation = ["false", "no"]
 
+export const botID = urlParams.get('botID') ? urlParams.get('botID') : "123";
 export const championName = urlParams.get('championName') ? urlParams.get('championName') : "King";
 export const gameLength = Number(urlParams.get('gameLength')) ? Number(urlParams.get('gameLength')) : 60;
 export const gstringProb = Number(urlParams.get('gstringProb')) ? Number(urlParams.get('gstringProb')) : 1000;
@@ -13,12 +14,15 @@ export const wsPort = urlParams.get('wsPort') ? urlParams.get('wsPort') : "8080"
 export const server = urlParams.get('server') ? `ws://${urlParams.get('server')}:${wsPort}/` : `ws://localhost:${wsPort}/`;
 export const showLastWinner = !(["false", "no"].includes(urlParams.get('lastWinner')))
 export const testing = !([null, ...classicNegation].includes(urlParams.get('testing')));
+export const massTesting = !([null, ...classicNegation].includes(urlParams.get('massTesting')));
 export const winStreak = winStreakNumber()
 export const winner = urlParams.get('winner') ? Number(urlParams.get('winner')) : Infinity;
 export const winStreakOrder = winStreakOrderCondition(urlParams.get('consecutive'))
+export const debug = winStreakOrderCondition(urlParams.get('debug'))
 
 export default function settings() {
     return {
+        "botID": botID,
         "championName": championName,
         "gameLength": gameLength,
         "gstringProb": gstringProb,
@@ -32,6 +36,8 @@ export default function settings() {
         "testing": testing,
         "winStreak": winStreak,
         "winStreakOrder": winStreakOrder,
+        "debug": debug,
+        "massTesting": massTesting
     }
 }
 function winStreakNumber(winStreakParam = null) {
