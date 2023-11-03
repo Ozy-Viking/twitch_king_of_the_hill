@@ -271,6 +271,7 @@ export const weaponCountTesting = weaponNamesTesting.length
 
 export const gstring = {
   'name': "JD's Sexy Thong",
+  'takeoverName': 'thong',
   'file': 'secret_thong.png',
   'tense 1': '',
   'tense 2': '',

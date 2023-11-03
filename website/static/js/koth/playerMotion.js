@@ -85,6 +85,7 @@ export function winnerMotionExit(element, lastWinner = false) {
     } catch (error) {
         console.error(error)
     }
+    setTimeout(removeElement, motionDown * 1000, element.id)
 }
 
 
@@ -133,4 +134,5 @@ export function randomSideMotion(element, side = null) {
         //TweenMax.to(element, 1.5, { y: '+=200', repeat: 0,  ease: Power2.easeIn, delay: 1.2 });
         TweenMax.to(element, 2, { y: (innerHeight - (150 + Randomizer(400, 800))), yoyo: true, ease: Back.easeOut, repeat: 0, delay: 0 });
     }
+    setTimeout(removeElement, 7 * 1000, element.id);
 }

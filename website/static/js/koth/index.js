@@ -12,7 +12,7 @@ import { redirectBrowser } from "../util.js";
 import { randomSide } from "../util.js";
 import { notify, setWinner, connectws } from "./streamerBot.js";
 import { clearWinnerHistory, isLastWinner, lastWinnerDiv, removeLastWinner, setLastWinner, winStreakNotify, winnerHistory } from "./lastWinner.js";
-import {
+import settings, {
     championName,
     gameLength,
     gstringProb,
@@ -108,7 +108,8 @@ function usersWeapon(lowerMessage) {
         choosenWeapon = chooseRandomWeapon();
     }
 
-    if (choosenWeapon.name == 'thong') {
+    if (choosenWeapon.name === gstring.takeoverName) {
+        console.log("potential thong")
         if (Randomizer(0, gstringProb) == 0) {
             return gstring;
         };
@@ -169,8 +170,6 @@ function addFighter(user, lowerMessage) {
                         break;
                 }
                 warp.appendChild(Div);
-
-                setTimeout(removeElement, totalGameLength * 1000, Div.id);
             }
         }
     };
@@ -188,7 +187,6 @@ function randomWeapon() {
     Div.style.backgroundSize = '100% 100%';
     warp.appendChild(Div);
     randomSideMotion(Div)
-    setTimeout(removeElement, totalGameLength * 1000, Div.id);
 };
 
 function winnerTime(id, winNotification) {
@@ -216,7 +214,7 @@ function winnerTime(id, winNotification) {
 
 function winnerNotification(user, winweapon, winMessage = winnerMessage) {
     let winnerMsg;
-    // console.log(winweapon)
+    console.log(winweapon)
     if (winweapon === null) {
         winnerMsg = `${user} ${winnerMessage}`;
     } else {
@@ -289,7 +287,7 @@ var endingMessage = generateEndingMessage();
 function addTestingPeople(totalGameLength, numberPeople = 10) {
     for (let i = 0; i < numberPeople; i++) {
         let randomdelay = (totalGameLength * Math.random()) * 1000;
-        setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer(), chooseRandomWeapon().command[0]);
+        setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer("Ozy_Viking"), chooseRandomWeapon().command[0]);
     };
 };
 
@@ -327,6 +325,7 @@ function closeWS(ws) {
 
 //Main function
 function main() {
+    console.log(settings())
     ws = connectws(server, userJoining);
     battleActive = true
     setTimeout(playBattleSound, hillAnimationLength * 1000, 0.2, gameLength);
@@ -346,7 +345,9 @@ function main() {
     setTimeout(startFight, (gameLength + hillAnimationLength + fightDelay) * 1000);
     setTimeout(removeElement, (totalGameLength - 0.5) * 1000, "grassyhill_id")
     setTimeout(stopAllSound, (totalGameLength) * 1000)
-    setTimeout(redirectBrowser, (totalGameLength) * 1000);
+    if (!testing) {
+        setTimeout(redirectBrowser, (totalGameLength) * 1000);
+    }
     randomWeaponSetup();
     if (testing) { setTimeout(addTestingPeople, 1000, gameLength, gameLength / 2) }
 };

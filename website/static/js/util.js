@@ -31,10 +31,15 @@ export function Randomizer(min, max) { return min + Math.floor(Math.random() * (
  * @param {boolean} debug - Console.log(element) before deleting  
  */
 export function removeElement(ID, debug = false) {
-    if (debug) { console.log("ID", ID) }
+    if (debug) { console.debug("ID", ID) }
     let element = document.getElementById(ID)
-    if (debug) { console.log("element", element) }
-    element.remove()
+    if (element === null) { }
+    if (debug) { console.debug("element", element) }
+    try {
+        element.remove()
+    } catch (error) {
+        console.error(ID, element, error)
+    }
 };
 
 export function boolSwitch(value) {

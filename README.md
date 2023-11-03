@@ -208,6 +208,35 @@ When you supply a number, that will be what the win stream is set to.
 http://localhost:28080/?winStreak=2
 ```
 
+##### Winner Limit
+
+This limits the number of winners per stream (NOTE: Only for consecutive currently). Default: 0
+
+```url
+http://localhost:28080/?winner=0
+```
+
+- [ ] : set to infinity by default
+##### Win Count Consecutive
+
+This is to set whether the win streak is consecutive only or any wins per stream. Default: Consecutive.
+
+###### Consecutive 
+
+```url
+http://localhost:28080/?consecutive
+http://localhost:28080/
+```
+
+###### Any Order
+
+Use any of the 3 options below:
+
+```url
+http://localhost:28080/?consecutive=no
+http://localhost:28080/?consecutive=false
+http://localhost:28080/?consecutive=any
+```
 ##### Reset Winner History
 
 To reset/clear the win history use the search parameter `reset`.

@@ -1,6 +1,9 @@
-export const testingPeople = ['Naval_Warlord' ,'Ozy_Viking', 'JDPlays', 'the_rubble',  'steveo0938']
+export const testingPeople = ['Naval_Warlord', 'Ozy_Viking', 'JDPlays', 'the_rubble', 'steveo0938']
 
-export function randomPlayer() {
+export function randomPlayer(player = null) {
+    if (player) {
+        return player;
+    }
     return testingPeople[Math.floor(Math.random() * testingPeople.length)]
 }
 

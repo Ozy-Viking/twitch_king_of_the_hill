@@ -1,17 +1,116 @@
 import { removeElement, sides } from "../util.js"
 import { motionDown, riggedMotion, winnerMotion, winnerMotionExit } from "./playerMotion.js"
 import { notify } from "./streamerBot.js";
-import { winStreak } from "./urlParams.js";
+import { winStreak, winner, winStreakOrder } from "./urlParams.js";
 import { weaponObjects, weaponObjectsTesting, weaponNames, weaponNamesTesting } from "./weapons.js"
 
 const scaleLastWinner = 2;
 const winStreakNumber = winStreak;
 const storage = localStorage;
 export var winnerHistory = getWinnerHistory()
+const winStreakKey = "Win Streak Key Paid Out"
+var currentWinStreakWinners = []
+
+
+class ConsecutiveCounter {
+    #username;
+    #wins;
+    #previousWinners;
+    #history; // Todo: Have a running history.
+
+    constructor(username = undefined, wins = 0, previousWinners = [], history = []) {
+        this.#username = username;
+        this.#wins = wins;
+        this.#previousWinners = previousWinners
+        this.#history = history
+    }
+
+    get wins() { return this.#wins }
+    get username() { return this.#username }
+    get previousWinners() { return this.#previousWinners }
+    set wins(value) { this.#wins = value }
+    set username(value) { this.#username = value }
+    get previousWinnersTotal() {
+        return this.#previousWinners.length
+    }
+
+    get toJSON() {
+        return JSON.stringify({
+            "username": this.#username,
+            "wins": this.#wins,
+            "prevWinner": this.#previousWinners
+        })
+    }
+
+    save() { storage.setItem(winStreakKey, this.toJSON) }
+    equal(username) { return username === this.#username }
+    increase(username = this.#username) {
+        if (this.equal(username)) {
+            this.#wins += 1
+        } else {
+            this.#username = username
+            this.#wins = 1
+        }
+        this.save()
+    }
+
+    checkIfWon(username) {
+        if (this.#wins >= winStreakNumber) {
+            this.#wins = 0
+        }
+        this.increase(username)
+        if (!(winStreakNumber > 0)) {
+            console.warn("!(winStreakNumber > 0):", !(winStreakNumber > 0))
+            return false
+        }
+        if (!(winStreakNumber === this.#wins)) {
+            console.warn("!(winStreakNumber === this.#wins):", !(winStreakNumber === this.#wins))
+            return false
+        }
+        if (this.previousWinnersTotal >= winner) {
+            console.warn("this.previousWinnersTotal >= winner:", this.previousWinnersTotal >= winner)
+            return false
+        }
+        this.winner()
+        return true
+    }
+    winner() {
+        this.#previousWinners.push(this.#username)
+        this.#wins = 0
+        this.save()
+    }
+    previousWinnersCount() {
+        var array = this.#previousWinners
+        var obj = {};
+        for (var i = 0; i < array.length; i++) {
+            obj[array[i]] = (obj[array[i]] || 0) + 1;
+        }
+        return obj
+    }
+    static fromJSON(jsonString) {
+        let jsonObj = JSON.parse(jsonString)
+        let tempUser = jsonObj.username
+        let tempWins = jsonObj.wins ? jsonObj.wins : 0
+        let tempPrevWinner = jsonObj.prevWinner ? jsonObj.prevWinner : []
+        return new ConsecutiveCounter(tempUser, tempWins, tempPrevWinner)
+    }
+    static init(key = winStreakKey) {
+        if (storage.getItem(key)) {
+            return ConsecutiveCounter.fromJSON(storage.getItem(key))
+        }
+        return new ConsecutiveCounter()
+    }
+}
+
+const consecutiveCounter = ConsecutiveCounter.init(winStreakKey);
 
 export function lastWinner() {
     return JSON.parse(storage.getItem("koth"))
 };
+
+function userWinCount(username) {
+    return currentWinStreakWinners.filter(x => x == username).length
+}
 
 function addToWinnerHistory(username) {
     if (winnerHistory[username]) {
@@ -23,12 +122,15 @@ function addToWinnerHistory(username) {
 }
 
 function saveWinnerHistory(key = "winnerHistory") {
+    if (!Object.keys(winnerHistory).includes(winStreakKey)) {
+        winnerHistory[winStreakKey] = currentWinStreakWinners
+    }
     storage.setItem(key, JSON.stringify(winnerHistory))
 }
 
 function getWinnerHistory(key = "winnerHistory") {
     let tempWinnerHistory = JSON.parse(storage.getItem(key))
-    return tempWinnerHistory ? tempWinnerHistory : {}
+    return tempWinnerHistory ? tempWinnerHistory : { winStreakKey: currentWinStreakWinners }
 }
 
 export function isLastWinner(key = "koth") {
@@ -106,7 +208,6 @@ export function removeLastWinner(id = "lastWinner") {
         if (storage.koth) {
             let element = document.getElementById(id)
             winnerMotionExit(element, true)
-            setTimeout(removeElement, (motionDown) * 1000, id)
         }
     } catch (error) {
         console.error(error)
@@ -116,8 +217,10 @@ export function removeLastWinner(id = "lastWinner") {
 export function clearWinnerHistory() {
     storage.removeItem("koth")
     storage.removeItem("winnerHistory")
+    storage.removeItem(winStreakKey)
     winnerHistory = {}
 }
+
 function winStreakCondition(win) {
     if (win < winStreakNumber) {
         return false
@@ -130,8 +233,13 @@ function winStreakCondition(win) {
 
 export function winStreakNotify(ws, botID, username) {
     let wins = winnerHistory[username];
-    if (winStreakCondition(wins)) {
-        let winStreakMessage = `Well done @${username}, You have won ${wins} times this stream. If you keep this up, you will have to untangle this spaghetti on stream.`
+    if (["any", "both"].includes(winStreakOrder) && winStreakCondition(wins)) {
+        let winStreakMessage = `WOW @${username}, You have won ${wins} times this stream!`
         notify(ws, botID, winStreakMessage)
     }
+    if (["consecutive", "both"].includes(winStreakOrder) && consecutiveCounter.checkIfWon(username)) {
+        let winStreakMessage = `OMG @${username}, You have won ${winStreakNumber} times in a row and now you get a free game!`
+        notify(ws, botID, winStreakMessage)
+    }
+    console.log(consecutiveCounter)
 }
