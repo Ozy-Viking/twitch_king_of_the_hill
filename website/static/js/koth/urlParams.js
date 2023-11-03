@@ -14,7 +14,7 @@ export const server = urlParams.get('server') ? `ws://${urlParams.get('server')}
 export const showLastWinner = !(["false", "no"].includes(urlParams.get('lastWinner')))
 export const testing = !([null, ...classicNegation].includes(urlParams.get('testing')));
 export const winStreak = winStreakNumber()
-export const winner = urlParams.get('winner') ? Number(urlParams.get('winner')) : 0;
+export const winner = urlParams.get('winner') ? Number(urlParams.get('winner')) : Infinity;
 export const winStreakOrder = winStreakOrderCondition(urlParams.get('consecutive'))
 
 export default function settings() {

@@ -68,7 +68,7 @@ class ConsecutiveCounter {
             return false
         }
         if (this.previousWinnersTotal >= winner) {
-            console.warn("this.previousWinnersTotal >= winner:", this.previousWinnersTotal >= winner)
+            console.warn("this.previousWinnersTotal >= winner:", this.previousWinnersTotal >= winner, this.previousWinnersTotal)
             return false
         }
         this.winner()
