@@ -22,6 +22,8 @@ export const winStreak = winStreakNumber()
 export const winner = urlParams.get('winner') ? Number(urlParams.get('winner')) : Infinity;
 export const winStreakOrder = winStreakOrderCondition(urlParams.get('consecutive'))
 export const debug = winStreakOrderCondition(urlParams.get('debug'))
+export const hillChoice = handleHillChoice(urlParams.get('hillChoice'))
+
 export default function settings() {
     return {
         "botID": botID,
@@ -39,11 +41,15 @@ export default function settings() {
         "winStreak": winStreak,
         "winStreakOrder": winStreakOrder,
         "debug": debug,
-        "massTesting": massTesting
+        "massTesting": massTesting,
+        "hillChoice": hillChoice
     }
 }
+
 function winStreakNumber(winStreakParam = null) {
+    // @ts-ignore
     winStreakParam = winStreakParam ? winStreakParam : urlParams.get('winStreak');
+    // @ts-ignore
     if (["false", "no", "0"].includes(winStreakParam)) {
         return null
     } else if (Number(winStreakParam) > 0) {
@@ -65,3 +71,17 @@ function winStreakOrderCondition(value) {
 
 export var weaponName = urlParams.get("weapon") ? urlParams.get("weapon") : weaponName = weaponNames[weaponCount - 1]
 export var side = randomSide(urlParams.get("side"))
+
+/**
+ * @param {string | null} hillChoice
+ */
+function handleHillChoice(hillChoice) {
+    switch (hillChoice) {
+        case "h1":
+            return "King_of_the_hill_barrows_edition"
+        case "h2":
+            return "King_of_the_hill_barrows_edition_2"
+        default:
+            return "Grassy_Hill"
+    }
+}

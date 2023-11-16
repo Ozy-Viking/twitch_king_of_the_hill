@@ -4,6 +4,7 @@
 // Docker Container: ozyviking/twitch-king-of-the-hill
 
 import { weaponObjects, weaponNames, gstring } from "./weapons.js";
+// @ts-ignore
 import { winnerMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";
 import { modifyStyleSheet, Randomizer, removeElement } from "../util.js";
 import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
@@ -11,6 +12,7 @@ import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } fro
 import { redirectBrowser } from "../util.js";
 import { randomSide } from "../util.js";
 import { notify, setWinner } from "./streamerBot.js";
+// @ts-ignore
 import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
 import settings, {
     botID,
@@ -22,12 +24,14 @@ import settings, {
     massTesting,
     reset,
     riggedUsers,
+    // @ts-ignore
     server,
     showLastWinner,
     testing,
     winStreak
 } from "./urlParams.js";
 import { ws, connectws } from "./websocket.js";
+import hill from "./Hill.js";
 
 // file deepcode ignore reDOS: No code injection possible in file.
 const joinCommandRegex = new RegExp(joinCommand, "i");
@@ -95,6 +99,59 @@ function userJoining() {
     };
 };
 
+function addFighter(user, lowerMessage) {
+    var username = user.toLowerCase();
+    // console.log("starting xmlhttp");
+    var xhttp = new XMLHttpRequest();
+    // console.log("created xmlhttp object");
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            // get display image for the user
+            // console.log("got a response back");
+            //save this to cache between sessions too.
+            //check for user being added already (or if already dead and ignore)
+            var warp = document.getElementById("confetti-container"),
+                innerWidth = window.innerWidth,
+                innerHeight = window.innerHeight;
+
+            // Load into page
+            var Div = document.createElement('div');
+            // @ts-ignore
+            Div.id = divnumber;
+            Div.setAttribute("user", user);
+            Div.setAttribute("state", "alive");
+            Div.style.background = `url(${xhttp.responseText})`;
+            Div.style.backgroundSize = '100% 100%';
+            divnumber++
+            var weapon = usersWeapon(lowerMessage);
+            let side = randomSide();
+            Div.setAttribute("side", side);
+            Div.setAttribute("weapon", weapon.name)
+
+            Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
+
+            switch (side) {
+                case 'left':
+                    // left - TweenLite.set(Div, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
+                    // @ts-ignore
+                    TweenLite.set(Div, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
+                    fighterAnimation(Div);
+                    break;
+                case 'right':
+                    // @ts-ignore
+                    TweenLite.set(Div, { className: 'falling-element', x: innerWidth, y: innerHeight - 110, z: 0 });
+                    fighterAnimation(Div);
+                    break;
+            }
+            // @ts-ignore
+            warp.appendChild(Div);
+
+        }
+    };
+    xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
+    xhttp.send();
+};
+
 function usersWeapon(lowerMessage) {
     var choosenWeapon = null;
     var weapon;
@@ -116,65 +173,6 @@ function usersWeapon(lowerMessage) {
     return choosenWeapon;
 }
 
-function addFighter(user, lowerMessage) {
-    var username = user.toLowerCase();
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-            var addToFight = true;
-            if (battleActive) {
-                if (!testing) {
-                    for (let i = 0; i < divnumber; i++) {
-                        let checkUser = document.getElementById(i).getAttribute("user");
-                        if (user == checkUser) {
-                            addToFight = false;
-                        };
-                    };
-                };
-            } else {
-                addToFight = false;
-            };
-            if (addToFight) {
-                var warp = document.getElementById("confetti-container"),
-                    innerWidth = window.innerWidth,
-                    innerHeight = window.innerHeight;
-
-                // Load into page
-                var Div = document.createElement('div');
-                Div.id = divnumber;
-                Div.setAttribute("user", user);
-                Div.setAttribute("state", "alive");
-                divnumber++;
-                Div.style.background = `url(${xhttp.responseText})`;
-                Div.style.backgroundSize = '100% 100%';
-
-                var weapon = usersWeapon(lowerMessage);
-                var side = randomSide();
-                Div.setAttribute("side", side);
-                if (weapon.name == gstring.name) {
-                    riggedWinners.push(Div.id)
-                }
-                Div.setAttribute("weapon", `${weapon.name}`)
-                Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
-
-                switch (side) {
-                    case 'left':
-                        // left - TweenLite.set(Div, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
-                        TweenLite.set(Div, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
-                        fighterAnimation(Div);
-                        break;
-                    default:
-                        TweenLite.set(Div, { className: 'falling-element', x: innerWidth, y: innerHeight - 110, z: 0 });
-                        fighterAnimation(Div);
-                        break;
-                }
-                warp.appendChild(Div);
-            }
-        }
-    };
-    xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
-    xhttp.send();
-};
 
 function randomWeapon() {
     var warp = document.getElementById("confetti-container");
@@ -184,6 +182,7 @@ function randomWeapon() {
     var weapon = chooseRandomWeapon();
     Div.style.background = `url("static/images/${weapon.file}")`;
     Div.style.backgroundSize = '100% 100%';
+    // @ts-ignore
     warp.appendChild(Div);
     randomSideMotion(Div)
 };
@@ -196,11 +195,14 @@ function winnerTime(id, winNotification) {
     setTimeout(notify, 1000, winNotification)
 
     let element = document.getElementById(id);
+    // @ts-ignore
     const user = element.getAttribute("user");
+    // @ts-ignore
     let rigged = riggedUsers.includes(user)
     if (winStreak) {
         setTimeout(winStreakHandler, 2000, user)
     }
+    // @ts-ignore
     new LastWinner(user, element.getAttribute('weapon'), element.getAttribute('side'), rigged).save()
 
     if (rigged) {
@@ -240,7 +242,9 @@ function fightSequence() {
         // deepcode ignore CodeInjection: No code injection possible here.
         setTimeout(notify, 10000, noJoinMessage);
     } else {
+        // @ts-ignore
         var user = document.getElementById(winner).getAttribute("user");
+        // @ts-ignore
         var winweapon = document.getElementById(winner).getAttribute("weapon");
         yeetathon(winner);
         // 17000
@@ -325,6 +329,7 @@ function closeWS(ws) {
 function main() {
     console.log(settings())
     connectws(userJoining);
+    hill()
     battleActive = true
     setTimeout(playBattleSound, hillAnimationLength * 1000, 0.2, gameLength);
     if (LastWinner.exists() && showLastWinner) {

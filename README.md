@@ -110,6 +110,26 @@ http://localhost:28080/?wsPort=8080&gameLength=60
 
 The values that are in each example are the default and are not required to be added. Except for the 'Streamer.bot Server' example.
 
+Available:
+
+- botID
+- championName
+- debug
+- gameLength
+- gstringProb
+- hillChoice
+- hillName
+- joinCommand
+- massTesting
+- reset
+- riggedUsers
+- server
+- showLastWinner
+- testing
+- winStreak
+- winStreakOrder
+- wsPort
+
 ##### Streamer.bot webstream port
 
 To change the port to what the streamer bot is listening on, change it by search parameters in the url.
@@ -182,6 +202,14 @@ or
 http://localhost:28080/?testing
 ```
 
+##### Mass Testing
+
+To get the battle to repeat constantly for testing, use `massTesting=true` or `massTesting`.
+
+```url
+http://localhost:28080/?massTesting
+```
+
 ##### Show Last Winner
 
 By default the last winner will be displayed, to not show them use the search parametre `lastWinner`.
@@ -210,18 +238,17 @@ http://localhost:28080/?winStreak=2
 
 ##### Winner Limit
 
-This limits the number of winners per stream (NOTE: Only for consecutive currently). Default: 0
+This limits the number of winners per stream (NOTE: Only for consecutive currently). Default: Infinity
 
 ```url
 http://localhost:28080/?winner=0
 ```
 
-- [ ] : set to infinity by default
 ##### Win Count Consecutive
 
 This is to set whether the win streak is consecutive only or any wins per stream. Default: Consecutive.
 
-###### Consecutive 
+###### Consecutive
 
 ```url
 http://localhost:28080/?consecutive
@@ -237,6 +264,7 @@ http://localhost:28080/?consecutive=no
 http://localhost:28080/?consecutive=false
 http://localhost:28080/?consecutive=any
 ```
+
 ##### Reset Winner History
 
 To reset/clear the win history use the search parameter `reset`.
@@ -264,6 +292,20 @@ U0JBRR+LCAAAAAAABADFVVtr2zAUfh/sP4g8V6ls+SLnZYyxrWOwQQvdwxhDtySmspTJctus9L9P8iWN
 > **Note**: The second OBS set browser source url goes to `about:blank`. Modify the delay as required to ensure that it actually clears the storage before setting it to `about:blank`.
 
 Set the url to the correct reset url. This sub-action auto resets your history when and only when you press **end stream** in OBS.
+
+##### Hill Choice
+
+The hill can be set by using the search param `hillChoice`.
+
+```url
+http://localhost:28080/?hillChoice=h2
+```
+
+Current Choices:
+
+- default: Grassy Hill (no need to add)
+- h1: Halloween 1
+- h2: Halloween 2
 
 #### Weapon Calls
 
@@ -298,22 +340,13 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 
 #### Ideas
 
-1. [x] Stats in the stream so far.
-1. [x] Track win records.
 1. [ ] Kill messages on the top left like COD.
-1. [x] Stop sound at appropriate places.
-1. [x] Work on sound timings and effects.
-1. [x] Variable Time
-1. [x] Ad warning not working
-1. [x] Last winner name on hill
-1. [x] Fix teapot lefts
-1. [x] Add version to title.
 1. [ ] Make some weapons throwable.
+1. [ ] Sparkle explosion on win.
 
 #### Known Bugs
 
 1. [x] What bugs, please let me know by raising an issue.
-2. [x] Limited to 60 seconds.
 
 #### Videos
 
@@ -327,7 +360,7 @@ Original author is VRFlad: [Champion of the Hill](https://vrflad.com/champion)
 
 #### Pictures
 
-Special thanks to @the_rubble for designing the new imagery!!! The rest are from vrflad's orginal game.
+Special thanks to @the_rubble and @JDPlays for designing the new imagery!!! The rest are from vrflad's orginal game.
 
 #### Sound
 
