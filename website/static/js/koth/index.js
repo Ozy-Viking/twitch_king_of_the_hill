@@ -3,17 +3,6 @@
 // Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 // Docker Container: ozyviking/twitch-king-of-the-hill
 
-import { weaponObjects, weaponNames, gstring } from "./weapons.js";
-// @ts-ignore
-import { winnerMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";
-import { modifyStyleSheet, Randomizer, removeElement } from "../util.js";
-import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
-import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } from "./sound.js";
-import { redirectBrowser } from "../util.js";
-import { randomSide } from "../util.js";
-import { notify, setWinner } from "./streamerBot.js";
-// @ts-ignore
-import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler } from "./lastWinner.js";
 import settings, {
     botID,
     championName,
@@ -28,6 +17,17 @@ import settings, {
     testing,
     winStreak
 } from "./urlParams.js";
+import { weaponObjects, weaponNames, gstring } from "./weapons.js";
+// @ts-ignore
+import { winnerMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";
+import { modifyStyleSheet, Randomizer, removeElement } from "../util.js";
+import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
+import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } from "./sound.js";
+import { redirectBrowser } from "../util.js";
+import { randomSide } from "../util.js";
+import { notify, setWinner } from "./streamerBot.js";
+// @ts-ignore
+import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler } from "./lastWinner.js";
 import { ws, connectws } from "./websocket.js";
 import hill from "./Hill.js";
 
