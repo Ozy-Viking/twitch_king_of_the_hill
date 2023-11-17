@@ -11,6 +11,8 @@ export var winnerHistory = getWinnerHistory()
 
 var currentWinStreakWinners = []
 
+// const de
+
 export class LastWinner {
     static key = "lastWinner"
     static divID = "lastWinner"
@@ -46,6 +48,7 @@ export class LastWinner {
         return new LastWinner(lw.username, lw.weapon, lw.side, lw.rigged)
     }
 }
+
 export var lastWinner;
 const lastWinnerKey = LastWinner.key
 

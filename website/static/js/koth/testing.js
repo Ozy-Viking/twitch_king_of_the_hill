@@ -1,4 +1,4 @@
-import { weaponObjects, weaponNames, weaponCount } from "./weapons.js";
+import { weaponObjects, weaponNames, weaponCount, weaponRegex } from "./weapons.js";
 import { weaponNamesTesting, weaponObjectsTesting } from "./weapons.js";
 import { modifyStyleSheet, boolSwitch, randomSide, sides } from "../util.js";
 import { winnerMotion, winnerMotionExit, riggedMotion, fighterAnimation, yeet } from "./playerMotion.js";
@@ -18,8 +18,11 @@ import settings, {
     testing,
     winStreak,
     weaponName,
-    side as requestSide
+    side as requestSide,
+    testingSettings,
+    checkNegationSettings
 } from "./urlParams.js";
+import listActiveWeaponName from "./listWeaponNames.js";
 var testingUser = "Ozy_Viking";
 var activeHill = null;
 var side;
@@ -28,7 +31,6 @@ const battleGround = `${championName} of the ${hillName}`;
 const winnerMessage = `is the new ${battleGround}`;
 var weapon = weaponObjects[weaponName]
 var rigged = false;
-
 
 function usersWeapon(choosenWeapon) {
     if (weapon) {
@@ -259,4 +261,5 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
 
 addButtons();
 weaponTest();
-hill("grassyhill_1");
+// hill("grassyhill_1");
+console.log(JSON.stringify(weaponRegex(),null,1));

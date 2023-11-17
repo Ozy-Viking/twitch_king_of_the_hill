@@ -112,23 +112,24 @@ The values that are in each example are the default and are not required to be a
 
 Available:
 
-- botID
-- championName
-- debug
-- gameLength
-- gstringProb
-- hillChoice
-- hillName
-- joinCommand
-- massTesting
-- reset
-- riggedUsers
-- server
-- showLastWinner
-- testing
-- winStreak
-- winStreakOrder
-- wsPort
+- [botID]()
+- [championName](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
+- [debug]()
+- [gameLength](https://github.com/Ozy-Viking/twitch_king_of_the_hill#game-length)
+- [gstringProb](https://github.com/Ozy-Viking/twitch_king_of_the_hill#probability-of-sexy-thong)
+- [hillChoice](https://github.com/Ozy-Viking/twitch_king_of_the_hill#hill-choice)
+- [hillName](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
+- [joinCommand](https://github.com/Ozy-Viking/twitch_king_of_the_hill#join-command)
+- [massTesting](https://github.com/Ozy-Viking/twitch_king_of_the_hill#mass-testing)
+- [Reset Winner History](https://github.com/Ozy-Viking/twitch_king_of_the_hill#reset-winner-history)
+- [riggedUsers](https://github.com/Ozy-Viking/twitch_king_of_the_hill#additional-rigged-users)
+- [server](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-server)
+- [showLastWinner](https://github.com/Ozy-Viking/twitch_king_of_the_hill#show-last-winner)
+- [testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#testing-setup)
+- [winner limit](https://github.com/Ozy-Viking/twitch_king_of_the_hill#winner-limit)
+- [winStreak](https://github.com/Ozy-Viking/twitch_king_of_the_hill#message-win-streaks)
+- [winStreakOrder (consecutive?)](https://github.com/Ozy-Viking/twitch_king_of_the_hill#win-count-consecutive)
+- [wsPort](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-webstream-port)
 
 ##### Streamer.bot webstream port
 
@@ -147,6 +148,15 @@ If streamer.bot is on a different server to you gaming machine use the search pa
 ```url
 http://localhost:28080/?server=192.168.0.10
 ```
+
+##### Streamer.bot BotID
+
+Set bot
+
+```url
+http://localhost:28080/?server=192.168.0.10
+```
+
 
 ##### Join Command
 
@@ -220,6 +230,7 @@ http://localhost:28080/?lastWinner=false
 ```
 
 ![Show last winner](docs/ShowLastWinner.png)
+
 ##### Message Win Streaks
 
 By default the win streaks will be sent through to twitch chat, to not have them use the search parameter `winStreak`. Currently every 2 wins.
@@ -241,7 +252,7 @@ http://localhost:28080/?winStreak=2
 This limits the number of winners per stream (NOTE: Only for consecutive currently). Default: Infinity
 
 ```url
-http://localhost:28080/?winner=0
+http://localhost:28080/?winner=1
 ```
 
 ##### Win Count Consecutive
@@ -307,6 +318,54 @@ Current Choices:
 - h1: Halloween 1
 - h2: Halloween 2
 
+##### List Weapon Choices
+
+List the active weapon choises by using the parametre `listWeapons`.
+
+```url
+http://localhost:28080/?listWeapons=true
+```
+
+or
+
+```url
+http://localhost:28080/?listWeapons
+```
+
+The output will be logged to the console. Access it by pressing ctrl + shift + c and then either pressing escape until it shows or clicking the second tab in the devtools and choosing console.
+
+Example output from v0.8.1:
+
+```text
+Type one of the following weapons to use them:
+- teapot
+- number 1 fan finger
+- plunger
+- doughnut
+- thong
+- giant match
+- frying pan
+- butchered name
+- boomerang
+- didgeridoo
+- sausage sanga
+- goon sack
+- poop
+- nuke
+- 200 IQ
+- rocket launcher
+- cat o' 9 tail
+- love
+- cat litter
+- mad house
+- 90 belt
+- Sassy's Ring
+- lazy bot
+- spaghetti
+- combat
+- combat wombat
+```
+
 #### Weapon Calls
 
 This is an example of the setup for a weapon.
@@ -342,7 +401,10 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 
 1. [ ] Kill messages on the top left like COD.
 1. [ ] Make some weapons throwable.
-1. [ ] Sparkle explosion on win.
+1. [ ] Confetti explosion on win.
+1. [ ] Add crown to last winner.
+1. [ ] Drop down top.
+1. [ ] Run ads on YouTube programatically?
 
 #### Known Bugs
 

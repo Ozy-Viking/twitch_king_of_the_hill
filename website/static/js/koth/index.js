@@ -13,7 +13,7 @@ import { redirectBrowser } from "../util.js";
 import { randomSide } from "../util.js";
 import { notify, setWinner } from "./streamerBot.js";
 // @ts-ignore
-import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler, winnerHistory } from "./lastWinner.js";
+import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler } from "./lastWinner.js";
 import settings, {
     botID,
     championName,
@@ -24,14 +24,17 @@ import settings, {
     massTesting,
     reset,
     riggedUsers,
-    // @ts-ignore
-    server,
     showLastWinner,
     testing,
     winStreak
 } from "./urlParams.js";
 import { ws, connectws } from "./websocket.js";
 import hill from "./Hill.js";
+
+if (reset) {
+    console.warn("Clearing History");
+    clearWinnerHistory()
+}
 
 // file deepcode ignore reDOS: No code injection possible in file.
 const joinCommandRegex = new RegExp(joinCommand, "i");
@@ -60,10 +63,6 @@ var altEndingMessages = [
     // `This Is Your Life, and It's Ending One Minute at a Time`
 ];
 
-if (reset) {
-    console.warn("Clearing History");
-    clearWinnerHistory()
-}
 
 modifyStyleSheet(".grassyhill", '--koth-length', `${totalGameLength}s`)
 

@@ -2,12 +2,7 @@ version: "3.8"
 name: king-of-the-hill
 services:
   web:
-    image: ozyviking/twitch-king-of-the-hill:0.7.4+halloween
-    deploy:
-      resources:
-        limits:
-          cpus: "2"
-          memory: 2gb
+    image: ozyviking/twitch-king-of-the-hill:0.8.0
     ports:
       - 28080:80
     restart: always
