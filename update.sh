@@ -30,9 +30,10 @@ done
 
 if [[ -n "$git_tag" ]]; then
   sed -i "s/\(image:.*:\).*$/\1${git_tag}/" ./docker-compose.yaml
+  ${0%/*}/scripts/version.sh v${git_tag}
 fi
 if [[ -n "$ADD" ]]; then
-  git add .
+  git add ${0%/*}
 fi
 if [[ -n "$COMMIT" ]]; then
   git commit -a --allow-empty -m "${msg}"
