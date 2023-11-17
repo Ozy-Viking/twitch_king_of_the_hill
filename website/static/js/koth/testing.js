@@ -20,12 +20,14 @@ import settings, {
     weaponName,
     side as requestSide,
     testingSettings,
-    checkNegationSettings
+    checkNegationSettings,
+    setSearchParam,
+    removeSearchParam
 } from "./urlParams.js";
 import listActiveWeaponName from "./listWeaponNames.js";
 var testingUser = "Ozy_Viking";
 var activeHill = null;
-var side;
+var side = requestSide;
 const divnumber = 0;
 const battleGround = `${championName} of the ${hillName}`;
 const winnerMessage = `is the new ${battleGround}`;
@@ -94,7 +96,8 @@ function winnerNotification(user = testingUser, winweapon = weapon, winMessage =
 
 function removeElement(ID) { document.getElementById(ID).remove(); };
 
-function weaponTest(annimationSide = null, inputWeapon = null) {
+function weaponTest(annimationSide = null, inputWeapon = weaponName) {
+    console.log(inputWeapon);
     try {
         while (document.getElementById(0)) {
             removeElement(divnumber);
@@ -180,7 +183,7 @@ function sidesUserWinner(sideButtonDiv) {
     sides.forEach(sideName => {
         btn = document.createElement('button');
         btn.id = sideName;
-        btn.onclick = () => { weaponTest(sideName); };
+        btn.onclick = () => { setSearchParam("side", sideName); weaponTest(sideName); };
         btn.innerText = sideName;
         btn.className = "btn btn-primary";
         div.appendChild(btn);
@@ -221,7 +224,7 @@ function sidesUserWinner(sideButtonDiv) {
     div.appendChild(btn);
     btn = document.createElement('button');
     btn.id = 'displayLastWinner';
-    btn.onclick = () => { lastWinnerDiv(rigged); };
+    btn.onclick = () => { lastWinnerDiv(); };
     btn.innerText = 'Last Winner';
     btn.className = "btn btn-primary";
     div.appendChild(btn);
@@ -244,7 +247,7 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
     weaponNames.forEach(name => {
         btn = document.createElement('button');
         btn.id = name;
-        btn.onclick = () => { weaponTest(side, name); };
+        btn.onclick = () => { setSearchParam("weapon", name); weaponTest(side, name); };
         btn.innerText = name;
         btn.className = "btn btn-primary";
         buttonDiv.appendChild(btn);
@@ -252,7 +255,7 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
     weaponNamesTesting.forEach(name => {
         btn = document.createElement('button');
         btn.id = name;
-        btn.onclick = () => { weaponTest(side, name); };
+        btn.onclick = () => { setSearchParam("weapon", name); weaponTest(side, name); };
         btn.innerText = name;
         btn.className = "btn btn-primary";
         testingWeaponButtonDiv.appendChild(btn);
@@ -261,5 +264,5 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
 
 addButtons();
 weaponTest();
-// hill("grassyhill_1");
-console.log(JSON.stringify(weaponRegex(),null,1));
+hill("grassyhill_1");
+// console.log(JSON.stringify(weaponRegex(), null, 1));

@@ -118,3 +118,21 @@ function handleHillChoice(hillChoice) {
 if (listWeapons) {
     listActiveWeaponName()
 }
+
+export function setSearchParam(key, value = "") {
+    const original = new URL(window.location.href)
+    const url = new URL(window.location.href)
+    url.searchParams.set(key, value)
+    if (original.href != url.href) {
+        window.location.assign(url)
+    }
+}
+
+export function removeSearchParam(key) {
+    const original = new URL(window.location.href)
+    const url = new URL(window.location.href)
+    if (url.searchParams.has(key)) {
+        url.searchParams.delete(key)
+        window.location.assign(url)
+    }
+}

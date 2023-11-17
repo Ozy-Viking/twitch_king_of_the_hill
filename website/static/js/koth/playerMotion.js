@@ -24,7 +24,7 @@ export const winnerMotionLength = (
 const innerWidth = window.innerWidth;
 const innerHeight = window.innerHeight;
 
-const moveLastWinner = "150"
+const moveLastWinner = "175"
 const moveWinner = "35"
 
 function winnerMoveByY(up = true, lastWinner = false) {
