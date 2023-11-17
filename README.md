@@ -403,7 +403,7 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [ ] Make some weapons throwable.
 1. [ ] Confetti explosion on win.
 1. [ ] Add crown to last winner.
-1. [ ] Drop down top.
+1. [x] Drop down top.
 1. [ ] Run ads on YouTube programatically?
 
 #### Known Bugs
