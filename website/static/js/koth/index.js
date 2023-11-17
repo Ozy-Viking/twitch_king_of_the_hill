@@ -2,7 +2,7 @@
 // Maintainer: Ozy-Viking
 // Repo: https://github.com/Ozy-Viking/twitch_king_of_the_hill
 // Docker Container: ozyviking/twitch-king-of-the-hill
-
+import * as param from "./urlParams.js";
 import settings, {
     botID,
     championName,
@@ -15,8 +15,11 @@ import settings, {
     riggedUsers,
     showLastWinner,
     testing,
-    winStreak
+    winStreak,
+    server,
+
 } from "./urlParams.js";
+
 import { weaponObjects, weaponNames, gstring } from "./weapons.js";
 // @ts-ignore
 import { winnerMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";

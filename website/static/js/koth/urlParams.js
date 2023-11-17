@@ -1,5 +1,4 @@
 import { randomSide } from "../util.js";
-import { clearWinnerHistory } from "./lastWinner.js";
 import listActiveWeaponName from "./listWeaponNames.js";
 import { weaponCount, weaponNames } from "./weapons.js";
 
