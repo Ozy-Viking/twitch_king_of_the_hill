@@ -1,4 +1,4 @@
-import { removeElement, sides } from "../util.js"
+import { Randomizer, removeElement, sides } from "../util.js"
 import { motionDown, riggedMotion, winnerMotion, winnerMotionExit } from "./playerMotion.js"
 import { notify } from "./streamerBot.js";
 import { winStreak, winner, winStreakOrder, botID } from "./urlParams.js";
@@ -10,8 +10,6 @@ const storage = localStorage;
 export var winnerHistory = getWinnerHistory()
 
 var currentWinStreakWinners = []
-
-// const de
 
 export class LastWinner {
     static key = "lastWinner"
@@ -207,9 +205,6 @@ export function lastWinnerDiv() {
         weapon = weaponObjectsTesting[lastWinner.weapon]
     }
     var winnerSide = lastWinner.side;
-    // if (sides.includes(winnerSide)) {
-    //     winnerSide = "left"
-    // }
     var username = lastWinner.username.toLowerCase();
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -227,25 +222,26 @@ export function lastWinnerDiv() {
                 innerWidth = window.innerWidth,
                 innerHeight = window.innerHeight;
             // Load into page
-            var Div = document.createElement('div');
-            Div.id = "lastWinner";
-            Div.setAttribute("user", lastWinner.username);
-            Div.style.background = `url(${xhttp.responseText})`;
-            Div.style.backgroundSize = '100% 100%';
-            Div.setAttribute("weapon", `${weapon.name}`)
+            var lastWinnerDiv = document.createElement('div');
+            lastWinnerDiv.id = "lastWinner";
+            lastWinnerDiv.setAttribute("user", lastWinner.username);
+            lastWinnerDiv.style.background = `url(${xhttp.responseText})`;
+            lastWinnerDiv.style.backgroundSize = '100% 100%';
+            lastWinnerDiv.setAttribute("weapon", `${weapon.name}`)
             // deepcode ignore DOMXSS: Only ran clientside.
-            Div.innerHTML = `<img style='${weapon[winnerSide]}' src='static/images/${weapon.file}'/>`;
-            TweenLite.set(Div, { className: 'falling-element', x: (innerWidth / 2) - 45, y: (innerHeight - 150), z: 0, scale: 1.5 });
-            warp.appendChild(Div);
+            lastWinnerDiv.innerHTML = `<img style='${weapon[winnerSide]}' src='static/images/${weapon.file}'/>`;
+            TweenLite.set(lastWinnerDiv, { className: 'falling-element', x: (innerWidth / 2) - 45, y: (innerHeight - 150), z: 0, scale: 1.5 });
+            warp.appendChild(lastWinnerDiv);
 
-            let div = document.createElement('div');
-            div.id = "lastWinnerName"
-            div.innerText = lastWinner.username
-            Div.appendChild(div)
+            let lastWinnerNameDiv = document.createElement('div');
+            lastWinnerNameDiv.id = "lastWinnerName"
+            lastWinnerNameDiv.innerText = lastWinner.username
+            lastWinnerDiv.appendChild(crown(winnerSide, lastWinner.username))
+            lastWinnerDiv.appendChild(lastWinnerNameDiv)
             if (lastWinner.rigged) {
-                winnerMotion(Div, true, (scaleLastWinner + 0.25), true)
+                winnerMotion(lastWinnerDiv, true, (scaleLastWinner + 0.25), true)
             } else {
-                winnerMotion(Div, true, scaleLastWinner, false)
+                winnerMotion(lastWinnerDiv, true, scaleLastWinner, false)
             }
         }
     };
@@ -292,4 +288,20 @@ export function winStreakHandler(username) {
     if (["consecutive", "both"].includes(winStreakOrder)) {
         consecutiveCounter.checkIfWon(username)
     }
+}
+
+function crown(side, user) {
+    console.log("Crown");
+    let element = document.createElement("img")
+    element.src = "/static/images/crown.png"
+    element.id = "lastWinnerCrown"
+    if (user == "Ozy_Viking") {
+        let op = Randomizer(0, 5)
+        element.className = op == 4 ? "crownOzyViking" : `${side} op${op}`
+    } else if (user == "Naval_Warlord"){
+        element.className = "crownNavalWarlord" 
+    } else {
+        element.className = `${side} op${Randomizer(0, 4)}`
+    }
+    return element
 }

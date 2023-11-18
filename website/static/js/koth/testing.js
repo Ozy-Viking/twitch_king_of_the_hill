@@ -116,7 +116,7 @@ function weaponTest(annimationSide = null, inputWeapon = weaponName) {
     document.getElementById("winnerNotification").innerText = winnerNotification()
 }
 
-function hill(hillID = null) {
+function hill(hillID = "grassyhill_1") {
     if (activeHill) {
         modifyStyleSheet(`#${activeHill}`, "opacity", 0)
     }
@@ -264,5 +264,6 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
 
 addButtons();
 weaponTest();
-hill("grassyhill_1");
+hill();
+lastWinnerDiv();
 // console.log(JSON.stringify(weaponRegex(), null, 1));
