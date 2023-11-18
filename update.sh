@@ -2,7 +2,29 @@
 version="v0.1.0"
 set -o errexit
 
-while getopts 'Vmsat:p' OPTION; do
+usage() {
+cat <<EOF
+Usage: $0 {-V|-c|-s|-a|-p|-h} [-m message] [-t tag]
+
+Help:
+  -a            Git Add
+  -c            Git Commit
+  -m message    Message for the Git Commit, if -m used -c is not required.
+  -p            Git Push
+  -s            Git Status
+  -t tag        Git Tag number.
+
+  -h            Usage help.
+  -V            Version
+EOF
+}
+
+if [[ -z $@ ]]; then
+  usage
+  exit
+fi
+
+while getopts 'Vcm:sat:ph' OPTION; do
 case "$OPTION" in
   V )
     echo "$version"
@@ -11,6 +33,9 @@ case "$OPTION" in
   m )
     COMMIT=true
     msg=$OPTARG;
+    ;;
+  c )
+    COMMIT=true
     ;;
   s )
     STATUS=true
@@ -23,6 +48,10 @@ case "$OPTION" in
     ;;
   p )
     PUSH=true
+    ;;
+  h | ? )
+    usage
+    exit
     ;;
 esac;
 done

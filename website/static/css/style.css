@@ -251,10 +251,13 @@ div#lastWinnerName {
     bottom: 0;
     transform: translate(-50%, 110%);
     color: #fff;
-    width: fit-content;
+    width: max-content;
     font-family: var(--font-family);
     font-weight: 600;
     font-size: 20px;
+    text-align: center;
+    line-height: 1.15;
+    text-shadow: 2px 2px 2px #000000;
 }
 
 .centre {
@@ -306,5 +309,5 @@ img#lastWinnerCrown.crownOzyViking {
 }
 img#lastWinnerCrown.crownNavalWarlord {
     left: 50%;
-    transform: translate(19%, 2.5px) scale(0.7) rotate(1deg);
+    transform: translate(19%, 4.5px) scale(0.5) rotate(1deg)
 }

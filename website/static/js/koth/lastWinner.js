@@ -1,7 +1,7 @@
 import { Randomizer, removeElement, sides } from "../util.js"
 import { motionDown, riggedMotion, winnerMotion, winnerMotionExit } from "./playerMotion.js"
 import { notify } from "./streamerBot.js";
-import { winStreak, winner, winStreakOrder, botID } from "./urlParams.js";
+import { winStreak, winner, winStreakOrder, botID, championName } from "./urlParams.js";
 import { weaponObjects, weaponObjectsTesting, weaponNames, weaponNamesTesting } from "./weapons.js"
 
 const scaleLastWinner = 2;
@@ -235,7 +235,7 @@ export function lastWinnerDiv() {
 
             let lastWinnerNameDiv = document.createElement('div');
             lastWinnerNameDiv.id = "lastWinnerName"
-            lastWinnerNameDiv.innerText = lastWinner.username
+            lastWinnerNameDiv.innerHTML = `Defending ${championName}:<br>${lastWinner.username}`
             lastWinnerDiv.appendChild(crown(winnerSide, lastWinner.username))
             lastWinnerDiv.appendChild(lastWinnerNameDiv)
             if (lastWinner.rigged) {
@@ -298,8 +298,8 @@ function crown(side, user) {
     if (user == "Ozy_Viking") {
         let op = Randomizer(0, 5)
         element.className = op == 4 ? "crownOzyViking" : `${side} op${op}`
-    } else if (user == "Naval_Warlord"){
-        element.className = "crownNavalWarlord" 
+    } else if (user == "Naval_Warlord") {
+        element.className = "crownNavalWarlord"
     } else {
         element.className = `${side} op${Randomizer(0, 4)}`
     }
