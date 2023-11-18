@@ -112,24 +112,23 @@ The values that are in each example are the default and are not required to be a
 
 Available:
 
-- [botID]()
-- [championName](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
-- [debug]()
-- [gameLength](https://github.com/Ozy-Viking/twitch_king_of_the_hill#game-length)
-- [gstringProb](https://github.com/Ozy-Viking/twitch_king_of_the_hill#probability-of-sexy-thong)
-- [hillChoice](https://github.com/Ozy-Viking/twitch_king_of_the_hill#hill-choice)
-- [hillName](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
-- [joinCommand](https://github.com/Ozy-Viking/twitch_king_of_the_hill#join-command)
-- [massTesting](https://github.com/Ozy-Viking/twitch_king_of_the_hill#mass-testing)
+- [Champion Name](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
+- [G-string Probability](https://github.com/Ozy-Viking/twitch_king_of_the_hill#probability-of-sexy-thong)
+- [Game Length](https://github.com/Ozy-Viking/twitch_king_of_the_hill#game-length)
+- [Hill Choice](https://github.com/Ozy-Viking/twitch_king_of_the_hill#hill-choice)
+- [Hill Name](https://github.com/Ozy-Viking/twitch_king_of_the_hill#champion-title-and-hill-name)
+- [Join Command](https://github.com/Ozy-Viking/twitch_king_of_the_hill#join-command)
+- [Mass Testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#mass-testing)
 - [Reset Winner History](https://github.com/Ozy-Viking/twitch_king_of_the_hill#reset-winner-history)
-- [riggedUsers](https://github.com/Ozy-Viking/twitch_king_of_the_hill#additional-rigged-users)
-- [server](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-server)
-- [showLastWinner](https://github.com/Ozy-Viking/twitch_king_of_the_hill#show-last-winner)
-- [testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#testing-setup)
-- [winner limit](https://github.com/Ozy-Viking/twitch_king_of_the_hill#winner-limit)
-- [winStreak](https://github.com/Ozy-Viking/twitch_king_of_the_hill#message-win-streaks)
-- [winStreakOrder (consecutive?)](https://github.com/Ozy-Viking/twitch_king_of_the_hill#win-count-consecutive)
-- [wsPort](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-webstream-port)
+- [Rigged Users](https://github.com/Ozy-Viking/twitch_king_of_the_hill#additional-rigged-users)
+- [Show Last Winner](https://github.com/Ozy-Viking/twitch_king_of_the_hill#show-last-winner)
+- [Streamer.bot botID](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-botid)
+- [Streamer.bot Server](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-server)
+- [Streamer.bot Websocket Port](https://github.com/Ozy-Viking/twitch_king_of_the_hill#streamerbot-webstream-port)
+- [Testing](https://github.com/Ozy-Viking/twitch_king_of_the_hill#testing-setup)
+- [Win Streak Order](https://github.com/Ozy-Viking/twitch_king_of_the_hill#win-streak-order)
+- [Win Streak](https://github.com/Ozy-Viking/twitch_king_of_the_hill#win-streak)
+- [Winner limit](https://github.com/Ozy-Viking/twitch_king_of_the_hill#winner-limit)
 
 ##### Streamer.bot webstream port
 
@@ -151,12 +150,11 @@ http://localhost:28080/?server=192.168.0.10
 
 ##### Streamer.bot BotID
 
-Set bot
+Set botID for the streamer.bot connection, only applicable when multiple different bots are accessing like koth and others. Any alphanumeric text is fine.
 
 ```url
-http://localhost:28080/?server=192.168.0.10
+http://localhost:28080/?botID=123
 ```
-
 
 ##### Join Command
 
@@ -231,9 +229,9 @@ http://localhost:28080/?lastWinner=false
 
 ![Show last winner](docs/ShowLastWinner.png)
 
-##### Message Win Streaks
+##### Win Streak
 
-By default the win streaks will be sent through to twitch chat, to not have them use the search parameter `winStreak`. Currently every 2 wins.
+By default the win streaks will be sent through to twitch chat, to not have them, use the search parameter `winStreak`. Currently every 2 wins.
 
 ```url
 http://localhost:28080/?winStreak=no
@@ -241,7 +239,7 @@ http://localhost:28080/?winStreak=false
 http://localhost:28080/?winStreak=0
 ```
 
-When you supply a number, that will be what the win stream is set to.
+When you supply a number, that will be what the win streak is set to, to win.
 
 ```url
 http://localhost:28080/?winStreak=2
@@ -255,15 +253,17 @@ This limits the number of winners per stream (NOTE: Only for consecutive current
 http://localhost:28080/?winner=1
 ```
 
-##### Win Count Consecutive
+##### Win Streak Order
 
 This is to set whether the win streak is consecutive only or any wins per stream. Default: Consecutive.
 
 ###### Consecutive
 
+This is the default setting.
+
 ```url
-http://localhost:28080/?consecutive
 http://localhost:28080/
+http://localhost:28080/?consecutive
 ```
 
 ###### Any Order
@@ -274,6 +274,16 @@ Use any of the 3 options below:
 http://localhost:28080/?consecutive=no
 http://localhost:28080/?consecutive=false
 http://localhost:28080/?consecutive=any
+```
+
+###### Both
+
+Use any of the 3 options below:
+
+```url
+http://localhost:28080/?consecutive=both
+http://localhost:28080/?consecutive=either
+http://localhost:28080/?consecutive=all
 ```
 
 ##### Reset Winner History
@@ -402,9 +412,8 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [ ] Kill messages on the top left like COD.
 1. [ ] Make some weapons throwable.
 1. [ ] Confetti explosion on win.
-1. [ ] Add crown to last winner.
+1. [x] Add crown to last winner.
 1. [x] Drop down top.
-1. [ ] Run ads on YouTube programatically?
 
 #### Known Bugs
 

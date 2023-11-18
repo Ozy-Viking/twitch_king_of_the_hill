@@ -77,7 +77,7 @@ function winStreakNumber(winStreakParam = null) {
     } else if (Number(winStreakParam) > 0) {
         return Number(winStreakParam)
     } else {
-        return 3
+        return 2
     }
 }
 
