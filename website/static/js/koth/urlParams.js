@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { randomSide } from "../util.js";
 import listActiveWeaponName from "./listWeaponNames.js";
 import { weaponCount, weaponNames } from "./weapons.js";

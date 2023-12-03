@@ -24,7 +24,6 @@ import settings, {
     setSearchParam,
     removeSearchParam
 } from "./urlParams.js";
-import listActiveWeaponName from "./listWeaponNames.js";
 var testingUser = "Ozy_Viking";
 var activeHill = null;
 var side = requestSide;
@@ -58,7 +57,7 @@ function addFighter(user, lowerMessage) {
 
             // Load into page
             var Div = document.createElement('div');
-            Div.id = divnumber;
+            Div.id = divnumber.toString();
             Div.setAttribute("user", user);
             Div.setAttribute("state", "alive");
             Div.style.background = `url(${xhttp.responseText})`;
@@ -70,18 +69,7 @@ function addFighter(user, lowerMessage) {
             Div.setAttribute("weapon", weapon.name)
 
             Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
-
-            switch (side) {
-                case 'left':
-                    // left - TweenLite.set(Div, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
-                    TweenLite.set(Div, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
-                    fighterAnimation(Div);
-                    break;
-                case 'right':
-                    TweenLite.set(Div, { className: 'falling-element', x: innerWidth, y: innerHeight - 110, z: 0 });
-                    fighterAnimation(Div);
-                    break;
-            }
+            fighterAnimation(side, Div);
             warp.appendChild(Div);
 
         }
@@ -264,6 +252,6 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
 
 addButtons();
 weaponTest();
-hill();
-lastWinnerDiv();
+// hill();
+// lastWinnerDiv();
 // console.log(JSON.stringify(weaponRegex(), null, 1));

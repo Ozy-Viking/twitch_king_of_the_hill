@@ -1,4 +1,5 @@
 import { Randomizer, removeElement, sides } from "../util.js"
+import { storage } from "./constants.js";
 import { motionDown, riggedMotion, winnerMotion, winnerMotionExit } from "./playerMotion.js"
 import { notify } from "./streamerBot.js";
 import { winStreak, winner, winStreakOrder, botID, championName } from "./urlParams.js";
@@ -6,7 +7,7 @@ import { weaponObjects, weaponObjectsTesting, weaponNames, weaponNamesTesting } 
 
 const scaleLastWinner = 2;
 const winStreakNumber = winStreak;
-const storage = localStorage;
+
 export var winnerHistory = getWinnerHistory()
 
 var currentWinStreakWinners = []
@@ -42,6 +43,7 @@ export class LastWinner {
         if (!storage.getItem(LastWinner.key)) {
             return undefined
         }
+        // @ts-ignore
         let lw = JSON.parse(storage.getItem(LastWinner.key))
         return new LastWinner(lw.username, lw.weapon, lw.side, lw.rigged)
     }
@@ -291,7 +293,6 @@ export function winStreakHandler(username) {
 }
 
 function crown(side, user) {
-    console.log("Crown");
     let element = document.createElement("img")
     element.src = "/static/images/crown.png"
     element.id = "lastWinnerCrown"

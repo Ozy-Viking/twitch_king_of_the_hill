@@ -7,13 +7,12 @@ export function randomPlayer(player = null) {
     return testingPeople[Math.floor(Math.random() * testingPeople.length)]
 }
 
-export function kothTestEvent(ws, joinCommand, user = "ozy_viking", weapon = "thong") {
+export function kothTestEvent(ws, joinCommand, user = "ozy_viking", weapon = "") {
     class TestEvent {
         constructor(data) {
             this.data = JSON.stringify(data);
         }
     };
-    // console.log(ws)
     ws.onmessage(new TestEvent({
         "timeStamp": "2022-01-30T21:32:04.4588947-05:00",
         "event": {

@@ -5,10 +5,7 @@
 import * as param from "./urlParams.js";
 import settings, {
     botID,
-    championName,
     gameLength,
-    gstringProb,
-    hillName,
     joinCommand,
     massTesting,
     reset,
@@ -16,62 +13,40 @@ import settings, {
     showLastWinner,
     testing,
     winStreak,
-    server,
 
 } from "./urlParams.js";
 
-import { weaponObjects, weaponNames, gstring } from "./weapons.js";
+import { weaponObjects, chooseRandomWeapon } from "./weapons.js";
 // @ts-ignore
-import { winnerMotion, fighterAnimation, yeet, winnerMotionExit, victorsClaimToFameTime, winnerMotionLength, motionUp, motionDown, randomSideMotion } from "./playerMotion.js";
+import { winnerMotion, yeet, winnerMotionExit, victorsClaimToFameTime, motionUp, randomSideMotion } from "./playerMotion.js";
 import { modifyStyleSheet, Randomizer, removeElement } from "../util.js";
 import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
 import { playSound, changeVolume, playBattleSound, soundplay, stopAllSound } from "./sound.js";
 import { redirectBrowser } from "../util.js";
-import { randomSide } from "../util.js";
 import { notify, setWinner } from "./streamerBot.js";
 // @ts-ignore
 import { LastWinner, clearWinnerHistory, lastWinnerDiv, removeLastWinner, winStreakHandler } from "./lastWinner.js";
 import { ws, connectws } from "./websocket.js";
 import hill from "./Hill.js";
+import { delayToCeremony, endingMessage, fightDelay, hillAnimationLength, joinCommandRegex, noJoinMessage, postGameLength, totalGameLength, totalYeetTime, updateMessage, updateMessageRegex, winnerMessage } from "./constants.js";
+import User, { UserList, divnumber } from "./user.js";
 
 if (reset) {
     console.warn("Clearing History");
     clearWinnerHistory()
 }
 
-// file deepcode ignore reDOS: No code injection possible in file.
-const joinCommandRegex = new RegExp(joinCommand, "i");
-const totalYeetTime = 10
-const delayToCeremony = 2.5
-const fightDelay = 1;
-const postGameLength = fightDelay + totalYeetTime + delayToCeremony + winnerMotionLength;
-const GLPGL = gameLength + postGameLength
-const hillAnimationCSS = 0.02 // 2%
-const hillAnimationLength = (GLPGL / (1 - 2 * hillAnimationCSS) - GLPGL) / 2;
-const totalGameLength = hillAnimationLength + gameLength + postGameLength + hillAnimationLength
-const battleGround = `${championName} of the ${hillName}`;
-const noJoinMessage = `No one joined, so no new ${battleGround}!`;
-const winnerMessage = `is the new ${battleGround}`;
-const updateMessage = `seconds left to join the fight! Type ${joinCommand} to see if you can take the title of ${battleGround}!`;
-// deepcode ignore MissingClose: websocket is closed.
 
+// deepcode ignore MissingClose: websocket is closed.
 var weaponnumber = 0;
 var riggedWinners = [];
-var divnumber = 0;
-var winner = 0;
+let winner;
 // Ending message set at end of code.
 var battleActive = false;
-// Alternate endings messages.
-var altEndingMessages = [
-    // `This Is Your Life, and It's Ending One Minute at a Time`
-];
+const usernamesAdded = new Set()
 
 
 modifyStyleSheet(".grassyhill", '--koth-length', `${totalGameLength}s`)
-
-function chooseRandomWeapon() {
-    return weaponObjects[weaponNames[Math.floor(Math.random() * weaponNames.length)]];
-};
 
 function userJoining() {
     ws.send(JSON.stringify(
@@ -85,7 +60,7 @@ function userJoining() {
             "id": botID
         }
     ));
-    const updateMessageRegex = new RegExp(`${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`, "i");
+
     ws.onmessage = function (event) {
         // grab message and parse JSON
         const msg = event.data;
@@ -93,88 +68,46 @@ function userJoining() {
         if (typeof wsdata.data != "undefined") {
             if (typeof wsdata.data.message != "undefined") {
                 let lowerMessage = wsdata.data.message.message.toLowerCase();
-                if ((joinCommandRegex.exec(lowerMessage) != null) && (updateMessageRegex.exec(lowerMessage) == null)) { //lowerMessage.startsWith(joinCommand)) {
-                    addFighter(wsdata.data.message.displayName, lowerMessage);
+                let username = wsdata.data.message.displayName
+                if (canUserJoin(username, lowerMessage)) {
+                    addFighter(username, lowerMessage);
                 };
             }
         }
     };
 };
 
-function addFighter(user, lowerMessage) {
-    var username = user.toLowerCase();
-    // console.log("starting xmlhttp");
+function canUserJoin(username, lowerMessage) {
+    if (!battleActive) {
+        return false
+    } else if (testing) {
+        return true
+    } else if (usernamesAdded.has(username)) {
+        return false
+        // deepcode ignore DuplicateIfBody: Seperating out the logic for readability.
+    } else if (joinCommandRegex.exec(lowerMessage) == null) {
+        return false
+        // deepcode ignore DuplicateIfBody: Seperating out the logic for readability.
+    } else if (updateMessageRegex.exec(lowerMessage) != null) {
+        return false
+    }
+    return true
+}
+
+function addFighter(username, lowerMessage) {
+    usernamesAdded.add(username)
     var xhttp = new XMLHttpRequest();
-    // console.log("created xmlhttp object");
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
-            // get display image for the user
-            // console.log("got a response back");
-            //save this to cache between sessions too.
-            //check for user being added already (or if already dead and ignore)
-            var warp = document.getElementById("confetti-container"),
-                innerWidth = window.innerWidth,
-                innerHeight = window.innerHeight;
-
-            // Load into page
-            var Div = document.createElement('div');
+            var warp = document.getElementById("confetti-container");
+            let user = new User(divnumber, username, lowerMessage, xhttp.responseText);
             // @ts-ignore
-            Div.id = divnumber;
-            Div.setAttribute("user", user);
-            Div.setAttribute("state", "alive");
-            Div.style.background = `url(${xhttp.responseText})`;
-            Div.style.backgroundSize = '100% 100%';
-            divnumber++
-            var weapon = usersWeapon(lowerMessage);
-            let side = randomSide();
-            Div.setAttribute("side", side);
-            Div.setAttribute("weapon", weapon.name)
-
-            Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
-
-            switch (side) {
-                case 'left':
-                    // left - TweenLite.set(Div, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
-                    // @ts-ignore
-                    TweenLite.set(Div, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
-                    fighterAnimation(Div);
-                    break;
-                case 'right':
-                    // @ts-ignore
-                    TweenLite.set(Div, { className: 'falling-element', x: innerWidth, y: innerHeight - 110, z: 0 });
-                    fighterAnimation(Div);
-                    break;
-            }
-            // @ts-ignore
-            warp.appendChild(Div);
-
+            warp.appendChild(user.div);
         }
     };
     xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
     xhttp.send();
 };
-
-function usersWeapon(lowerMessage) {
-    var choosenWeapon = null;
-    var weapon;
-
-    for (let i = 0; i < weaponNames.length; i++) {
-        weapon = weaponObjects[weaponNames[i]]
-        if (weapon.regex.exec(lowerMessage) != null) {
-            choosenWeapon = weapon
-        }
-    }
-    if (choosenWeapon === null) {
-        choosenWeapon = chooseRandomWeapon();
-    }
-    if (choosenWeapon.name === gstring.takeoverName) {
-        if (Randomizer(0, gstringProb) == 0) {
-            return gstring;
-        };
-    };
-    return choosenWeapon;
-}
-
 
 function randomWeapon() {
     var warp = document.getElementById("confetti-container");
@@ -189,23 +122,26 @@ function randomWeapon() {
     randomSideMotion(Div)
 };
 
-function winnerTime(id, winNotification) {
+
+/**
+ * 
+ * @param {User} winner - The user who won.
+ */
+function winnerTime(winner) {
     playSound('horn.mp3', 0.4)
     // Play Sound and notify winner 
     setTimeout(playSound, 1500, 'cheer.mp3', 0.3)
     setTimeout(changeVolume, 24000, soundplay - 1, 0, 2000, 20)
-    setTimeout(notify, 1000, winNotification)
+    setTimeout(notify, 1000, winner.winMessage())
 
-    let element = document.getElementById(id);
+    let element = winner.getDiv()
     // @ts-ignore
-    const user = element.getAttribute("user");
-    // @ts-ignore
-    let rigged = riggedUsers.includes(user)
+    let rigged = riggedUsers.includes(winner.username)
     if (winStreak) {
-        setTimeout(winStreakHandler, 2000, user)
+        setTimeout(winStreakHandler, 2000, winner.username)
     }
     // @ts-ignore
-    new LastWinner(user, element.getAttribute('weapon'), element.getAttribute('side'), rigged).save()
+    new LastWinner(winner.username, winner.weapon.name, winner.side, winner.rigged).save()
 
     if (rigged) {
         winnerMotion(element, false, 4, true);
@@ -215,15 +151,7 @@ function winnerTime(id, winNotification) {
     setTimeout(winnerMotionExit, victorsClaimToFameTime * 1000, element)
 };
 
-function winnerNotification(user, winweapon, winMessage = winnerMessage) {
-    let winnerMsg;
-    if (winweapon === null) {
-        winnerMsg = `${user} ${winnerMessage}`;
-    } else {
-        winnerMsg = `${user} ${winMessage}, using ${winweapon["tense 1"]} ${winweapon.name}.`
-    }
-    return winnerMsg
-}
+
 
 function startFight() {
     battleActive = false;
@@ -245,15 +173,14 @@ function fightSequence() {
         setTimeout(notify, 10000, noJoinMessage);
     } else {
         // @ts-ignore
-        var user = document.getElementById(winner).getAttribute("user");
-        // @ts-ignore
-        var winweapon = document.getElementById(winner).getAttribute("weapon");
+        let user = UserList.getUserByID(winner);
+        console.log(user);
         yeetathon(winner);
         // 17000
         setTimeout(changeVolume, 0, 0, 0.1, 2500)
         setTimeout(changeVolume, totalYeetTime * 1000, 0, 0, 2500)
-        setTimeout(winnerTime, (totalYeetTime + delayToCeremony) * 1000, winner, winnerNotification(user, weaponObjects[winweapon]));
-        setTimeout(setWinner, (totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime), user);
+        setTimeout(winnerTime, (totalYeetTime + delayToCeremony) * 1000, user);
+        setTimeout(setWinner, (totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime), user.username);
         // deepcode ignore CodeInjection: Code Injection is not possible.
         setTimeout(closeWS, postGameLength * 1000, ws)
     }
@@ -277,21 +204,10 @@ function yeetathon(winner) {
     }
 }
 
-function generateEndingMessage() {
-    let endingChoice = Randomizer(0, (weaponNames.length + altEndingMessages.length - 1));
-    if (endingChoice < altEndingMessages.length) {
-        return altEndingMessages[endingChoice];
-    } else {
-        let randWeapon = chooseRandomWeapon()
-        return `The fight is coming to an end! Get back, Back, no more people. OI! Who threw ${randWeapon['tense 2']} ${randWeapon.name}!?!`;
-    }
-};
-var endingMessage = generateEndingMessage();
-
-function addTestingPeople(totalGameLength, numberPeople = 10) {
+function addTestingPeople(totalGameLength, numberPeople = 20) {
     for (let i = 0; i < numberPeople; i++) {
         let randomdelay = (totalGameLength * Math.random()) * 1000;
-        setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer(), chooseRandomWeapon().command[0]);
+        setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer());
     };
 };
 
@@ -350,6 +266,7 @@ function main() {
     setTimeout(startFight, (gameLength + hillAnimationLength + fightDelay) * 1000);
     setTimeout(removeElement, (totalGameLength - 0.5) * 1000, "grassyhill_id")
     setTimeout(stopAllSound, (totalGameLength) * 1000)
+
     if (!testing) {
         setTimeout(redirectBrowser, (totalGameLength) * 1000);
     }

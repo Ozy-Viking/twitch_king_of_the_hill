@@ -89,12 +89,24 @@ export function winnerMotionExit(element, lastWinner = false) {
 }
 
 
-export function fighterAnimation(element) {
+export function fighterAnimation(side, element) {
+    switch (side) {
+        case 'left':
+            // left - TweenLite.set(element, { className: 'lurking-element', x: -600, y: Randomizer(0, innerHeight-600 ), z:0 });
+            // @ts-ignore
+            TweenLite.set(element, { className: 'falling-element', x: -75, y: innerHeight - 113, z: 0 });
+            break;
+        case 'right':
+            // @ts-ignore
+            TweenLite.set(element, { className: 'falling-element', x: innerWidth, y: innerHeight - 110, z: 0 });
+            break;
+    }
     TweenMax.to(element, 0.1, { scale: 1.5 });
     TweenMax.to(element, 2, { x: (innerWidth / 2) - 45, yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 0 });
     TweenMax.to(element, 0.9, { y: (innerHeight - 200), yoyo: true, repeat: 0, ease: Power2.easeIn, delay: 0 });
     TweenMax.to(element, 0.6, { y: (innerHeight - (300 + Randomizer(150, 350))), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: .9 });
     TweenMax.to(element, 0.5, { y: (innerHeight - 150), yoyo: true, repeat: 0, ease: Sine.easeInOut, delay: 1.5 });
+    return element
 };
 
 export function yeet(id) {
