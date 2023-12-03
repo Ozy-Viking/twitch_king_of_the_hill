@@ -76,6 +76,8 @@ if [[ -n "$git_tag" ]]; then
   git tag v${git_tag}
 fi
 if [[ -n "$PUSH" ]]; then
+  git-chglog -o CHANGELOG.md
+  git commit -a --allow-empty -m "Update CHANGELOG.md"
   git push origin HEAD --tags
 fi
 if [[ -n "$STATUS" ]]; then
