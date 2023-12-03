@@ -2,6 +2,13 @@
 ## [Unreleased]
 
 
+<a name="v0.8.9"></a>
+## [v0.8.9] - 2023-12-04
+### Feat
+- Added gif to main set of weapons.
+- Added change logging.
+
+
 <a name="v0.8.8"></a>
 ## [v0.8.8] - 2023-12-03
 ### Patch
@@ -102,11 +109,11 @@
 - Merge pull request [#39](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/39) from Ozy-Viking/38-variable-game-length
 
 
-<a name="v0.5.11rc1"></a>
-## [v0.5.11rc1] - 2023-10-01
-
 <a name="v0.5.11-rc.1"></a>
 ## [v0.5.11-rc.1] - 2023-10-01
+
+<a name="v0.5.11rc1"></a>
+## [v0.5.11rc1] - 2023-10-01
 
 <a name="v0.5.10"></a>
 ## [v0.5.10] - 2023-09-24
@@ -275,7 +282,8 @@
 - Merge pull request [#1](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/1) from Ozy-Viking/1-Inital-code
 
 
-[Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.8...HEAD
+[Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.9...HEAD
+[v0.8.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.8...v0.8.9
 [v0.8.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.7...v0.8.8
 [v0.8.7]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.6...v0.8.7
 [v0.8.6]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.5...v0.8.6
@@ -301,9 +309,9 @@
 [v0.6.2-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.1-halloween...v0.6.2-halloween
 [v0.6.1-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.6.0-halloween...v0.6.1-halloween
 [v0.6.0-halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/halloween...v0.6.0-halloween
-[halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.11rc1...halloween
-[v0.5.11rc1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.11-rc.1...v0.5.11rc1
-[v0.5.11-rc.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.10...v0.5.11-rc.1
+[halloween]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.11-rc.1...halloween
+[v0.5.11-rc.1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.11rc1...v0.5.11-rc.1
+[v0.5.11rc1]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.10...v0.5.11rc1
 [v0.5.10]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.9...v0.5.10
 [v0.5.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.8...v0.5.9
 [v0.5.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.5.7...v0.5.8
