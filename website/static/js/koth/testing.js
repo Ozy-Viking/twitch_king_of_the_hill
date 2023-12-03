@@ -17,7 +17,7 @@ import settings, {
     showLastWinner,
     testing,
     winStreak,
-    weaponName,
+    weaponName as requestWeaponName,
     side as requestSide,
     testingSettings,
     checkNegationSettings,
@@ -30,6 +30,7 @@ var side = requestSide;
 const divnumber = 0;
 const battleGround = `${championName} of the ${hillName}`;
 const winnerMessage = `is the new ${battleGround}`;
+let weaponName = requestWeaponName ? requestWeaponName : 'tentacles'
 var weapon = weaponObjects[weaponName]
 var rigged = false;
 

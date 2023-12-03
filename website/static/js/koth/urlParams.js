@@ -92,7 +92,7 @@ function winStreakOrderCondition(value) {
     }
 }
 
-export var weaponName = urlParams.get("weapon") ? urlParams.get("weapon") : weaponName = weaponNames[weaponCount - 1]
+export var weaponName = urlParams.get("weapon") ? urlParams.get("weapon") : null;
 export var side = randomSide(urlParams.get("side"))
 
 export function testingSettings() {
