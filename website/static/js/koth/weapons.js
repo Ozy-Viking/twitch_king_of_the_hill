@@ -238,6 +238,14 @@ export const weaponObjects = {
         right: "transform:translate(-10px,-25px) rotate(-45deg); width: 100px;",
         command: ["seabus club", "club"],
     },
+    tentacles: {
+        file: "tentacles_2_flipped.gif",
+        "tense 1": "the",
+        "tense 2": "that",
+        left: "transform: translate(36px,-56px) rotate(225deg) scaleY(-1); width: 78px;",
+        right: "transform: translate(-38px,-56px) rotate(-45deg); width: 78px;",
+        command: ["tentacles"],
+    },
 };
 
 export const weaponNames = Object.keys(weaponObjects);
@@ -288,14 +296,7 @@ export const weaponObjectsTesting = {
         right: "transform: rotate(30deg) translate(-35px,10px);",
         command: ["thong", "flip flop", "formal thong", "safety boot"],
     },
-    tentacles: {
-        file: "tentacles_2_flipped.gif",
-        "tense 1": "the",
-        "tense 2": "that",
-        left: "transform: translate(36px,-56px) rotate(225deg) scaleY(-1); width: 78px;",
-        right: "transform: translate(-38px,-56px) rotate(-45deg); width: 78px;",
-        command: ["tentacles"],
-    },
+    
 };
 
 export const weaponNamesTesting = Object.keys(weaponObjectsTesting);
