@@ -1,5 +1,11 @@
 # Changelog
 
+<a name="unreleased"></a>
+## [Unreleased]
+### Fix
+- Modifying the changelog template.
+
+
 <a name="v0.8.12"></a>
 ## [v0.8.12] - 2023-12-04
 ### Fix
@@ -297,6 +303,7 @@
 ### Pull Requests
 - Merge pull request [#2](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/2) from Ozy-Viking/2-condense-code
 - Merge pull request [#1](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/1) from Ozy-Viking/1-Inital-code
+
 
 
 [Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.12...HEAD
