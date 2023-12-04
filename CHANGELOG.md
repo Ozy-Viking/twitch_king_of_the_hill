@@ -2,51 +2,66 @@
 
 <a name="unreleased"></a>
 ## [Unreleased]
+### Note
+- Modifying the changelog temp.
+
 
 <a name="v0.8.13"></a>
 ## [v0.8.13] - 2023-12-04
-### Bug Fixes
+### Fix
 - Modifying the changelog template.
 
-### Testing Changes
+### Test
 - Modifying the changelog temp.
 - Modifying the changelog temp.
 
 
 <a name="v0.8.12"></a>
 ## [v0.8.12] - 2023-12-04
-### Bug Fixes
+### Fix
 - Modifying chglog template.
 
 
 <a name="v0.8.11"></a>
 ## [v0.8.11] - 2023-12-04
-### Testing Changes
+### Test
 - Testing
 
 
 <a name="v0.8.10"></a>
 ## [v0.8.10] - 2023-12-04
-### Bug Fixes
+### Fix
 - Moved git change log command in update script.
 - Modified change log template.
 
 
 <a name="v0.8.9"></a>
 ## [v0.8.9] - 2023-12-04
-### Features
+### Feat
 - Added gif to main set of weapons.
 - Added change logging.
 
 
 <a name="v0.8.8"></a>
 ## [v0.8.8] - 2023-12-03
+### Patch
+- Patched testing.
+
 
 <a name="v0.8.7"></a>
 ## [v0.8.7] - 2023-12-03
+### Patch
+- Fixed user can only join once.
+
 
 <a name="v0.8.6"></a>
 ## [v0.8.6] - 2023-11-18
+### Feature
+- Crown Added
+
+### Fix
+- Updated update script
+
 
 <a name="v0.8.5"></a>
 ## [v0.8.5] - 2023-11-18
