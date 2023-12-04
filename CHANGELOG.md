@@ -1,8 +1,8 @@
 # Changelog
 
-<a name="unreleased"></a>
-## [Unreleased]
 
+<a name="v0.8.11"></a>
+## [v0.8.11] - 2023-12-04
 ### Test
 - Testing
 
@@ -294,7 +294,8 @@
 - Merge pull request [#1](https://github.com/Ozy-Viking/twitch_king_of_the_hill/issues/1) from Ozy-Viking/1-Inital-code
 
 
-[Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.10...HEAD
+[Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.11...HEAD
+[v0.8.11]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.10...v0.8.11
 [v0.8.10]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.9...v0.8.10
 [v0.8.9]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.8...v0.8.9
 [v0.8.8]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.7...v0.8.8
