@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-version="v0.1.0"
+version="v0.2.0"
 set -o errexit
 
 usage() {
@@ -78,6 +78,7 @@ if [[ -n "$git_tag" ]]; then
   git tag v${git_tag}
   git-chglog -o CHANGELOG.md
   git commit -a --allow-empty -m "Update CHANGELOG.md"
+  git tag -f v${git_tag}
 fi
 if [[ -n "$PUSH" ]]; then
   git push origin HEAD --tags
