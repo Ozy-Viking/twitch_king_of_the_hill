@@ -76,6 +76,8 @@ echo "commit"
 fi
 if [[ -n "$git_tag" ]]; then
   git tag v${git_tag}
+  git-chglog -o CHANGELOG.md
+  git commit -a --allow-empty -m "Update CHANGELOG.md"
 fi
 if [[ -n "$PUSH" ]]; then
   git push origin HEAD --tags
