@@ -1,4 +1,8 @@
 # Changelog
+<a name="unreleased"></a>
+## [Unreleased]
+### Fix
+- Modifying chglog template.
 
 
 <a name="v0.8.11"></a>
