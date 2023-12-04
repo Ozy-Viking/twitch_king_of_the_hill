@@ -1,5 +1,11 @@
+# Changelog
+
 <a name="unreleased"></a>
 ## [Unreleased]
+
+### Fix
+- Moved git change log command in update script.
+- Modified change log template.
 
 
 <a name="v0.8.9"></a>
