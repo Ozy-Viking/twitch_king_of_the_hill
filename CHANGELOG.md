@@ -5,6 +5,10 @@
 ### Bug Fixes
 - Modifying the changelog template.
 
+### Testing Changes
+- Modifying the changelog temp.
+- Modifying the changelog temp.
+
 
 <a name="v0.8.12"></a>
 ## [v0.8.12] - 2023-12-04
@@ -14,6 +18,9 @@
 
 <a name="v0.8.11"></a>
 ## [v0.8.11] - 2023-12-04
+### Testing Changes
+- Testing
+
 
 <a name="v0.8.10"></a>
 ## [v0.8.10] - 2023-12-04
