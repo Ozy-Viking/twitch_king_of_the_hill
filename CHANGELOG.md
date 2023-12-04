@@ -2,6 +2,9 @@
 
 <a name="unreleased"></a>
 ## [Unreleased]
+
+<a name="v0.8.13"></a>
+## [v0.8.13] - 2023-12-04
 ### Bug Fixes
 - Modifying the changelog template.
 
@@ -278,7 +281,8 @@
 
 
 
-[Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.12...HEAD
+[Unreleased]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.13...HEAD
+[v0.8.13]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.12...v0.8.13
 [v0.8.12]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.11...v0.8.12
 [v0.8.11]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.10...v0.8.11
 [v0.8.10]: https://github.com/Ozy-Viking/twitch_king_of_the_hill/compare/v0.8.9...v0.8.10
