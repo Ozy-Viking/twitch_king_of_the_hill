@@ -1,0 +1,23 @@
+changelog:
+  categories:
+    - title: Features
+      labels:
+        - "feat"
+    - title: Bug Fixes
+      labels:
+        - "fix"
+    - title: Performance Improvements
+      labels:
+        - "perf"
+    - title: Code Refactoring
+      labels:
+        - "refactor"
+    - title: Weapon Changes
+      labels:
+        - "weapon"
+    - title: Testing Changes
+      labels:
+        - "test"
+    - title: Notes
+      labels:
+        - "*"
