@@ -7,22 +7,24 @@ options:
   tag_filter_pattern: '^v'
   sort: "semver"
   commits:
-    # filters:
-    #   Type:
-    #     - feat
-    #     - fix
-    #     - perf
-    #     - refactor
-    #     - weapon
-    #     - test
+    filters:
+      Type:
+        - feat
+        - fix
+        - perf
+        - refactor
+        - weapon
+        - test
+        - note
   commit_groups:
-    # title_maps:
-      # feat: Features
-      # fix: Bug Fixes
-      # perf: Performance Improvements
-      # refactor: Code Refactoring
-      # weapon: Weapon Changes
-      # test: Testing Changes
+    title_maps:
+      feat: Features
+      fix: Bug Fixes
+      perf: Performance Improvements
+      refactor: Code Refactoring
+      weapon: Weapon Changes
+      test: Testing Changes
+      note: Notes
 
   header:
     pattern: "^(\\w*)\\:\\s(.*)$"
@@ -33,3 +35,4 @@ options:
   notes:
     keywords:
       - BREAKING CHANGE
+      - note
