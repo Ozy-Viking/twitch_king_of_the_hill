@@ -414,6 +414,7 @@ For Doughnut, both american and british spelling were added. I highly recommend 
 1. [ ] Confetti explosion on win.
 1. [x] Add crown to last winner.
 1. [x] Drop down top.
+2. [ ] Preload all current users images.
 
 #### Known Bugs
 
