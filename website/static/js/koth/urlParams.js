@@ -13,7 +13,7 @@ export const massTesting = checkNegation("massTesting");
 export const showLastWinner = checkNegation("lastWinner", ["false", "no"]);
 export const listWeapons = checkNegation("listWeapons");
 
-export const botID = urlParams.get("botID") ? urlParams.get("botID") : "123";
+export const botID = urlParams.get("botID") ? urlParams.get("botID") : "12343";
 export const championName = urlParams.get("championName")
   ? urlParams.get("championName")
   : "King";

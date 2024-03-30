@@ -1,4 +1,3 @@
-#!/usr/bin/env bash
 version="v0.2.0"
 set -o errexit
 

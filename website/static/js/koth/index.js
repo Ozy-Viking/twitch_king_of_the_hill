@@ -62,6 +62,10 @@ import {
 } from "./constants.js";
 import User, { UserList, divnumber } from "./user.js";
 
+// TODO: set platform to twitch from one side and youtube the other.
+// TODO: Add platform icon to user div.
+// TODO: Name below new winner div.
+
 if (reset) {
   console.warn("Clearing History");
   clearWinnerHistory();
@@ -83,6 +87,7 @@ function userJoining() {
       request: "Subscribe",
       events: {
         Twitch: ["ChatMessage"],
+        YouTube: ["Message"],
       },
       id: botID,
     })
@@ -92,12 +97,25 @@ function userJoining() {
     // grab message and parse JSON
     const msg = event.data;
     const wsdata = JSON.parse(msg);
+    console.log(wsdata);
     if (typeof wsdata.data != "undefined") {
       if (typeof wsdata.data.message != "undefined") {
-        let lowerMessage = wsdata.data.message.message.toLowerCase();
-        let username = wsdata.data.message.displayName;
-        if (canUserJoin(username, lowerMessage)) {
-          addFighter(username, lowerMessage);
+        let lowerMessage;
+        let username;
+        if (wsdata.event.source === "Twitch") {
+          lowerMessage = wsdata.data.message.message.toLowerCase();
+          username = wsdata.data.message.displayName;
+          let imageUrl = "https://decapi.me/twitch/avatar/" + username;
+          if (canUserJoin(username, lowerMessage)) {
+            addFighter(username, lowerMessage, imageUrl);
+          }
+        } else if (wsdata.event.source === "YouTube") {
+          lowerMessage = wsdata.data.message.toLowerCase();
+          username = wsdata.data.user.name;
+          let imageUrl = wsdata.data.user.profileImageUrl;
+          if (canUserJoin(username, lowerMessage)) {
+            addFighter(username, lowerMessage, imageUrl, "YouTube");
+          }
         }
       }
     }
@@ -121,23 +139,22 @@ function canUserJoin(username, lowerMessage) {
   return true;
 }
 
-function addFighter(username, lowerMessage) {
+function addFighter(username, lowerMessage, imageUrl, source = "Twitch") {
   usernamesAdded.add(username);
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var warp = document.getElementById("confetti-container");
-      let user = new User(
-        divnumber,
-        username,
-        lowerMessage,
-        xhttp.responseText
-      );
+      let image = xhttp.responseText;
+      if (source === "YouTube") {
+        image = imageUrl;
+      }
+      let user = new User(divnumber, username, lowerMessage, image);
       // @ts-ignore
       warp.appendChild(user.div);
     }
   };
-  xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
+  xhttp.open("GET", imageUrl, true);
   xhttp.send();
 }
 
@@ -243,6 +260,9 @@ function yeetathon(winner) {
 }
 
 function addTestingPeople(totalGameLength, numberPeople = 20) {
+  if (numberPeople == 0) {
+    return;
+  }
   for (let i = 0; i < numberPeople; i++) {
     let randomdelay = totalGameLength * Math.random() * 1000;
     setTimeout(testEvent, randomdelay, ws, joinCommand, randomPlayer());
