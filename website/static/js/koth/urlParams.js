@@ -48,6 +48,7 @@ export const winner = urlParams.get("winner")
 export const winStreakOrder = winStreakOrderCondition(
   urlParams.get("consecutive")
 );
+export const platformBattle = checkNegation("platformBattle")
 export const debug = winStreakOrderCondition(urlParams.get("debug"));
 export const hillChoice = handleHillChoice(urlParams.get("hillChoice"));
 
