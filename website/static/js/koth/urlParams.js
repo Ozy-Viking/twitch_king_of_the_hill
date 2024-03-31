@@ -54,7 +54,7 @@ export const platform = urlParams.get("platform")
   : randomPlatform();
 export const debug = winStreakOrderCondition(urlParams.get("debug"));
 export const hillChoice = handleHillChoice(urlParams.get("hillChoice"));
-export const PlatformSide = setPlatformSide("twitchSide")
+export const PlatformSide = setPlatformSide(urlParams.get("twitchSide"));
 export var checkNegationSettings;
 
 /**
@@ -167,16 +167,14 @@ export function removeSearchParam(key) {
   }
 }
 
-export function setPlatformSide(twitchSideParamName = "twitchSide"){
-  let setting = urlParams.get(twitchSideParamName).toLowerCase()
-
-  if(!sides.includes(setting)){
+export function setPlatformSide(setting) {
+  if (!setting || !sides.includes(setting.toLowerCase())) {
     return {
       Twitch: SIDE.right,
       YouTube: SIDE.left,
-    }
+    };
   }
-  let twitchSide = setting;
+  let twitchSide = setting.toLowerCase();
 
   return {
     Twitch: twitchSide,
