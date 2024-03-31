@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -x
+
 . ${0%/*}/pages.sh
 
 for page in "${pages[@]}"; do

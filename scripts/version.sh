@@ -1,3 +1,7 @@
+#!/bin/bash
+
+set -x
+
 . ${0%/*}/pages.sh
 
 version=$1
