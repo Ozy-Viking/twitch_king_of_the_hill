@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { randomSide } from "../util.js";
+import { randomPlatform, randomSide } from "../util.js";
 import listActiveWeaponName from "./listWeaponNames.js";
 import { weaponCount, weaponNames } from "./weapons.js";
 
@@ -48,7 +48,10 @@ export const winner = urlParams.get("winner")
 export const winStreakOrder = winStreakOrderCondition(
   urlParams.get("consecutive")
 );
-export const platformBattle = checkNegation("platformBattle")
+export const platformBattle = checkNegation("platformBattle");
+export const platform = urlParams.get("platform")
+  ? urlParams.get("platform")
+  : randomPlatform();
 export const debug = winStreakOrderCondition(urlParams.get("debug"));
 export const hillChoice = handleHillChoice(urlParams.get("hillChoice"));
 
@@ -125,6 +128,7 @@ export function testingSettings() {
     ...settings(),
     weaponName: weaponName,
     side: side,
+    platform: platform,
   };
 }
 /**

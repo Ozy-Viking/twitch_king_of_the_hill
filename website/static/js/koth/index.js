@@ -25,7 +25,12 @@ import {
   motionUp,
   randomSideMotion,
 } from "./playerMotion.js";
-import { modifyStyleSheet, platform, Randomizer, removeElement } from "../util.js";
+import {
+  modifyStyleSheet,
+  PLATFORM,
+  Randomizer,
+  removeElement,
+} from "../util.js";
 import { kothTestEvent as testEvent, randomPlayer } from "./test.js";
 import {
   playSound,
@@ -102,19 +107,19 @@ function userJoining() {
       if (typeof wsdata.data.message != "undefined") {
         let lowerMessage;
         let username;
-        if (wsdata.event.source === platform.Twitch) {
+        if (wsdata.event.source === PLATFORM.Twitch) {
           lowerMessage = wsdata.data.message.message.toLowerCase();
           username = wsdata.data.message.displayName;
           let imageUrl = "https://decapi.me/twitch/avatar/" + username;
           if (canUserJoin(username, lowerMessage)) {
             addFighter(username, lowerMessage, imageUrl);
           }
-        } else if (wsdata.event.source === platform.YouTube) {
+        } else if (wsdata.event.source === PLATFORM.YouTube) {
           lowerMessage = wsdata.data.message.toLowerCase();
           username = wsdata.data.user.name;
           let imageUrl = wsdata.data.user.profileImageUrl;
           if (canUserJoin(username, lowerMessage)) {
-            addFighter(username, lowerMessage, imageUrl, platform.YouTube);
+            addFighter(username, lowerMessage, imageUrl, PLATFORM.YouTube);
           }
         }
       }
@@ -139,17 +144,22 @@ function canUserJoin(username, lowerMessage) {
   return true;
 }
 
-function addFighter(username, lowerMessage, imageUrl, source = platform.Twitch) {
+function addFighter(
+  username,
+  lowerMessage,
+  imageUrl,
+  platform = PLATFORM.Twitch
+) {
   usernamesAdded.add(username);
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
       var warp = document.getElementById("confetti-container");
       let image = xhttp.responseText;
-      if (source === platform.YouTube) {
+      if (platform === PLATFORM.YouTube) {
         image = imageUrl;
       }
-      let user = new User(divnumber, username, lowerMessage, image);
+      let user = new User(divnumber, username, lowerMessage, image, platform);
       // @ts-ignore
       warp.appendChild(user.div);
     }
@@ -193,8 +203,13 @@ function winnerTime(winner) {
     winner.username,
     winner.weapon.name,
     winner.side,
-    winner.rigged
+    winner.rigged,
+    winner.platform,
+    winner.avatarURL
   ).save();
+  element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${
+    joinCommand[0].toUpperCase() + joinCommand.slice(1)
+  }</div><div>${element.getAttribute("user")}</div></div>`;
 
   if (rigged) {
     winnerMotion(element, false, 4, true);

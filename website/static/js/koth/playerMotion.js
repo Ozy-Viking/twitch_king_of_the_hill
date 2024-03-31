@@ -23,7 +23,7 @@ export const winnerMotionLength =
 const innerWidth = window.innerWidth;
 const innerHeight = window.innerHeight;
 
-const moveLastWinner = "175";
+const moveLastWinner = "140";
 const moveWinner = "35";
 
 function winnerMoveByY(up = true, lastWinner = false) {

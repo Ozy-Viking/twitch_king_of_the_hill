@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { SIDE, PLATFORM, randomSide, sides } from "../util.js";
-import { winnerMessage } from "./constants.js";
+import { PlatformSide, winnerMessage } from "./constants.js";
 import { fighterAnimation } from "./playerMotion.js";
-import { riggedUsers } from "./urlParams.js";
+import { platformBattle, riggedUsers } from "./urlParams.js";
 import { usersWeapon } from "./weapons.js";
 
 class UserListClass {
@@ -66,16 +66,20 @@ export default class User {
     this.weapon = usersWeapon(lowerMessage);
     this.avatarURL = avatarURL;
     this.rigged = riggedUsers.includes(username);
-    if (platform in PLATFORM) {
+    if (Object.keys(PLATFORM).includes(platform)) {
       this.platform = platform;
     } else {
-        this.platform = PLATFORM.Twitch;
+      console.log(`Invalid platform (${platform}), defaulting to Twitch.`);
+      this.platform = PLATFORM.Twitch;
     }
 
-    if (side.toLowerCase() in sides){
-        this.side = side.toLowerCase();
+    if (side.toLowerCase() in sides) {
+      this.side = side.toLowerCase();
     } else {
-        this.side = randomSide();
+      this.side = randomSide();
+    }
+    if (platformBattle) {
+      this.side = PlatformSide[this.platform];
     }
 
     this.div = this.initDiv();
@@ -101,7 +105,9 @@ export default class User {
     Div.innerHTML = `<img style='${
       this.weapon[this.side]
     }' src='static/images/${this.weapon.file}'/>
-    <img class='${this.side} ${this.platform}' src='static/images/${this.platform}.webp/>`;
+    <img class='${this.side} ${this.platform}' src='static/images/${
+      this.platform
+    }.png'/>`;
     fighterAnimation(this.side, Div);
 
     return Div;

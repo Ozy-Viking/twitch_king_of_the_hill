@@ -1,4 +1,4 @@
-import { Randomizer, removeElement, sides } from "../util.js";
+import { PLATFORM, Randomizer, removeElement, sides } from "../util.js";
 import { storage } from "./constants.js";
 import {
   motionDown,
@@ -31,12 +31,21 @@ var currentWinStreakWinners = [];
 export class LastWinner {
   static key = "lastWinner";
   static divID = "lastWinner";
-  constructor(username, weapon, side, rigged = false) {
+  constructor(
+    username,
+    weapon,
+    side,
+    rigged = false,
+    platform = PLATFORM.Twitch,
+    ImageURL = ""
+  ) {
     this.username = username;
     this.weapon = weapon;
     this.side = side;
     this.rigged = rigged;
-    addToWinnerHistory(username);
+    this.platform = platform;
+    this.ImageURL = ImageURL;
+    addToWinnerHistory(username); // BUG: Fix the multi-platform username issue.
   }
   get obj() {
     return {
@@ -44,6 +53,8 @@ export class LastWinner {
       weapon: this.weapon,
       side: this.side,
       rigged: this.rigged,
+      platform: this.platform,
+      ImageURL: this.ImageURL,
     };
   }
   get json() {
@@ -61,7 +72,14 @@ export class LastWinner {
     }
     // @ts-ignore
     let lw = JSON.parse(storage.getItem(LastWinner.key));
-    return new LastWinner(lw.username, lw.weapon, lw.side, lw.rigged);
+    return new LastWinner(
+      lw.username,
+      lw.weapon,
+      lw.side,
+      lw.rigged,
+      lw.platform,
+      lw.ImageURL
+    );
   }
 }
 
@@ -232,6 +250,7 @@ function getWinnerHistory(key = "winnerHistory") {
 }
 
 export function lastWinnerDiv() {
+  // TODO: Refactor this function to use the User class.
   lastWinner = LastWinner.fetch();
   if (lastWinner == undefined) {
     return;
@@ -242,55 +261,95 @@ export function lastWinnerDiv() {
   } else if (weaponNamesTesting.includes(lastWinner.weapon)) {
     weapon = weaponObjectsTesting[lastWinner.weapon];
   }
+  let platform = lastWinner.platform;
   var winnerSide = lastWinner.side;
   var username = lastWinner.username.toLowerCase();
-  var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200) {
-      // get display image for the user
-      // console.log("got a response back");
-      //save this to cache between sessions too.
-      //check for user being added already (or if already dead and ignore)
-      if (document.getElementById("lastWinner")) {
-        try {
-          removeElement("lastWinner");
-        } catch (error) {}
-      }
-      var warp = document.getElementById("lastWinnerDiv"),
-        innerWidth = window.innerWidth,
-        innerHeight = window.innerHeight;
-      // Load into page
-      var lastWinnerDiv = document.createElement("div");
-      lastWinnerDiv.id = "lastWinner";
-      lastWinnerDiv.setAttribute("user", lastWinner.username);
-      lastWinnerDiv.style.background = `url(${xhttp.responseText})`;
-      lastWinnerDiv.style.backgroundSize = "100% 100%";
-      lastWinnerDiv.setAttribute("weapon", `${weapon.name}`);
-      // deepcode ignore DOMXSS: Only ran clientside.
-      lastWinnerDiv.innerHTML = `<img style='${weapon[winnerSide]}' src='static/images/${weapon.file}'/>`;
-      TweenLite.set(lastWinnerDiv, {
-        className: "falling-element",
-        x: innerWidth / 2 - 45,
-        y: innerHeight - 150,
-        z: 0,
-        scale: 1.5,
-      });
-      warp.appendChild(lastWinnerDiv);
+  let side = lastWinner.side;
+  if (platform == PLATFORM.Twitch) {
+    var xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+      if (this.readyState == 4 && this.status == 200) {
+        // get display image for the user
+        // console.log("got a response back");
+        //save this to cache between sessions too.
+        //check for user being added already (or if already dead and ignore)
+        if (document.getElementById("lastWinner")) {
+          try {
+            removeElement("lastWinner");
+          } catch (error) {}
+        }
+        var warp = document.getElementById("lastWinnerDiv"),
+          innerWidth = window.innerWidth,
+          innerHeight = window.innerHeight;
+        // Load into page
+        var lastWinnerDiv = document.createElement("div");
+        lastWinnerDiv.id = "lastWinner";
+        lastWinnerDiv.setAttribute("user", lastWinner.username);
+        lastWinnerDiv.style.background = `url(${xhttp.responseText})`;
+        lastWinnerDiv.style.backgroundSize = "100% 100%";
+        lastWinnerDiv.setAttribute("weapon", `${weapon.name}`);
+        // deepcode ignore DOMXSS: Only ran clientside.
+        lastWinnerDiv.innerHTML = `<img style='${weapon[winnerSide]}' src='static/images/${weapon.file}'/><img class='${side} ${platform}' src='static/images/${platform}.png'/>`;
+        TweenLite.set(lastWinnerDiv, {
+          className: "falling-element",
+          x: innerWidth / 2 - 45,
+          y: innerHeight - 150,
+          z: 0,
+          scale: 1.5,
+        });
+        warp.appendChild(lastWinnerDiv);
 
-      let lastWinnerNameDiv = document.createElement("div");
-      lastWinnerNameDiv.id = "lastWinnerName";
-      lastWinnerNameDiv.innerHTML = `Defending ${championName}:<br>${lastWinner.username}`;
-      lastWinnerDiv.appendChild(crown(winnerSide, lastWinner.username));
-      lastWinnerDiv.appendChild(lastWinnerNameDiv);
-      if (lastWinner.rigged) {
-        winnerMotion(lastWinnerDiv, true, scaleLastWinner + 0.25, true);
-      } else {
-        winnerMotion(lastWinnerDiv, true, scaleLastWinner, false);
+        let lastWinnerNameDiv = document.createElement("div");
+        lastWinnerNameDiv.id = "lastWinnerName";
+        lastWinnerNameDiv.innerHTML = `Defending ${championName}:<br>${lastWinner.username}`;
+        lastWinnerDiv.appendChild(crown(winnerSide, lastWinner.username));
+        lastWinnerDiv.appendChild(lastWinnerNameDiv);
+        if (lastWinner.rigged) {
+          winnerMotion(lastWinnerDiv, true, scaleLastWinner + 0.25, true);
+        } else {
+          winnerMotion(lastWinnerDiv, true, scaleLastWinner, false);
+        }
       }
+    };
+    xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
+    xhttp.send();
+  } else if (lastWinner.platform == PLATFORM.YouTube) {
+    if (document.getElementById("lastWinner")) {
+      try {
+        removeElement("lastWinner");
+      } catch (error) {}
     }
-  };
-  xhttp.open("GET", "https://decapi.me/twitch/avatar/" + username, true);
-  xhttp.send();
+    var warp = document.getElementById("lastWinnerDiv"),
+      innerWidth = window.innerWidth,
+      innerHeight = window.innerHeight;
+    // Load into page
+    var lastWinnerDiv = document.createElement("div");
+    lastWinnerDiv.id = "lastWinner";
+    lastWinnerDiv.setAttribute("user", lastWinner.username);
+    lastWinnerDiv.setAttribute("weapon", `${weapon.name}`);
+    lastWinnerDiv.style.background = `url('${lastWinner.ImageURL}')`;
+    lastWinnerDiv.style.backgroundSize = "100% 100%";
+    lastWinnerDiv.innerHTML = `<img style='${weapon[winnerSide]}' src='static/images/${weapon.file}'/> <img class='${side} ${platform}' src='static/images/${platform}.png'/>`;
+    TweenLite.set(lastWinnerDiv, {
+      className: "falling-element",
+      x: innerWidth / 2 - 45,
+      y: innerHeight - 150,
+      z: 0,
+      scale: 1.5,
+    });
+    warp.appendChild(lastWinnerDiv);
+
+    let lastWinnerNameDiv = document.createElement("div");
+    lastWinnerNameDiv.id = "lastWinnerName";
+    lastWinnerNameDiv.innerHTML = `Defending ${championName}:<br>${lastWinner.username}`;
+    lastWinnerDiv.appendChild(crown(winnerSide, lastWinner.username));
+    lastWinnerDiv.appendChild(lastWinnerNameDiv);
+    if (lastWinner.rigged) {
+      winnerMotion(lastWinnerDiv, true, scaleLastWinner + 0.25, true);
+    } else {
+      winnerMotion(lastWinnerDiv, true, scaleLastWinner, false);
+    }
+  }
 }
 
 export function removeLastWinner(id = LastWinner.divID) {

@@ -5,13 +5,19 @@ import {
   weaponRegex,
 } from "./weapons.js";
 import { weaponNamesTesting, weaponObjectsTesting } from "./weapons.js";
-import { modifyStyleSheet, boolSwitch, randomSide, sides } from "../util.js";
+import {
+  modifyStyleSheet,
+  boolSwitch,
+  randomSide,
+  sides,
+  PLATFORM,
+  randomPlatform,
+} from "../util.js";
 import {
   winnerMotion,
   winnerMotionExit,
   riggedMotion,
   fighterAnimation,
-  yeet,
 } from "./playerMotion.js";
 import {
   lastWinnerDiv,
@@ -20,25 +26,13 @@ import {
   LastWinner,
 } from "./lastWinner.js";
 import settings, {
-  botID,
   championName,
-  gameLength,
-  gstringProb,
   hillName,
-  joinCommand,
-  massTesting,
-  reset,
-  riggedUsers,
-  server,
-  showLastWinner,
-  testing,
-  winStreak,
   weaponName as requestWeaponName,
   side as requestSide,
-  testingSettings,
-  checkNegationSettings,
   setSearchParam,
-  removeSearchParam,
+  platform as requestPlatform,
+  joinCommand,
 } from "./urlParams.js";
 var testingUser = "Ozy_Viking";
 var activeHill = null;
@@ -49,6 +43,7 @@ const winnerMessage = `is the new ${battleGround}`;
 let weaponName = requestWeaponName ? requestWeaponName : "tentacles";
 var weapon = weaponObjects[weaponName];
 var rigged = false;
+let platform = requestPlatform;
 
 function usersWeapon(choosenWeapon) {
   if (weapon) {
@@ -84,8 +79,9 @@ function addFighter(user, lowerMessage) {
       side = randomSide(side);
       Div.setAttribute("side", side);
       Div.setAttribute("weapon", weapon.name);
+      Div.setAttribute("platform", platform);
 
-      Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/>`;
+      Div.innerHTML = `<img style='${weapon[side]}' src='static/images/${weapon.file}'/><img class='${side} ${platform}' src='static/images/${platform}.png'/>`;
       fighterAnimation(side, Div);
       warp.appendChild(Div);
     }
@@ -146,6 +142,9 @@ function winnerTime(id, userSide = side) {
     console.error(error);
   }
   let element = document.getElementById(id);
+  element.innerHTML += `<div class='WinnerUsername'><span>New ${joinCommand[0].toUpperCase()+joinCommand.slice(1)}</span>\n${element.getAttribute(
+    "user"
+  )}</div>`;
   new LastWinner(
     element.getAttribute("user"),
     element.getAttribute("weapon"),
@@ -168,8 +167,10 @@ function addButtons() {
   );
   const sideButtonDiv = document.getElementById("sideButtonDiv");
   const hillButtonDiv = document.getElementById("hillButtonDiv");
+  const platformButtonDiv = document.getElementById("platformButtonDiv");
 
   weaponsButtons(buttonDiv, testingWeaponButtonDiv);
+  platformButtons(platformButtonDiv);
   sidesUserWinner(sideButtonDiv);
   grassyHillButtons(hillButtonDiv);
 }
@@ -298,6 +299,22 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
     btn.innerText = name;
     btn.className = "btn btn-primary";
     testingWeaponButtonDiv.appendChild(btn);
+  });
+}
+
+function platformButtons(platformButtonDiv) {
+  let btn;
+  Object.keys(PLATFORM).forEach((platformChoice) => {
+    btn = document.createElement("button");
+    btn.id = platformChoice;
+    btn.onclick = () => {
+      setSearchParam("platform", platformChoice);
+      platform = platformChoice;
+      weaponTest();
+    };
+    btn.innerText = platformChoice;
+    btn.className = `btn btn-${platformChoice}`;
+    platformButtonDiv.appendChild(btn);
   });
 }
 

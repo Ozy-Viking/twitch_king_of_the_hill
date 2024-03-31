@@ -1,4 +1,5 @@
 version: "3.1"
+name: twitch-king-of-the-hill
 services:
   web:
     build: ../.
@@ -12,4 +13,4 @@ services:
 
 networks:
   default:
-    name: testingcd
+    name: testing

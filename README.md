@@ -376,6 +376,14 @@ Type one of the following weapons to use them:
 - combat wombat
 ```
 
+##### Platform Battle
+
+This sets for Twitch to come in on one side and YouTube to come in on the other. Default = False.
+
+```url
+http://localhost:28080/?platformBattle
+```
+
 #### Weapon Calls
 
 This is an example of the setup for a weapon.
