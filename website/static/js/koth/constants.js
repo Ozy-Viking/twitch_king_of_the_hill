@@ -52,7 +52,3 @@ export const updateMessageRegex = new RegExp(
   "i"
 );
 
-export const PlatformSide = {
-  Twitch: SIDE.left,
-  YouTube: SIDE.right,
-};

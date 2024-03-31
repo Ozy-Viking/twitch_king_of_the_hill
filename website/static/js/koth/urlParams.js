@@ -1,5 +1,5 @@
 // @ts-nocheck
-import { randomPlatform, randomSide } from "../util.js";
+import { SIDE, randomPlatform, randomSide, sides } from "../util.js";
 import listActiveWeaponName from "./listWeaponNames.js";
 import { weaponCount, weaponNames } from "./weapons.js";
 
@@ -54,7 +54,7 @@ export const platform = urlParams.get("platform")
   : randomPlatform();
 export const debug = winStreakOrderCondition(urlParams.get("debug"));
 export const hillChoice = handleHillChoice(urlParams.get("hillChoice"));
-
+export const PlatformSide = setPlatformSide("twitchSide")
 export var checkNegationSettings;
 
 /**
@@ -165,4 +165,21 @@ export function removeSearchParam(key) {
     url.searchParams.delete(key);
     window.location.assign(url);
   }
+}
+
+export function setPlatformSide(twitchSideParamName = "twitchSide"){
+  let setting = urlParams.get(twitchSideParamName).toLowerCase()
+
+  if(!sides.includes(setting)){
+    return {
+      Twitch: SIDE.right,
+      YouTube: SIDE.left,
+    }
+  }
+  let twitchSide = setting;
+
+  return {
+    Twitch: twitchSide,
+    YouTube: twitchSide === SIDE.left ? SIDE.right : SIDE.left,
+  };
 }

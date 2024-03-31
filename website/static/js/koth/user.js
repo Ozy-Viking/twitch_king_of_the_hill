@@ -1,8 +1,8 @@
 // @ts-nocheck
 import { SIDE, PLATFORM, randomSide, sides } from "../util.js";
-import { PlatformSide, winnerMessage } from "./constants.js";
+import { winnerMessage } from "./constants.js";
 import { fighterAnimation } from "./playerMotion.js";
-import { platformBattle, riggedUsers } from "./urlParams.js";
+import { PlatformSide, platformBattle, riggedUsers } from "./urlParams.js";
 import { usersWeapon } from "./weapons.js";
 
 class UserListClass {

@@ -384,6 +384,14 @@ This sets for Twitch to come in on one side and YouTube to come in on the other.
 http://localhost:28080/?platformBattle
 ```
 
+##### Twitch Side
+
+This sets the side which twitch comes in for the platform battle, case insensitive, options are left or right. Default = right
+
+```url
+http://localhost:28080/?twitchSide=right
+```
+
 #### Weapon Calls
 
 This is an example of the setup for a weapon.
