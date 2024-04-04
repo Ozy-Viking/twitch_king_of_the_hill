@@ -11,13 +11,14 @@ import {
   randomSide,
   sides,
   PLATFORM,
-  randomPlatform,
 } from "../util.js";
 import {
   winnerMotion,
   winnerMotionExit,
   riggedMotion,
   fighterAnimation,
+  motionUp,
+  motionUp1,
 } from "./playerMotion.js";
 import {
   lastWinnerDiv,
@@ -33,7 +34,15 @@ import settings, {
   setSearchParam,
   platform as requestPlatform,
   joinCommand,
+  platformBattle,
 } from "./urlParams.js";
+import {
+  Scoreboard,
+  scoreboard,
+  scoreboardMotion,
+  twitchTitle,
+  youtubeTitle,
+} from "./platformBattle.js";
 var testingUser = "Ozy_Viking";
 var activeHill = null;
 var side = requestSide;
@@ -142,22 +151,30 @@ function winnerTime(id, userSide = side) {
     console.error(error);
   }
   let element = document.getElementById(id);
-  element.innerHTML += `<div class='WinnerUsername'><span>New ${joinCommand[0].toUpperCase()+joinCommand.slice(1)}</span>\n${element.getAttribute(
-    "user"
-  )}</div>`;
+  element.innerHTML += `<div class='WinnerUsername'><div class="pretext">New ${
+    joinCommand[0].toUpperCase() + joinCommand.slice(1)
+  }</div><div>${element.getAttribute("user")}</div></div>`;
   new LastWinner(
     element.getAttribute("user"),
     element.getAttribute("weapon"),
     userSide,
     rigged
   ).save();
+  if (platformBattle) {
+    scoreboard.platformWonRound(element.getAttribute("platform"));
+    scoreboard.displayWinnerPlatformMessage(motionUp1*1000);
+  }
   if (rigged) {
     //riggedUsers.includes(user)) {
     riggedMotion(element, false);
   } else {
     winnerMotion(element, false);
   }
-  setTimeout(winnerMotionExit, 10000, element);
+  let delay = 5000;
+  setTimeout(winnerMotionExit, delay, element);
+  if (platformBattle) {
+    scoreboard.hideWinnerPlatformMessage(delay)
+  }
 }
 
 function addButtons() {
@@ -171,6 +188,7 @@ function addButtons() {
 
   weaponsButtons(buttonDiv, testingWeaponButtonDiv);
   platformButtons(platformButtonDiv);
+  platformWinnerButtons(platformButtonDiv);
   sidesUserWinner(sideButtonDiv);
   grassyHillButtons(hillButtonDiv);
 }
@@ -316,6 +334,39 @@ function platformButtons(platformButtonDiv) {
     btn.className = `btn btn-${platformChoice}`;
     platformButtonDiv.appendChild(btn);
   });
+}
+
+function platformWinnerButtons(platformButtonDiv) {
+  let btn;
+  Object.keys(PLATFORM).forEach((platformChoice) => {
+    btn = document.createElement("button");
+    btn.id = platformChoice;
+    btn.onclick = () => {
+      scoreboard.platformWonRound(platformChoice);
+      scoreboard.displayWinnerPlatformMessage();
+    };
+    btn.innerText = platformChoice + " Winner";
+    btn.className = `btn btn-${platformChoice}`;
+    platformButtonDiv.appendChild(btn);
+  });
+
+  btn = document.createElement("button");
+  btn.id = "clearPlatformBattleHistory";
+  btn.innerText = "Clear Platform History";
+  btn.onclick = () => {
+    scoreboard.hideWinnerPlatformMessage(true);
+    scoreboard.reset();
+  };
+  btn.className = "btn btn-success";
+  platformButtonDiv.appendChild(btn);
+  btn = document.createElement("button");
+  btn.id = "HidePlatformBattleHistory";
+  btn.innerText = "Hide Platform History";
+  btn.onclick = () => {
+    scoreboard.hideWinnerPlatformMessage(true);
+  };
+  btn.className = "btn btn-success";
+  platformButtonDiv.appendChild(btn);
 }
 
 addButtons();

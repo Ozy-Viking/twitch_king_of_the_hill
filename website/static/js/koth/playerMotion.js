@@ -2,12 +2,12 @@ import { Randomizer, randomSide, removeElement } from "../util.js";
 import { modifyStyleSheet } from "../util.js";
 import { loseSound } from "./sound.js";
 
-const startTime = 0;
-const motionUp1 = 1.5;
-const motionUp2 = 1;
-const motionDown1 = motionUp2 / 2;
-const motionDown2 = 3;
-const growDuration = 1;
+export const startTime = 0;
+export const motionUp1 = 1.5;
+export const motionUp2 = 1;
+export const motionDown1 = motionUp2 / 2;
+export const motionDown2 = 3;
+export const growDuration = 1;
 
 export const motionUp = motionUp1 + motionUp2;
 export const motionDown = motionDown1 + motionDown2;

@@ -51,4 +51,3 @@ export const updateMessageRegex = new RegExp(
   `${updateMessage.toLowerCase()}|${endingMessage.toLowerCase()}|${noJoinMessage.toLowerCase()}`,
   "i"
 );
-

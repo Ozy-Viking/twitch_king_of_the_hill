@@ -110,8 +110,8 @@ export function removeElement(ID, debug = false) {
 export function emptyFunction() {}
 
 export const PLATFORM = {
-  Twitch: "Twitch",
   YouTube: "YouTube",
+  Twitch: "Twitch",
 };
 
 export function randomPlatform() {

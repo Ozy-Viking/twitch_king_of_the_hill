@@ -24,6 +24,7 @@ import {
   victorsClaimToFameTime,
   motionUp,
   randomSideMotion,
+  motionUp1,
 } from "./playerMotion.js";
 import {
   modifyStyleSheet,
@@ -66,14 +67,12 @@ import {
   winnerMessage,
 } from "./constants.js";
 import User, { UserList, divnumber } from "./user.js";
-
-// TODO: set platform to twitch from one side and youtube the other.
-// TODO: Add platform icon to user div.
-// TODO: Name below new winner div.
+import { clearPlatformBattleHistory, scoreboard } from "./platformBattle.js";
 
 if (reset) {
   console.warn("Clearing History");
   clearWinnerHistory();
+  clearPlatformBattleHistory();
 }
 
 // deepcode ignore MissingClose: websocket is closed.
@@ -211,12 +210,21 @@ function winnerTime(winner) {
     joinCommand[0].toUpperCase() + joinCommand.slice(1)
   }</div><div>${element.getAttribute("user")}</div></div>`;
 
+  if (param.platformBattle) {
+    scoreboard.platformWonRound(winner.platform);
+    scoreboard.displayWinnerPlatformMessage(motionUp1 * 1000);
+  }
+
   if (rigged) {
-    winnerMotion(element, false, 4, true);
+    winnerMotion(element, false, 3, true);
   } else {
     winnerMotion(element, false, 2.5, false);
   }
   setTimeout(winnerMotionExit, victorsClaimToFameTime * 1000, element);
+
+  if (param.platformBattle) {
+    scoreboard.hideWinnerPlatformMessage(victorsClaimToFameTime * 1000);
+  }
 }
 
 function startFight() {
@@ -237,23 +245,24 @@ function fightSequence() {
     // file deepcode ignore UsageOfUndefinedReturnValue: Not an issue.
     // deepcode ignore CodeInjection: No code injection possible here.
     setTimeout(notify, 10000, noJoinMessage);
-  } else {
-    // @ts-ignore
-    let user = UserList.getUserByID(winner);
-    console.log(user);
-    yeetathon(winner);
-    // 17000
-    setTimeout(changeVolume, 0, 0, 0.1, 2500);
-    setTimeout(changeVolume, totalYeetTime * 1000, 0, 0, 2500);
-    setTimeout(winnerTime, (totalYeetTime + delayToCeremony) * 1000, user);
-    setTimeout(
-      setWinner,
-      totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime,
-      user.username
-    );
-    // deepcode ignore CodeInjection: Code Injection is not possible.
-    setTimeout(closeWS, postGameLength * 1000, ws);
+    return;
   }
+
+  // @ts-ignore
+  let user = UserList.getUserByID(winner);
+  console.log(user);
+  yeetathon(winner);
+  // 17000
+  setTimeout(changeVolume, 0, 0, 0.1, 2500);
+  setTimeout(changeVolume, totalYeetTime * 1000, 0, 0, 2500);
+  setTimeout(winnerTime, (totalYeetTime + delayToCeremony) * 1000, user);
+  setTimeout(
+    setWinner,
+    totalYeetTime + delayToCeremony + motionUp + victorsClaimToFameTime,
+    user.username
+  );
+  // deepcode ignore CodeInjection: Code Injection is not possible.
+  setTimeout(closeWS, postGameLength * 1000, ws);
 }
 
 function yeetathon(winner) {

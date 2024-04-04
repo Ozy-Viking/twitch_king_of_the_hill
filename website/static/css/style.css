@@ -7,6 +7,7 @@
   --winnerGrowRatio: 2.5;
   --riggedGrowRatio: 5;
   --font-family: "Tw Cen MT Std", Inter;
+  --bs-body-bg: #000;
 }
 
 body {
@@ -144,6 +145,7 @@ div#winnerNotification {
   margin-right: auto;
   margin-top: 20px;
   text-align: center;
+  color: #fff;
 }
 .display {
   font-family: var(--font-family);
@@ -152,7 +154,7 @@ div#winnerNotification {
 div#winnerNotification {
   margin-top: 10px;
   padding: 5px 0px;
-  border: rgba(0, 0, 0, 0.8) solid;
+  border: rgba(255, 255, 255, 0.6) solid;
   text-align: center;
 }
 #testing_user {
@@ -249,7 +251,7 @@ div#lastWinnerName {
   position: absolute;
   left: 50%;
   bottom: 0;
-  transform: translate(-50%, 130%);
+  transform: translate(-50%, 150%);
   color: #fff;
   width: max-content;
   font-family: var(--font-family);
@@ -312,35 +314,20 @@ img#lastWinnerCrown.crownNavalWarlord {
   transform: translate(19%, 4.5px) scale(0.5) rotate(1deg);
 }
 
+
+:root {
+  --icon-dimension: 40px;
+  --yt-primary: #ff0000;
+  --twitch-primary: #9146ff;
+}
+
 button.btn-YouTube {
-  --bs-btn-bg: #ff0000;
+  --bs-btn-bg: var(--yt-primary);
   --bs-btn-color: #fff;
 }
 button.btn-Twitch {
-  --bs-btn-bg: #772ce8;
+  --bs-btn-bg: var(--twitch-primary);
   --bs-btn-color: #fff;
-}
-
-img.left {
-  position: absolute;
-  left: calc(-1 * var(--icon-dimension) / 2);
-  bottom: calc(-1 * var(--icon-dimension) / 2);
-}
-img.right {
-  position: absolute;
-  right: calc(-1 * var(--icon-dimension) / 2);
-  bottom: calc(-1 * var(--icon-dimension) / 2);
-}
-:root {
-  --icon-dimension: 40px;
-}
-img.Twitch {
-  width: var(--icon-dimension);
-  height: var(--icon-dimension);
-}
-img.YouTube {
-  width: var(--icon-dimension);
-  height: var(--icon-dimension);
 }
 
 div.WinnerUsername {
@@ -353,7 +340,7 @@ div.WinnerUsername {
   z-index: 20;
   left: 50%;
   bottom: 0;
-  transform: translate(-50%, 130%);
+  transform: translate(-50%, 150%);
   text-align: center;
   line-height: 1;
 }
@@ -361,4 +348,181 @@ div.WinnerUsername {
 .WinnerUsername > div.pretext {
   font-size: 15px;
   font-weight: 500;
+}
+img.Twitch {
+  --twitch-width: calc(var(--icon-dimension) * 0.857111);
+  --twitch-height: var(--icon-dimension);
+  width: var(--twitch-width);
+  height: var(--twitch-height);
+}
+img.Twitch.left{
+  position: absolute;
+  left:calc(-1 * var(--twitch-width) / 2);
+  bottom:calc(-1 * var(--twitch-height) / 2);
+}
+img.Twitch.right{
+  position: absolute;
+  right:calc(-1 * var(--twitch-width) / 2);
+  bottom:calc(-1 * var(--twitch-height) / 2);
+}
+
+img.YouTube {
+  --yt-width: var(--icon-dimension);
+  --yt-height: calc(var(--icon-dimension) / 1.417);
+  width: var(--yt-width);
+  height: var(--yt-height);
+}
+
+img.left.YouTube {
+  position: absolute;
+  left: calc(-1 * var(--yt-width) / 2);
+  bottom: calc(-1 * var(--yt-height) / 2);
+}
+img.right.YouTube {
+  position: absolute;
+  right: calc(-1 * var(--yt-width) / 2);
+  bottom: calc(-1 * var(--yt-height) / 2);
+}
+
+div.Twitch {
+  color: var(--twitch-primary);
+}
+
+div.YouTube {
+  color: var(--yt-primary);
+}
+
+.platform_title {
+  text-align: center;
+  vertical-align: text-top;
+  font-size: 112px;
+  border-style: hidden;
+  outline: none;
+  font-weight: 600;
+  margin: 0;
+  line-height: 0;
+}
+
+.platform_comment {
+  font-size: 60px;
+  font-weight: 500;
+  color: #fff;
+}
+
+#platformBattle {
+  position: absolute;
+  z-index: 0;
+  width: 100%;
+  text-align: center;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* .titlelogo{
+  display: inline-flex;
+  align-items: center;
+} */
+
+img.Twitch.titlelogo {
+  width: 68.57px;
+  height: 80px;
+}
+img.YouTube.titlelogo {
+  width: 113.36px;
+  height: 80px;
+}
+img.Twitch.score_logo {
+  width: 51.43px;
+  height: 60px;
+}
+img.YouTube.score_logo {
+  width: 85.02px;
+  height: 60px;
+}
+
+.titlelogo {
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+}
+
+#bottom_message {
+  color: #ffffff;
+  text-align: center;
+  vertical-align: text-top;
+  font-size: 60px;
+  line-height: auto;
+  border-style: hidden;
+  outline: none;
+}
+
+.platformBattleScoreboard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 36px;
+}
+
+.separator {
+  color: #ffffff;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 112px;
+  line-height: auto;
+  border-style: hidden;
+  outline: none;
+}
+
+div.score {
+  display: inline-flex;
+  text-align: center;
+  vertical-align: text-top;
+
+  font-size: 90px;
+  line-height: 1;
+  border-style: hidden;
+  outline: none;
+  font-weight: 500;
+}
+
+.logo_score {
+  padding: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+}
+
+.logoWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.textMoveUp {
+  padding-bottom: 10px;
+}
+
+.separator {
+  padding-bottom: 24px;
+  line-height: 0;
+}
+.titleMessageWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0px;
+}
+
+#platformBattleDisplay {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  opacity: 0;
 }
