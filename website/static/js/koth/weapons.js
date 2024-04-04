@@ -147,7 +147,7 @@ export const weaponObjects = {
       "transform: rotate(0deg) translate(-20px,-20px) scale(1.25); width: 50px;",
     command: ["big brains", "smart", "smrt", "200", "IQ"],
   },
-  "rocket launcher": {
+  "cat rocket": {
     file: "Cat_Rocket.png",
     "tense 1": "the",
     "tense 2": "that",
@@ -229,7 +229,7 @@ export const weaponObjects = {
       "transform: translate(-25px,30px) rotate(0deg) scale(1.25); width: 50px;",
     command: ["spag", "conveyor", "belt", "meal"],
   },
-  combat: {
+  "cat with a bat": {
     file: "Wack.png",
     "tense 1": "",
     "tense 2": "that",
@@ -261,7 +261,34 @@ export const weaponObjects = {
     "tense 2": "that",
     left: "transform: translate(36px,-56px) rotate(225deg) scaleY(-1); width: 78px;",
     right: "transform: translate(-38px,-56px) rotate(-45deg); width: 78px;",
-    command: ["tentacles"],
+    command: ["tentacles", "tentacle", "octopus", "squid", "ten"],
+  },
+  witch: {
+    file: "cat-witch.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    command: ["witch", "spell"],
+  },
+  "halloween pumpkin": {
+    file: "Pumpkin.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    command: ["pumpkin"],
+  },
+  "abused bot": {
+    file: "abused_robot.png",
+    "tense 1": "the",
+    "tense 2": "that",
+    left: "transform: translate(50px,-20px) rotate(0deg) scale(1.25); width: 50px;",
+    right:
+      "transform: translate(-25px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
+    command: ["abused", "sad", "crying"],
   },
 };
 
@@ -279,16 +306,6 @@ export const weaponObjectsTesting = {
       "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
     command: ["seabus", "magic"],
   },
-
-  witchy: {
-    file: "cat-witch.png",
-    "tense 1": "the",
-    "tense 2": "that",
-    left: "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
-    right:
-      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
-    command: ["witch", "spell"],
-  },
   ghost: {
     file: "GhostCat.png",
     "tense 1": "the",
@@ -297,15 +314,6 @@ export const weaponObjectsTesting = {
     right:
       "transform: translate(-25px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
     command: ["ghost", "scare"],
-  },
-  pumpkin: {
-    file: "Pumpkin.png",
-    "tense 1": "the",
-    "tense 2": "that",
-    left: "transform: translate(50px,-20px) rotate(0deg) scaleX(-1) scale(1.25); width: 50px;",
-    right:
-      "transform: translate(-25px,-20px) rotate(0deg) scale(1.25); width: 50px;",
-    command: ["pumpkin"],
   },
   gsting: {
     name: "JD's Sexy Thong",

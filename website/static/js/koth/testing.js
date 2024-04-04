@@ -162,7 +162,7 @@ function winnerTime(id, userSide = side) {
   ).save();
   if (platformBattle) {
     scoreboard.platformWonRound(element.getAttribute("platform"));
-    scoreboard.displayWinnerPlatformMessage(motionUp1*1000);
+    scoreboard.displayWinnerPlatformMessage(motionUp1 * 1000);
   }
   if (rigged) {
     //riggedUsers.includes(user)) {
@@ -173,7 +173,7 @@ function winnerTime(id, userSide = side) {
   let delay = 5000;
   setTimeout(winnerMotionExit, delay, element);
   if (platformBattle) {
-    scoreboard.hideWinnerPlatformMessage(delay)
+    scoreboard.hideWinnerPlatformMessage(delay);
   }
 }
 
@@ -350,6 +350,18 @@ function platformWinnerButtons(platformButtonDiv) {
     platformButtonDiv.appendChild(btn);
   });
 
+  btn = document.createElement("button");
+  btn.id = "togglePlatformBattle";
+  btn.innerText = "Toggle Platform Battle";
+  btn.onclick = () => {
+    if (platformBattle) {
+      setSearchParam("platformBattle", "false");
+    } else {
+      setSearchParam("platformBattle", "true");
+    }
+  };
+  btn.className = `btn btn-${platformBattle ? "success" : "danger"}`;
+  platformButtonDiv.appendChild(btn);
   btn = document.createElement("button");
   btn.id = "clearPlatformBattleHistory";
   btn.innerText = "Clear Platform History";
