@@ -1,6 +1,4 @@
-#!/bin/bash
-
-set -x
+#!/bin/env sh
 
 . ${0%/*}/pages.sh
 
