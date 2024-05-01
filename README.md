@@ -8,6 +8,23 @@ A live example or a stable version you can use in production/live: [https://twit
 
 To try out the weapons and different features go to  [https://twitchbot.hankin.io/testing](https://twitchbot.hankin.io/testing)
 
+----
+
+## BREAKING CHANGE
+
+In streamer.bot instead of a single message action named `FightMessage` one for each Twitch and YouTube need to be created as depicted below. Below under Import String is what can be used to import these 2 actions.
+
+![Streamer.bot youtube message actions](./docs/FightMessageYouTube.png)
+![Streamer.bot twitch message actions](./docs/FightMessageTwitch.png)
+
+### Import String
+
+```base64
+U0JBRR+LCAAAAAAABADtVcGK2zAUvC/sPxjD3lZBshXH6W0pbLeHUijLQllKkaVnR9SWXVlqki7590p2nMRxuode2kNv1sw8zfO8h/1yfRUE4Q/QraxV+CaIbztAVk2tzdMBjnq4kkpWtjriIZ5Fsyjcs2CYw178wR0Vq8BLPkDbsgLerphSULa92PHMmlWtveLjz+3XJ/lNquJAHjsKyQzP8IEQ0HItG7MnQw/ven/BRv6Me1HrkOceCQaqo6Xw9ZHAi4hEFKV5QhBdZAIxuqSI0BwwxmKJSTp4d2XfLVj/WsqW5SkOimUl+DuNtjBiNry0Au51XT3I1tR660Q5K9uRakjrXhYrs4/scS0NX43sC13bxutcnFXj3i+o88CsIHiQZTlSsnLNtu0nqy65aaZEXd3xfYwTnteKW61BmUus0bIo3IB8tF9GntPIz2Lv62Hj7w1vNFu/V401N6edd5JGQw6uAXHHeW27Nsi5pp/gMk3jOMsTBNGSIZrECUojKhDmfJ4RSrOcwOT6NfiYXblbrXPObBs/CTIhhuzPRv/6+PtOlYCNdzvFd8fDhRDfebNpwrwuS9a0IE74gd7d/n7PM8BRvhQpwlnMEU2jBUoxixGf+w0nHDjL/9qef67to83g/6K/uuiQinmSM/epokmCKFswlPI0R0kMPMpiSAhhf7LoFOOJ4z+/6v3DoO+3dXSFK68qN/wxaGQ1jLP7cVxf7X4By1GFBwIHAAA=
+```
+
+----
+
 ## Docker Container
 
 Docker image: [ozyviking/twitch-king-of-the-hill](https://hub.docker.com/repository/docker/ozyviking/twitch-king-of-the-hill/)
