@@ -11,6 +11,7 @@ import {
   randomSide,
   sides,
   PLATFORM,
+  SIDE,
 } from "../util.js";
 import {
   winnerMotion,
@@ -35,6 +36,8 @@ import settings, {
   platform as requestPlatform,
   joinCommand,
   platformBattle,
+  PlatformSide,
+  removeSearchParam,
 } from "./urlParams.js";
 import {
   Scoreboard,
@@ -107,6 +110,15 @@ function winnerNotification(
   return `${user} ${winMessage}, using ${winweapon["tense 1"]} ${winweapon.name}.`;
 }
 
+function platformChatMessages() {
+  const left = document.getElementById("leftPlatformBattleChat");
+  const right = document.getElementById("rightPlatformBattleChat");
+  const center = document.getElementById("scorePlatformBattleChat");
+  center.innerHTML = scoreboard.scoreChatMessage;
+  left.innerHTML = scoreboard.chatMessage("Twitch");
+  right.innerHTML = scoreboard.chatMessage("YouTube");
+}
+
 function removeElement(ID) {
   document.getElementById(ID).remove();
 }
@@ -163,6 +175,9 @@ function winnerTime(id, userSide = side) {
   if (platformBattle) {
     scoreboard.platformWonRound(element.getAttribute("platform"));
     scoreboard.displayWinnerPlatformMessage(motionUp1 * 1000);
+    console.log("Twitch Chat: ", scoreboard.chatMessage("Twitch"));
+    console.log("YouTube Chat: ", scoreboard.chatMessage("YouTube"));
+    platformChatMessages();
   }
   if (rigged) {
     //riggedUsers.includes(user)) {
@@ -214,6 +229,7 @@ function grassyHillButtons(hillButtonDiv) {
   btn.innerText = "No Hill";
   btn.className = "btn btn-primary";
   hillButtonDiv.appendChild(btn);
+  clearChoice(hillButtonDiv, "hill", "Clear Hill Choice");
 }
 
 function sidesUserWinner(sideButtonDiv) {
@@ -294,6 +310,18 @@ function sidesUserWinner(sideButtonDiv) {
   div.appendChild(btn);
 }
 
+function clearChoice(Div, searchParam, name) {
+  let btn = document.createElement("button");
+  btn.id = `clear${searchParam}`;
+  btn.onclick = () => {
+    removeSearchParam(searchParam);
+    weaponTest(side, name);
+  };
+  btn.innerText = name;
+  btn.className = "btn btn-danger";
+  Div.appendChild(btn);
+}
+
 function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
   let btn;
   weaponNames.forEach((name) => {
@@ -318,37 +346,64 @@ function weaponsButtons(buttonDiv, testingWeaponButtonDiv) {
     btn.className = "btn btn-primary";
     testingWeaponButtonDiv.appendChild(btn);
   });
+  clearChoice(buttonDiv, "weapon", "Clear Weapon Choice");
+}
+
+function sortSides(a, b) {
+  console.log({a,b, PlatformSide})
+  if (PlatformSide.Twitch === SIDE.left) {
+    if (a == PLATFORM.Twitch) return -1;
+    else return 1;
+  } else if (PlatformSide.Twitch == SIDE.right) {
+    if (a == PLATFORM.Twitch) return 1;
+    else return -1;
+  }
+}
+
+function setPlatformSides(){
+  let ytBorder = "var(--yt-primary) solid"
+  let twitchBorder = "var(--twitch-primary) solid"
+  let left = PlatformSide.Twitch === SIDE.left ? twitchBorder : ytBorder
+  let right = PlatformSide.Twitch === SIDE.right ? twitchBorder : ytBorder
+
+  modifyStyleSheet('#leftPlatformBattleChat', 'border', left)
+  modifyStyleSheet('#rightPlatformBattleChat', 'border', right)
 }
 
 function platformButtons(platformButtonDiv) {
   let btn;
-  Object.keys(PLATFORM).forEach((platformChoice) => {
-    btn = document.createElement("button");
-    btn.id = platformChoice;
-    btn.onclick = () => {
-      setSearchParam("platform", platformChoice);
-      platform = platformChoice;
-      weaponTest();
-    };
-    btn.innerText = platformChoice;
-    btn.className = `btn btn-${platformChoice}`;
-    platformButtonDiv.appendChild(btn);
-  });
+  Object.keys(PLATFORM)
+    .sort(sortSides)
+    .forEach((platformChoice) => {
+      btn = document.createElement("button");
+      btn.id = platformChoice;
+      btn.onclick = () => {
+        setSearchParam("platform", platformChoice);
+        platform = platformChoice;
+        weaponTest();
+      };
+      btn.innerText = platformChoice;
+      btn.className = `btn btn-${platformChoice}`;
+      platformButtonDiv.appendChild(btn);
+    });
 }
 
 function platformWinnerButtons(platformButtonDiv) {
   let btn;
-  Object.keys(PLATFORM).forEach((platformChoice) => {
-    btn = document.createElement("button");
-    btn.id = platformChoice;
-    btn.onclick = () => {
-      scoreboard.platformWonRound(platformChoice);
-      scoreboard.displayWinnerPlatformMessage();
-    };
-    btn.innerText = platformChoice + " Winner";
-    btn.className = `btn btn-${platformChoice}`;
-    platformButtonDiv.appendChild(btn);
-  });
+  Object.keys(PLATFORM)
+    .sort(sortSides)
+    .forEach((platformChoice) => {
+      btn = document.createElement("button");
+      btn.id = platformChoice;
+      btn.onclick = () => {
+        scoreboard.platformWonRound(platformChoice);
+        scoreboard.displayWinnerPlatformMessage();
+        platformChatMessages();
+      };
+      btn.innerText = platformChoice + " Winner";
+      btn.className = `btn btn-${platformChoice}`;
+      platformButtonDiv.appendChild(btn);
+    });
 
   btn = document.createElement("button");
   btn.id = "togglePlatformBattle";
@@ -363,26 +418,29 @@ function platformWinnerButtons(platformButtonDiv) {
   btn.className = `btn btn-${platformBattle ? "success" : "danger"}`;
   platformButtonDiv.appendChild(btn);
   btn = document.createElement("button");
+  btn.id = "HidePlatformBattleHistory";
+  btn.innerText = "Hide Platform History";
+  btn.onclick = () => {
+    scoreboard.hideWinnerPlatformMessage(true);
+    platformChatMessages();
+  };
+  btn.className = "btn btn-success";
+  platformButtonDiv.appendChild(btn);
+  btn = document.createElement("button");
   btn.id = "clearPlatformBattleHistory";
   btn.innerText = "Clear Platform History";
   btn.onclick = () => {
     scoreboard.hideWinnerPlatformMessage(true);
     scoreboard.reset();
+    platformChatMessages();
   };
-  btn.className = "btn btn-success";
-  platformButtonDiv.appendChild(btn);
-  btn = document.createElement("button");
-  btn.id = "HidePlatformBattleHistory";
-  btn.innerText = "Hide Platform History";
-  btn.onclick = () => {
-    scoreboard.hideWinnerPlatformMessage(true);
-  };
-  btn.className = "btn btn-success";
+  btn.className = "btn btn-danger";
   platformButtonDiv.appendChild(btn);
 }
-
+setPlatformSides()
 addButtons();
 weaponTest();
+platformChatMessages();
 // hill();
 // lastWinnerDiv();
 // console.log(JSON.stringify(weaponRegex(), null, 1));

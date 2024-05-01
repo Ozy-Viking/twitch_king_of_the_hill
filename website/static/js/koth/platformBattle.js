@@ -130,6 +130,15 @@ export function scoreboardMotion(
   return element;
 }
 
+class PlatformState {
+  static TIEING_WON = 0;
+  static TIEING_LOSE = 1;
+  static WINNING_WON = 2;
+  static WINNING_LOSE = 3;
+  static LOSING_WON = 4;
+  static LOSING_LOSE = 5;
+}
+
 export class Scoreboard {
   key = SCOREBOARD_NAME;
   id = "platformBattleDisplay";
@@ -161,6 +170,13 @@ export class Scoreboard {
     return this.getScore(PLATFORM.YouTube);
   }
 
+  get lastWinner() {
+    if (this.history.length > 0) {
+      return this.history[this.history.length - 1];
+    }
+    return null;
+  }
+
   getScore(platform) {
     return this.history.filter((winner) => winner === platform).length;
   }
@@ -174,6 +190,7 @@ export class Scoreboard {
 
   reset() {
     this.history = [];
+    this.store();
     return this;
   }
 
@@ -260,7 +277,7 @@ export class Scoreboard {
       return;
     }
 
-    const winner = this.history[this.history.length - 1];
+    const winner = this.lastWinner;
     if (!winner) return;
     const isTwitch = PLATFORM.Twitch === winner;
 
@@ -285,7 +302,7 @@ export class Scoreboard {
     setTimeout(scoreboardMotion, delay, true, display);
   }
 
-  hideWinnerPlatformMessage(delay=0) {
+  hideWinnerPlatformMessage(delay = 0) {
     const platformBattleDiv = document.getElementById(this.outerDiv);
     if (!platformBattleDiv) {
       console.error("No platformBattleDiv found");
@@ -296,19 +313,93 @@ export class Scoreboard {
     if (!display) {
       return;
     }
-    setTimeout(scoreboardMotion, delay, false, scoreboard.platformBattleDisplayDiv);
+    setTimeout(
+      scoreboardMotion,
+      delay,
+      false,
+      scoreboard.platformBattleDisplayDiv
+    );
   }
 
   platformWonRound(winner) {
     this.history.push(winner);
     this.store();
   }
+
+  get overallCurrentWinner() {
+    if (this.twitch === this.youtube) {
+      return null;
+    }
+    return this.twitch > this.youtube ? PLATFORM.Twitch : PLATFORM.YouTube;
+  }
+  get diff() {
+    return Math.abs(this.twitch - this.youtube);
+  }
+
+  platformState(platform) {
+    if (this.lastWinner === null) {
+      return null;
+    }
+    if (this.lastWinner === platform) {
+      if (this.twitch === this.youtube) {
+        return PlatformState.TIEING_WON;
+      } else if (this.twitch > this.youtube) {
+        return platform === PLATFORM.Twitch
+          ? PlatformState.WINNING_WON
+          : PlatformState.LOSING_WON;
+      } else {
+        return platform === PLATFORM.YouTube
+          ? PlatformState.WINNING_WON
+          : PlatformState.LOSING_WON;
+      }
+    } else {
+      if (this.twitch === this.youtube) {
+        return PlatformState.TIEING_LOSE;
+      } else if (this.twitch > this.youtube) {
+        return platform === PLATFORM.Twitch
+          ? PlatformState.WINNING_LOSE
+          : PlatformState.LOSING_LOSE;
+      } else {
+        return platform === PLATFORM.YouTube
+          ? PlatformState.WINNING_LOSE
+          : PlatformState.LOSING_LOSE;
+      }
+    }
+  }
+  get scoreChatMessage() {
+    let scoreList = [this.twitch, this.youtube].sort((a, b) => b - a);
+    return `${scoreList[0]} - ${scoreList[1]}`;
+  }
+
+  chatMessage(platform) {
+    const state = this.platformState(platform);
+    const score = this.scoreChatMessage;
+    const diff = this.diff;
+    const overallWinner = this.overallCurrentWinner;
+    console.log({ state, platform });
+    switch (state) {
+      case PlatformState.TIEING_WON:
+        return `Great job, ${platform}! That win made it a tie, keep pushing ahead! The score is now ${score}.`;
+      case PlatformState.TIEING_LOSE:
+        return `Unlucky, ${platform}! It's a tie now. The score is now ${score}.`;
+      case PlatformState.WINNING_WON:
+        return `Great job, ${platform}! Keep pushing ahead, you leading by ${diff}! The score is now ${score} to ${overallWinner}.`;
+      case PlatformState.WINNING_LOSE:
+        return `Unlucky, ${platform}! You are only ${diff} ahead! The score is now ${score} to ${overallWinner}.`;
+      case PlatformState.LOSING_WON:
+        return `Great job, ${platform}! You are only ${diff} behind! The score is now ${score} to ${overallWinner}.`;
+      case PlatformState.LOSING_LOSE:
+        return `Unlucky, ${platform}! It may be a skill issue but with a few broken fingers you can turn this around! The score is now ${score} to ${overallWinner}.`;
+      default:
+        return "No side has won yet!";
+    }
+  }
 }
 
 export const scoreboard = new Scoreboard();
 
 export function clearPlatformBattleHistory() {
-  scoreboard.reset()
-  scoreboard.store()
+  scoreboard.reset();
+  scoreboard.store();
   storage.removeItem(scoreboard.key);
 }

@@ -133,10 +133,10 @@ function canUserJoin(username, lowerMessage) {
     return true;
   } else if (usernamesAdded.has(username)) {
     return false;
-    // deepcode ignore DuplicateIfBody: Seperating out the logic for readability.
+    // deepcode ignore DuplicateIfBody: Separating out the logic for readability.
   } else if (joinCommandRegex.exec(lowerMessage) == null) {
     return false;
-    // deepcode ignore DuplicateIfBody: Seperating out the logic for readability.
+    // deepcode ignore DuplicateIfBody: Separating out the logic for readability.
   } else if (updateMessageRegex.exec(lowerMessage) != null) {
     return false;
   }
@@ -213,6 +213,10 @@ function winnerTime(winner) {
   if (param.platformBattle) {
     scoreboard.platformWonRound(winner.platform);
     scoreboard.displayWinnerPlatformMessage(motionUp1 * 1000);
+    const twitchChatMessage = scoreboard.chatMessage(PLATFORM.Twitch);
+    const youtubeChatMessage = scoreboard.chatMessage(PLATFORM.YouTube);
+    setTimeout(notify, 2000, twitchChatMessage, PLATFORM.Twitch);
+    setTimeout(notify, 2000, youtubeChatMessage, PLATFORM.YouTube);
   }
 
   if (rigged) {

@@ -146,17 +146,16 @@ div#winnerNotification {
   margin-top: 20px;
   text-align: center;
   color: #fff;
-}
-.display {
-  font-family: var(--font-family);
-  font-style: normal;
-}
-div#winnerNotification {
   margin-top: 10px;
   padding: 5px 0px;
   border: rgba(255, 255, 255, 0.6) solid;
   text-align: center;
 }
+.display {
+  font-family: var(--font-family);
+  font-style: normal;
+}
+
 #testing_user {
   text-align: center;
   margin: 0px 10px;
@@ -314,7 +313,6 @@ img#lastWinnerCrown.crownNavalWarlord {
   transform: translate(19%, 4.5px) scale(0.5) rotate(1deg);
 }
 
-
 :root {
   --icon-dimension: 40px;
   --yt-primary: #ff0000;
@@ -355,15 +353,15 @@ img.Twitch {
   width: var(--twitch-width);
   height: var(--twitch-height);
 }
-img.Twitch.left{
+img.Twitch.left {
   position: absolute;
-  left:calc(-1 * var(--twitch-width) / 2);
-  bottom:calc(-1 * var(--twitch-height) / 2);
+  left: calc(-1 * var(--twitch-width) / 2);
+  bottom: calc(-1 * var(--twitch-height) / 2);
 }
-img.Twitch.right{
+img.Twitch.right {
   position: absolute;
-  right:calc(-1 * var(--twitch-width) / 2);
-  bottom:calc(-1 * var(--twitch-height) / 2);
+  right: calc(-1 * var(--twitch-width) / 2);
+  bottom: calc(-1 * var(--twitch-height) / 2);
 }
 
 img.YouTube {
@@ -526,3 +524,33 @@ div.score {
   gap: 32px;
   opacity: 0;
 }
+
+#platformChatNotification {
+  display: flex;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  color: #fff;
+  gap: 10px
+}
+#platformChatNotification > div {
+  width: 100%;
+  margin-top: 10px;
+  padding: 5px 5px;
+}
+div#scorePlatformBattleChat.center {
+  width: max-content;
+  white-space: nowrap;
+  font-size: xx-large;
+}
+#rightPlatformBattleChat{
+  /* border: var(--yt-primary) solid; */
+  text-align: right;
+} 
+#leftPlatformBattleChat{
+  /* border: var(--twitch-primary) solid; */
+  text-align: left;
+} 
+
+

@@ -134,6 +134,7 @@ export default class User {
    * @param {string} [winMessage=winnerMessage] - The bulk of the message to be sent.
    */
   winMessage(winMessage = winnerMessage) {
-    return `${this.username} ${winMessage}, using ${this.weapon["tense 1"]} ${this.weapon.name}.`;
+    const platformAddition = platformBattle ? ` of ${this.platform}` : "";
+    return `${this.username}${platformAddition} ${winMessage}, using ${this.weapon["tense 1"]} ${this.weapon.name}.`;
   }
 }
