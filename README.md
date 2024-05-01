@@ -75,7 +75,7 @@ http://[QNAP IP addess]:28080/
 
 ### Resource Limiter
 
-These values within the docker compose file are used to limit the resouces available. If the container isn't responding due to lag, I would suspent from large amount of traffic, try increasing either or both limits (or removing them for not limit).
+These values within the docker compose file are used to limit the resouces available. If the container isn't responding due to lag, I would suspent from large amount of traffic, try increasing either or both limits (or removing them for not limit). Doesn't work with QNAP.
 
 ```yaml
 services:
