@@ -389,7 +389,7 @@ export class Scoreboard {
       case PlatformState.LOSING_WON:
         return `Great job, ${platform}! You are only ${diff} behind! The score is now ${score} to ${overallWinner}.`;
       case PlatformState.LOSING_LOSE:
-        return `Unlucky, ${platform}! It may be a skill issue but with a few broken fingers you can turn this around! The score is now ${score} to ${overallWinner}.`;
+        return `Unlucky, ${platform}! It may be a skill issue but maybe kick them in the shins next time around! The score is now ${score} to ${overallWinner}.`;
       default:
         return "No side has won yet!";
     }
