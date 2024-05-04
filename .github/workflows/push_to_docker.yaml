@@ -18,8 +18,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Version
-        run: ./scripts/version.sh '${{github.ref_name}}'
+      # - name: Version
+      #   run: ./scripts/version.sh '${{github.ref_name}}'
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v4
